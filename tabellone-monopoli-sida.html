@@ -98,11 +98,13 @@
     background:var(--gold);border-radius:1mm;padding:.3mm 1mm;
   }
 
-  .special .icon{font-size:6mm;margin-top:1.5mm;line-height:1;}
+  .special .icon{font-size:9.5mm;margin-top:1.5mm;line-height:1;}
   .special .label{
     font-size:2.15mm;font-weight:700;text-transform:uppercase;margin-top:1mm;line-height:1.15;
   }
-  .special .price{margin-top:.8mm;}
+  .special .price{margin-top:auto;}
+  .special.card .inner{justify-content:center;}
+  .special.card .icon{margin-top:0;}
 
   .corner .inner{justify-content:center;padding:1mm;}
   .corner .icon{font-size:8mm;line-height:1;}
@@ -224,7 +226,7 @@
 
   <div class="toolbar">
     <span><b>Il Monopoli d'Ufficio</b> — SIDA Autosoft Multimedia</span>
-    <span>Clicca sui nomi "Dipendente 1…22" per modificarli direttamente, poi stampa in <b>A3 orizzontale</b>.</span>
+    <span>Clicca sui nomi delle caselle per modificarli direttamente, poi stampa in <b>A3 orizzontale</b>.</span>
     <button onclick="window.print()">🖨️ Stampa tabellone</button>
   </div>
 
@@ -252,21 +254,21 @@
           </div>
         </div>
 
-        <!-- ===== CASELLA 0 — PARTENZA (angolo) ===== -->
+        <!-- ===== CASELLA 0 — AVVIO SPRINT (angolo) ===== -->
         <div class="cell corner" style="grid-column:11/12;grid-row:11/12;">
-          <div class="inner"><div class="icon">▶️</div><div class="label">Partenza</div><div class="sub">Ritira 200 BP</div></div>
+          <div class="inner"><div class="icon">▶️</div><div class="label">Avvio sprint!</div><div class="sub">Ritira 200 BP</div></div>
         </div>
         <!-- 1 -->
         <div class="cell prop brown" style="grid-column:10/11;grid-row:11/12;"><div class="inner">
-          <div class="bar"></div><div class="dept">Magazzino</div><div class="name" contenteditable="true">Dipendente 1</div><div class="price">60 BP</div>
+          <div class="bar"></div><div class="dept">Store</div><div class="name" contenteditable="true">CML</div><div class="price">60 BP</div>
         </div></div>
         <!-- 2 -->
-        <div class="cell special" style="grid-column:9/10;grid-row:11/12;"><div class="inner">
-          <div class="icon">🧾</div><div class="label">Note Spese</div>
+        <div class="cell special card" style="grid-column:9/10;grid-row:11/12;"><div class="inner">
+          <div class="icon">❓</div><div class="label">Probabilità</div>
         </div></div>
         <!-- 3 -->
         <div class="cell prop brown" style="grid-column:8/9;grid-row:11/12;"><div class="inner">
-          <div class="bar"></div><div class="dept">Magazzino</div><div class="name" contenteditable="true">Dipendente 2</div><div class="price">60 BP</div>
+          <div class="bar"></div><div class="dept">Store</div><div class="name" contenteditable="true">Accessori</div><div class="price">60 BP</div>
         </div></div>
         <!-- 4 -->
         <div class="cell special" style="grid-column:7/8;grid-row:11/12;"><div class="inner">
@@ -274,148 +276,147 @@
         </div></div>
         <!-- 5 -->
         <div class="cell special" style="grid-column:6/7;grid-row:11/12;"><div class="inner">
-          <div class="icon">⛽</div><div class="label">Stazione di Servizio 1</div><div class="price">200 BP</div>
+          <div class="icon">📡</div><div class="label">Fastweb</div><div class="price">200 BP</div>
         </div></div>
         <!-- 6 -->
         <div class="cell prop lightblue" style="grid-column:5/6;grid-row:11/12;"><div class="inner">
-          <div class="bar"></div><div class="dept">Segreteria</div><div class="name" contenteditable="true">Dipendente 3</div><div class="price">100 BP</div>
+          <div class="bar"></div><div class="dept">Simulatori</div><div class="name" contenteditable="true">DRIVE 180°</div><div class="price">100 BP</div>
         </div></div>
         <!-- 7 -->
-        <div class="cell special" style="grid-column:4/5;grid-row:11/12;"><div class="inner">
+        <div class="cell special card" style="grid-column:4/5;grid-row:11/12;"><div class="inner">
           <div class="icon">🎲</div><div class="label">Imprevisti</div>
         </div></div>
         <!-- 8 -->
         <div class="cell prop lightblue" style="grid-column:3/4;grid-row:11/12;"><div class="inner">
-          <div class="bar"></div><div class="dept">Segreteria</div><div class="name" contenteditable="true">Dipendente 4</div><div class="price">100 BP</div>
+          <div class="bar"></div><div class="dept">Simulatori</div><div class="name" contenteditable="true">DRIVE 360°</div><div class="price">100 BP</div>
         </div></div>
         <!-- 9 -->
         <div class="cell prop lightblue" style="grid-column:2/3;grid-row:11/12;"><div class="inner">
-          <div class="bar"></div><div class="dept">Segreteria</div><div class="name" contenteditable="true">Dipendente 5</div><div class="price">120 BP</div>
+          <div class="bar"></div><div class="dept">Simulatori</div><div class="name" contenteditable="true">DRIVE Controller</div><div class="price">120 BP</div>
         </div></div>
-        <!-- ===== CASELLA 10 — PAUSA CAFFÈ (angolo) ===== -->
+        <!-- ===== CASELLA 10 — RIUNIONE / TRANSITO (angolo) ===== -->
         <div class="cell corner" style="grid-column:1/2;grid-row:11/12;">
-          <div class="inner"><div class="icon">☕</div><div class="label">Panata giornaliera</div><div class="sub">Di passaggio o in sosta</div></div>
+          <div class="inner"><div class="icon">👥</div><div class="label">Riunione / Transito</div><div class="sub">Di passaggio o convocato</div></div>
         </div>
 
         <!-- 11 -->
         <div class="cell prop pink rot90" style="grid-column:1/2;grid-row:10/11;"><div class="inner">
-          <div class="bar"></div><div class="dept">Marketing</div><div class="name" contenteditable="true">Dipendente 6</div><div class="price">140 BP</div>
+          <div class="bar"></div><div class="dept">Consulenza</div><div class="name" contenteditable="true">Consulenza Nord Italia</div><div class="price">140 BP</div>
         </div></div>
         <!-- 12 -->
         <div class="cell special rot90" style="grid-column:1/2;grid-row:9/10;"><div class="inner">
-          <div class="icon">🔧</div><div class="label">Officina</div><div class="price">150 BP</div>
+          <div class="icon">⚡</div><div class="label">Enel</div><div class="price">150 BP</div>
         </div></div>
         <!-- 13 -->
         <div class="cell prop pink rot90" style="grid-column:1/2;grid-row:8/9;"><div class="inner">
-          <div class="bar"></div><div class="dept">Marketing</div><div class="name" contenteditable="true">Dipendente 7</div><div class="price">140 BP</div>
+          <div class="bar"></div><div class="dept">Consulenza</div><div class="name" contenteditable="true">Consulenza Centro Italia</div><div class="price">140 BP</div>
         </div></div>
         <!-- 14 -->
         <div class="cell prop pink rot90" style="grid-column:1/2;grid-row:7/8;"><div class="inner">
-          <div class="bar"></div><div class="dept">Marketing</div><div class="name" contenteditable="true">Dipendente 8</div><div class="price">160 BP</div>
+          <div class="bar"></div><div class="dept">Consulenza</div><div class="name" contenteditable="true">Consulenza Sud Italia</div><div class="price">160 BP</div>
         </div></div>
         <!-- 15 -->
         <div class="cell special rot90" style="grid-column:1/2;grid-row:6/7;"><div class="inner">
-          <div class="icon">⛽</div><div class="label">Stazione di Servizio 2</div><div class="price">200 BP</div>
+          <div class="icon">📡</div><div class="label">Fastweb</div><div class="price">200 BP</div>
         </div></div>
         <!-- 16 -->
         <div class="cell prop orange rot90" style="grid-column:1/2;grid-row:5/6;"><div class="inner">
-          <div class="bar"></div><div class="dept">Commerciale</div><div class="name" contenteditable="true">Dipendente 9</div><div class="price">180 BP</div>
+          <div class="bar"></div><div class="dept">Trasporti</div><div class="name" contenteditable="true">Tachigrafo</div><div class="price">180 BP</div>
         </div></div>
         <!-- 17 -->
-        <div class="cell special rot90" style="grid-column:1/2;grid-row:4/5;"><div class="inner">
-          <div class="icon">🧾</div><div class="label">Note Spese</div>
+        <div class="cell special rot90 card" style="grid-column:1/2;grid-row:4/5;"><div class="inner">
+          <div class="icon">❓</div><div class="label">Probabilità</div>
         </div></div>
         <!-- 18 -->
         <div class="cell prop orange rot90" style="grid-column:1/2;grid-row:3/4;"><div class="inner">
-          <div class="bar"></div><div class="dept">Commerciale</div><div class="name" contenteditable="true">Dipendente 10</div><div class="price">180 BP</div>
+          <div class="bar"></div><div class="dept">Trasporti</div><div class="name" contenteditable="true">Carico sicuro</div><div class="price">180 BP</div>
         </div></div>
         <!-- 19 -->
         <div class="cell prop orange rot90" style="grid-column:1/2;grid-row:2/3;"><div class="inner">
-          <div class="bar"></div><div class="dept">Commerciale</div><div class="name" contenteditable="true">Dipendente 11</div><div class="price">200 BP</div>
+          <div class="bar"></div><div class="dept">Trasporti</div><div class="name" contenteditable="true">Guida sicura</div><div class="price">200 BP</div>
         </div></div>
-        <!-- ===== CASELLA 20 — PARCHEGGIO LIBERO (angolo) ===== -->
+        <!-- ===== CASELLA 20 — PAUSA CAFFÈ (angolo) ===== -->
         <div class="cell corner" style="grid-column:1/2;grid-row:1/2;">
-          <div class="inner"><div class="icon">🅿️</div><div class="label">Parcheggio Libero</div><div class="sub">Sosta gratuita</div></div>
+          <div class="inner"><div class="icon">☕</div><div class="label">Pausa caffè</div><div class="sub">Sosta gratuita</div></div>
         </div>
 
         <!-- 21 -->
         <div class="cell prop red rot180" style="grid-column:2/3;grid-row:1/2;"><div class="inner">
-          <div class="bar"></div><div class="dept">Supporto Clienti</div><div class="name" contenteditable="true">Dipendente 12</div><div class="price">220 BP</div>
+          <div class="bar"></div><div class="dept">Didattica</div><div class="name" contenteditable="true">Aula</div><div class="price">220 BP</div>
         </div></div>
         <!-- 22 -->
-        <div class="cell special rot180" style="grid-column:3/4;grid-row:1/2;"><div class="inner">
+        <div class="cell special rot180 card" style="grid-column:3/4;grid-row:1/2;"><div class="inner">
           <div class="icon">🎲</div><div class="label">Imprevisti</div>
         </div></div>
         <!-- 23 -->
         <div class="cell prop red rot180" style="grid-column:4/5;grid-row:1/2;"><div class="inner">
-          <div class="bar"></div><div class="dept">Supporto Clienti</div><div class="name" contenteditable="true">Dipendente 13</div><div class="price">220 BP</div>
+          <div class="bar"></div><div class="dept">Didattica</div><div class="name" contenteditable="true">QuizApp</div><div class="price">220 BP</div>
         </div></div>
         <!-- 24 -->
         <div class="cell prop red rot180" style="grid-column:5/6;grid-row:1/2;"><div class="inner">
-          <div class="bar"></div><div class="dept">Supporto Clienti</div><div class="name" contenteditable="true">Dipendente 14</div><div class="price">240 BP</div>
+          <div class="bar"></div><div class="dept">Didattica</div><div class="name" contenteditable="true">Manuali</div><div class="price">240 BP</div>
         </div></div>
         <!-- 25 -->
         <div class="cell special rot180" style="grid-column:6/7;grid-row:1/2;"><div class="inner">
-          <div class="icon">⛽</div><div class="label">Stazione di Servizio 3</div><div class="price">200 BP</div>
+          <div class="icon">📡</div><div class="label">Fastweb</div><div class="price">200 BP</div>
         </div></div>
         <!-- 26 -->
         <div class="cell prop yellow rot180" style="grid-column:7/8;grid-row:1/2;"><div class="inner">
-          <div class="bar"></div><div class="dept">Formazione</div><div class="name" contenteditable="true">Dipendente 15</div><div class="price">260 BP</div>
+          <div class="bar"></div><div class="dept">Servizi</div><div class="name" contenteditable="true">Ecoguida</div><div class="price">260 BP</div>
         </div></div>
         <!-- 27 -->
         <div class="cell prop yellow rot180" style="grid-column:8/9;grid-row:1/2;"><div class="inner">
-          <div class="bar"></div><div class="dept">Formazione</div><div class="name" contenteditable="true">Dipendente 16</div><div class="price">260 BP</div>
+          <div class="bar"></div><div class="dept">Servizi</div><div class="name" contenteditable="true">Sida Tools</div><div class="price">260 BP</div>
         </div></div>
         <!-- 28 -->
         <div class="cell special rot180" style="grid-column:9/10;grid-row:1/2;"><div class="inner">
-          <div class="icon">🚿</div><div class="label">Autolavaggio</div><div class="price">150 BP</div>
+          <div class="icon">❄️</div><div class="label">Impianto clima</div><div class="price">150 BP</div>
         </div></div>
         <!-- 29 -->
         <div class="cell prop yellow rot180" style="grid-column:10/11;grid-row:1/2;"><div class="inner">
-          <div class="bar"></div><div class="dept">Formazione</div><div class="name" contenteditable="true">Dipendente 17</div><div class="price">280 BP</div>
+          <div class="bar"></div><div class="dept">Servizi</div><div class="name" contenteditable="true">Formazienda</div><div class="price">280 BP</div>
         </div></div>
-        <!-- ===== CASELLA 30 — STRAORDINARIO FORZATO (angolo) ===== -->
+        <!-- ===== CASELLA 30 — CONVOCAZIONE IN RIUNIONE (angolo) ===== -->
         <div class="cell corner" style="grid-column:11/12;grid-row:1/2;">
-          <div class="inner"><div class="icon">⏰</div><div class="label">Straordinario Forzato</div><div class="sub">Emm... Vai dritto in panata</div></div>
+          <div class="inner"><div class="icon">⏰</div><div class="label">Convocazione in riunione!</div><div class="sub">Vai dritto in riunione</div></div>
         </div>
 
         <!-- 31 -->
         <div class="cell prop green rot270" style="grid-column:11/12;grid-row:2/3;"><div class="inner">
-          <div class="bar"></div><div class="dept">Sviluppo IT</div><div class="name" contenteditable="true">Dipendente 18</div><div class="price">300 BP</div>
+          <div class="bar"></div><div class="dept">Gestionale</div><div class="name" contenteditable="true">Gestione</div><div class="price">300 BP</div>
         </div></div>
         <!-- 32 -->
         <div class="cell prop green rot270" style="grid-column:11/12;grid-row:3/4;"><div class="inner">
-          <div class="bar"></div><div class="dept">Sviluppo IT</div><div class="name" contenteditable="true">Dipendente 19</div><div class="price">300 BP</div>
+          <div class="bar"></div><div class="dept">Gestionale</div><div class="name" contenteditable="true">Gestione Cloud</div><div class="price">300 BP</div>
         </div></div>
         <!-- 33 -->
-        <div class="cell special rot270" style="grid-column:11/12;grid-row:4/5;"><div class="inner">
-          <div class="icon">🧾</div><div class="label">Note Spese</div>
+        <div class="cell special rot270 card" style="grid-column:11/12;grid-row:4/5;"><div class="inner">
+          <div class="icon">❓</div><div class="label">Probabilità</div>
         </div></div>
         <!-- 34 -->
         <div class="cell prop green rot270" style="grid-column:11/12;grid-row:5/6;"><div class="inner">
-          <div class="bar"></div><div class="dept">Sviluppo IT</div><div class="name" contenteditable="true">Dipendente 20</div><div class="price">320 BP</div>
+          <div class="bar"></div><div class="dept">Gestionale</div><div class="name" contenteditable="true">Messaggi</div><div class="price">320 BP</div>
         </div></div>
         <!-- 35 -->
         <div class="cell special rot270" style="grid-column:11/12;grid-row:6/7;"><div class="inner">
-          <div class="icon">⛽</div><div class="label">Stazione di Servizio 4</div><div class="price">200 BP</div>
+          <div class="icon">📡</div><div class="label">Fastweb</div><div class="price">200 BP</div>
         </div></div>
         <!-- 36 -->
-        <div class="cell special rot270" style="grid-column:11/12;grid-row:7/8;"><div class="inner">
-          <div class="icon">🎲</div><div class="label">Imprevisti</div>
+        <div class="cell prop darkblue rot270" style="grid-column:11/12;grid-row:7/8;"><div class="inner">
+          <div class="bar"></div><div class="dept">Infrastruttura</div><div class="name" contenteditable="true">VPN</div><div class="price">350 BP</div>
         </div></div>
         <!-- 37 -->
-        <div class="cell prop darkblue rot270" style="grid-column:11/12;grid-row:8/9;"><div class="inner">
-          <div class="bar"></div><div class="dept">Direzione</div><div class="name" contenteditable="true">Dipendente 21</div><div class="price">350 BP</div>
+        <div class="cell special rot270 card" style="grid-column:11/12;grid-row:8/9;"><div class="inner">
+          <div class="icon">🎲</div><div class="label">Imprevisti</div>
         </div></div>
         <!-- 38 -->
         <div class="cell special rot270" style="grid-column:11/12;grid-row:9/10;"><div class="inner">
-          <div class="icon">📄</div><div class="label">Tassa Extra</div><div class="price">Paga 100 BP</div>
+          <div class="icon">📄</div><div class="label">Intrè</div><div class="price">Paga 100 BP</div>
         </div></div>
         <!-- 39 -->
         <div class="cell prop darkblue rot270" style="grid-column:11/12;grid-row:10/11;"><div class="inner">
-          <div class="bar"></div><div class="dept">Direzione</div><div class="name" contenteditable="true">Dipendente 22</div><div class="price">400 BP</div>
+          <div class="bar"></div><div class="dept">Infrastruttura</div><div class="name" contenteditable="true">PagoPa</div><div class="price">400 BP</div>
         </div></div>
-
       </div>
       <!-- ===================== FINE TABELLONE ===================== -->
 
@@ -427,40 +428,40 @@
         <h2>Come si gioca</h2>
         <ul>
           <li>Ogni giocatore riceve <b>1.500 Buoni Pasto</b> (tagli da 1, 5, 10, 20, 50, 100, 500) e sceglie una pedina.</li>
-          <li>A turno si tira il dado e ci si muove in senso orario partendo da <b>Partenza</b>.</li>
-          <li>Passando o fermandosi su <b>Partenza</b> si ritirano 200 BP.</li>
-          <li>Su una casella "Dipendente" libera puoi <b>assumerlo</b> pagando il valore indicato.</li>
-          <li>Se il collega è già assunto da un altro giocatore, si paga lo <b>stipendio/affitto</b> a chi lo possiede.</li>
-          <li>Le caselle dello stesso colore formano un <b>Reparto</b>: chi lo possiede per intero può costruire <b>Straordinari</b> (case) e una <b>Sede Distaccata</b> (hotel) per aumentare lo stipendio dovuto.</li>
-          <li>Vince chi resta l'unico a non essere finito in "esubero" (fallimento).</li>
+          <li>A turno si tira il dado e ci si muove in senso orario partendo da <b>Avvio sprint!</b></li>
+          <li>Passando o fermandosi su <b>Avvio sprint!</b> si ritirano 200 BP.</li>
+          <li>Su una casella prodotto/servizio libera puoi <b>acquisirne la licenza</b> pagando il valore indicato.</li>
+          <li>Se la casella è già di un altro giocatore, gli paghi il <b>canone</b> indicato.</li>
+          <li>Le caselle dello stesso colore formano una <b>Linea di business</b>: chi la possiede per intero può costruire <b>Release</b> (case) e un <b>Data Center</b> (hotel) per aumentare il canone dovuto.</li>
+          <li>Vince chi resta l'unico a non essere finito fuori budget (fallimento).</li>
         </ul>
 
-        <h2>Legenda Reparti</h2>
+        <h2>Legenda Linee di business</h2>
         <div class="swatches">
-          <div class="swatch"><i style="background:var(--brown)"></i>Magazzino</div>
-          <div class="swatch"><i style="background:var(--lightblue)"></i>Segreteria</div>
-          <div class="swatch"><i style="background:var(--pink)"></i>Marketing</div>
-          <div class="swatch"><i style="background:var(--orange)"></i>Commerciale</div>
-          <div class="swatch"><i style="background:var(--red)"></i>Supporto Clienti</div>
-          <div class="swatch"><i style="background:var(--yellow)"></i>Formazione</div>
-          <div class="swatch"><i style="background:var(--green)"></i>Sviluppo IT</div>
-          <div class="swatch"><i style="background:var(--darkblue)"></i>Direzione</div>
+          <div class="swatch"><i style="background:var(--brown)"></i>Store — CML, Accessori</div>
+          <div class="swatch"><i style="background:var(--lightblue)"></i>Simulatori — DRIVE</div>
+          <div class="swatch"><i style="background:var(--pink)"></i>Consulenza — Nord/Centro/Sud</div>
+          <div class="swatch"><i style="background:var(--orange)"></i>Trasporti — sicurezza e tachigrafo</div>
+          <div class="swatch"><i style="background:var(--red)"></i>Didattica — aula, quiz, manuali</div>
+          <div class="swatch"><i style="background:var(--yellow)"></i>Servizi — formazione e tools</div>
+          <div class="swatch"><i style="background:var(--green)"></i>Gestionale — gestione e messaggi</div>
+          <div class="swatch"><i style="background:var(--darkblue)"></i>Infrastruttura — VPN, PagoPa</div>
         </div>
 
         <h2>Caselle speciali</h2>
         <ul class="special-list">
-          <li><span class="ic">⛽</span><span><b>Stazione di Servizio</b> (4) — come le stazioni classiche: lo stipendio dovuto raddoppia per ogni stazione posseduta dallo stesso giocatore.</span></li>
-          <li><span class="ic">🔧🚿</span><span><b>Officina / Autolavaggio</b> (2) — come le "società" classiche: l'importo dovuto dipende dal tiro di dado.</span></li>
-          <li><span class="ic">🎲</span><span><b>Imprevisti</b> — pesca una carta con un evento casuale (bonus o malus).</span></li>
-          <li><span class="ic">🧾</span><span><b>Note Spese</b> — pesca una carta rimborso o spesa imprevista.</span></li>
-          <li><span class="ic">💶📄</span><span><b>Tasse</b> — versa l'importo indicato al fondo cassa aziendale.</span></li>
-          <li><span class="ic">☕</span><span><b>Pausa Caffè</b> — la "prigione" del Monopoli classico: di passaggio o in sosta forzata.</span></li>
-          <li><span class="ic">🅿️</span><span><b>Parcheggio Libero</b> — sosta gratuita, nessun effetto.</span></li>
-          <li><span class="ic">⏰</span><span><b>Straordinario Forzato</b> — manda direttamente in Pausa Caffè.</span></li>
+          <li><span class="ic">📡</span><span><b>Fastweb</b> (4) — come le stazioni classiche: il canone dovuto raddoppia per ogni casella Fastweb posseduta dallo stesso giocatore.</span></li>
+          <li><span class="ic">⚡❄️</span><span><b>Enel / Impianto clima</b> (2) — come le "società" classiche: l'importo dovuto dipende dal tiro di dado.</span></li>
+          <li><span class="ic">🎲</span><span><b>Imprevisti</b> (3) — pesca una carta con un evento casuale (bonus o malus).</span></li>
+          <li><span class="ic">❓</span><span><b>Probabilità</b> (3) — pesca una carta dal mazzo Probabilità.</span></li>
+          <li><span class="ic">💶📄</span><span><b>Tasse / Intrè</b> — versa l'importo indicato al fondo cassa aziendale.</span></li>
+          <li><span class="ic">👥</span><span><b>Riunione / Transito</b> — la "prigione" del Monopoli classico: di passaggio o convocato in sosta forzata.</span></li>
+          <li><span class="ic">☕</span><span><b>Pausa caffè</b> — sosta gratuita, nessun effetto.</span></li>
+          <li><span class="ic">⏰</span><span><b>Convocazione in riunione!</b> — manda direttamente in Riunione.</span></li>
         </ul>
 
         <div class="note">
-          ✏️ I nomi "Dipendente 1…22" sono segnaposto: clicca direttamente sul nome nel tabellone (in questo file HTML aperto nel browser) per sostituirlo con il nome del collega, poi stampa in A3 orizzontale.
+          ✏️ I nomi dei prodotti sul tabellone sono modificabili: apri questo file HTML nel browser, clicca direttamente sul nome della casella per correggerlo, poi stampa in A3 orizzontale.
         </div>
 
         <footer>Realizzato per uso interno aziendale — grafica ispirata a SIDA Autosoft Multimedia (patente.it)</footer>
