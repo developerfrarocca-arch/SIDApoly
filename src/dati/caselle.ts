@@ -1,12 +1,60 @@
 /* ============================================================
    Dati delle 40 caselle - Il Monopoli d'Ufficio (SIDA)
    Ordine: dalla casella 0 (Avvio sprint!) in senso orario.
-   tipo:   angolo | proprieta | speciale (con prezzo) | carta (senza prezzo)
-   prezzo: numero  -> stampato come "<n> BP"
-           stringa -> stampata cosi' com'e' (es. "Paga 200 BP")
-   gruppo: brown | lightblue | pink | orange | red | yellow | green | darkblue
    ============================================================ */
-const CASELLE = [
+
+/** Le otto linee di business, nell'ordine del tabellone. */
+export type Gruppo =
+  | 'brown'
+  | 'lightblue'
+  | 'pink'
+  | 'orange'
+  | 'red'
+  | 'yellow'
+  | 'green'
+  | 'darkblue';
+
+/** Numero -> stampato come "<n> BP"; stringa -> stampata cosi' com'e'. */
+export type Prezzo = number | string;
+
+/** Angolo: Avvio sprint, Riunione, Pausa caffe', Convocazione. */
+export interface Angolo {
+  tipo: 'angolo';
+  icona: string;
+  nome: string;
+  sotto: string;
+}
+
+/** Casella acquistabile, appartenente a una linea di business. */
+export interface Proprieta {
+  tipo: 'proprieta';
+  gruppo: Gruppo;
+  reparto: string;
+  nome: string;
+  prezzo: Prezzo;
+}
+
+/** Casella speciale con un importo: Fastweb, Enel, Impianto clima, Tasse, Intre'. */
+export interface Speciale {
+  tipo: 'speciale';
+  icona: string;
+  nome: string;
+  prezzo: Prezzo;
+}
+
+/** Casella pesca-carta, senza importo: Imprevisti, Probabilita'. */
+export interface CasellaCarta {
+  tipo: 'carta';
+  icona: string;
+  nome: string;
+}
+
+export type Casella = Angolo | Proprieta | Speciale | CasellaCarta;
+
+/** Il tabellone ha sempre 40 caselle: indici 0-39 in senso orario. */
+export const NUMERO_CASELLE = 40;
+
+export const CASELLE: readonly Casella[] = [
   /*  0 */ { tipo: "angolo", icona: "▶️", nome: "Avvio sprint!", sotto: "Ritira 200 BP" },
   /*  1 */ { tipo: "proprieta", gruppo: "brown", reparto: "Store", nome: "CML", prezzo: 60 },
   /*  2 */ { tipo: "carta", icona: "❓", nome: "Probabilità" },

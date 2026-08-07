@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Il Monopoli d'Ufficio — SIDA Autosoft Multimedia</title>
-<link rel="stylesheet" href="css/tabellone.css">
 </head>
 <body>
 
@@ -17,14 +16,14 @@
     <div class="page">
 
       <!-- ======================= TABELLONE ======================= -->
-      <!-- Le 40 caselle sono generate da js/render-tabellone.js (dati in js/caselle.js) -->
+      <!-- Le 40 caselle sono generate da src/render/tabellone.ts (dati in src/dati/caselle.ts) -->
       <div class="board" id="board">
 
         <!-- CENTRO -->
         <div class="center">
           <div class="kicker">SIDA Autosoft Multimedia presenta</div>
           <div class="diagonal-card">
-          <img class="team-photo" src="resources/extendedVersion.png" alt="Il team SIDA">
+          <img class="team-photo" src="/resources/extendedVersion.png" alt="Il team SIDA">
           <div class="ribbon-flat">Il Monopoli d'Ufficio</div>
           </div>
           
@@ -87,7 +86,7 @@
         <footer>Realizzato per uso interno aziendale — grafica ispirata a SIDA Autosoft Multimedia (patente.it)</footer>
         <div class="brand-strip">
           <div class="mini-logo-row">
-            <img class="logo-mini" src="resources/logo-sida.svg" alt="SIDA Autosoft Multimedia">
+            <img class="logo-mini" src="/resources/logo-sida.svg" alt="SIDA Autosoft Multimedia">
             <span>SIDA Autosoft Multimedia</span>
           </div>
           <div class="sub2">Prodotti, servizi e release sul tabellone più temuto dell'ufficio</div>
@@ -97,7 +96,6 @@
     </div>
   </div>
 
-  <script src="js/caselle.js"></script>
-  <script src="js/render-tabellone.js"></script>
+  <script type="module" src="/src/main.ts"></script>
 </body>
 </html>

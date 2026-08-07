@@ -1,0 +1,20 @@
+{
+  "name": "sidapoly",
+  "version": "1.0.0",
+  "description": "Generatore di stampe per Il Monopoli d'Ufficio - SIDA Autosoft Multimedia",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "jsdom": "^25.0.1",
+    "typescript": "^5.6.3",
+    "vite": "^7.1.5",
+    "vitest": "^3.2.4"
+  }
+}

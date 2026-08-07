@@ -1,0 +1,13 @@
+# Dipendenze
+node_modules/
+
+# Output della build e cache di Vite
+dist/
+.vite/
+
+# Log
+npm-debug.log*
+yarn-error.log*
+
+# File locali
+*.local
