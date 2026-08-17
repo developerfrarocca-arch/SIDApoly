@@ -113,8 +113,7 @@
   .red     .bar{background:var(--red);}
   .yellow  .bar{background:var(--yellow);}
   .green   .bar{background:var(--green);}
-  .darkblue .bar{background:var(--darkblue);color:#fff;}
-  .darkblue .dept{color:#fff;}
+  .darkblue .bar{background:var(--darkblue);}
 
   /* ---------- Centro tabellone ---------- */
   .center{

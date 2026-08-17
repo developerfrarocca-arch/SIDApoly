@@ -113,8 +113,8 @@ Posizione nella griglia e rotazione del testo sono calcolate dall'indice, quindi
 vanno indicate. Se aggiungi o togli caselle, però, salta la geometria del perimetro:
 il tabellone è pensato per esattamente 40 posizioni.
 
-I nomi dei gruppi colore (`Store`, `Simulatori`, `Consulenza`, `Trasporti`, `Didattica`,
-`Servizi`, `Gestionale`, `Infrastruttura`) compaiono anche nella legenda dentro
+I nomi dei gruppi colore (`Configurazione`, `Formazione`, `Web`, `Mobile`, `Didattica`,
+`Simulatori`, `Ufficio`, `Sportello`) compaiono anche nella legenda dentro
 [`index.html`](index.html): se li rinomini, allineali in entrambi i posti.
 
 ## Cambiare la foto centrale
