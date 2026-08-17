@@ -135,8 +135,10 @@
     transform:translate(-50%,-50%) rotate(-45deg);
     overflow:hidden;
     z-index:1;
+    background-image:url(/resources/extendedVersion.png);
+    background-size:cover;
+    background-position:50% 45%;
   }
-  .team-photo{width:100%;height:100%;object-fit:cover;object-position:50% 45%;display:block;}
   .ribbon-flat{
     position:absolute;left:0;right:0;top:24%;
     transform:translateY(-50%);
