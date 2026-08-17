@@ -1,40 +1,4 @@
-  :root{
-    --brown:#8B5E3C;
-    --lightblue:#8ECBEA;
-    --pink:#E4699D;
-    --orange:#F2A93B;
-    --red:#E2574C;
-    --yellow:#F0D048;
-    --green:#4CAF6D;
-    --darkblue:#28527A;
-    --cream:#F7F2E3;
-    --panel:#FFFDF7;
-    --ink:#241F16;
-    --gold:#C9A227;
-    --line:#241F16;
-    --cell:25mm;
-  }
-  *{box-sizing:border-box;}
-  html,body{margin:0;padding:0;}
-  body{
-    background:#999;
-    font-family:"Segoe UI","Arial Narrow",Arial,Helvetica,sans-serif;
-    color:var(--ink);
-  }
-
-  /* ---------- Toolbar (schermo, non stampata) ---------- */
-  .toolbar{
-    position:sticky;top:0;z-index:100;
-    background:var(--darkblue);color:#fff;
-    padding:10px 16px;display:flex;align-items:center;gap:16px;
-    font-size:14px;flex-wrap:wrap;
-  }
-  .toolbar b{color:var(--gold);}
-  .toolbar button{
-    background:var(--gold);color:var(--ink);border:none;
-    padding:8px 16px;border-radius:4px;font-weight:700;cursor:pointer;font-size:14px;
-  }
-  .toolbar button:hover{background:#e0b93a;}
+  @import './comune.css';
 
   /* ---------- Pagina A3 orizzontale ---------- */
   .page-wrap{padding:24px;overflow:auto;}
@@ -211,8 +175,6 @@
   /* ---------- Stampa ---------- */
   @page{size:A3 landscape;margin:0;}
   @media print{
-    body{background:#fff;}
-    .toolbar{display:none;}
     .page-wrap{padding:0;}
     .page{box-shadow:none;margin:0;}
   }

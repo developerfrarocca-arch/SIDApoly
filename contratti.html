@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<title>Contratti delle proprietà — Il Monopoli d'Ufficio</title>
+</head>
+<body>
+
+  <div class="toolbar">
+    <span><b>Contratti delle proprietà</b> — SIDA Autosoft Multimedia</span>
+    <span>Clicca sui nomi per modificarli, poi stampa in <b>A4 verticale</b> e ritaglia le carte.</span>
+    <span class="spacer"></span>
+    <a href="./index.html">🎲 Tabellone</a>
+    <a href="./contratti.html" aria-current="page">📄 Contratti</a>
+    <button onclick="window.print()">🖨️ Stampa contratti</button>
+  </div>
+
+  <!-- I fogli di carte sono generati da src/render/contratti.ts
+       (canoni in src/dati/contratti.ts, nomi in src/dati/caselle.ts) -->
+  <div class="sheets" id="sheets"></div>
+
+  <script type="module" src="/src/contratti.ts"></script>
+</body>
+</html>

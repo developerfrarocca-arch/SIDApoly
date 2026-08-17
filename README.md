@@ -1,7 +1,13 @@
 # SIDApoly — Il Monopoli d'Ufficio
 
-Generatore della plancia stampabile del Monopoli in versione SIDA Autosoft Multimedia:
-un foglio A3 orizzontale con il tabellone da 40 caselle e il pannello del regolamento.
+Generatore delle stampe del Monopoli in versione SIDA Autosoft Multimedia. Due pagine:
+
+- **`index.html`** — la plancia: un foglio A3 orizzontale con il tabellone da 40 caselle
+  e il pannello del regolamento.
+- **`contratti.html`** — i contratti delle proprietà: 28 carte in stile Monopoli classico
+  (22 prodotti/servizi, 4 Fastweb, 2 caselle servizio) su 4 fogli A4 verticali da ritagliare.
+
+Si passa da una all'altra coi link nella toolbar in alto.
 
 Le caselle non sono scritte a mano nell'HTML: sono generate da un file di dati
 ([`src/dati/caselle.ts`](src/dati/caselle.ts)), così per cambiare un nome o un prezzo
@@ -32,22 +38,25 @@ Poi apri **http://localhost:5173**.
 > come modulo ES e il browser lo blocca dal protocollo `file://`. Per aprire la plancia
 > senza server usa `npm run build` e apri `dist/index.html` (vedi sotto).
 
-## Stampare la plancia
+## Stampare
 
 Dal browser: **Ctrl+P**, poi in "Altre impostazioni":
 
-| Impostazione | Valore |
-|---|---|
-| Formato | **A3** |
-| Orientamento | **Orizzontale** |
-| Margini | **Nessuno** |
-| Scala | **100%** (non "Adatta all'area stampabile") |
-| Grafica di sfondo | **Attiva** |
+| Impostazione | Plancia (`index.html`) | Contratti (`contratti.html`) |
+|---|---|---|
+| Formato | **A3** | **A4** |
+| Orientamento | **Orizzontale** | **Verticale** |
+| Margini | **Nessuno** | **Nessuno** |
+| Scala | **100%** (non "Adatta all'area stampabile") | **100%** |
+| Grafica di sfondo | **Attiva** | **Attiva** |
 
 L'ultima voce è la più importante: senza di essa Chrome scarta tutti i fondini colorati
-delle caselle e il tabellone esce in bianco e nero.
+delle caselle e delle carte, e la stampa esce in bianco e nero.
 
-I nomi delle caselle sono `contenteditable`: puoi correggerli cliccandoci sopra
+Le carte contratto misurano 60×88 mm e sono già distanziate di 4 mm: si taglia lungo
+il bordo nero di ogni carta.
+
+I nomi delle caselle e delle carte sono `contenteditable`: puoi correggerli cliccandoci sopra
 direttamente nella pagina, subito prima di stampare. **Le modifiche fatte così non
 vengono salvate**: se ricarichi la pagina tornano i valori del file di dati. Per renderle
 permanenti modifica [`src/dati/caselle.ts`](src/dati/caselle.ts).
@@ -73,18 +82,25 @@ npm run build
 ```
 
 Genera la cartella `dist/`, autosufficiente e con percorsi relativi: `dist/index.html`
-**si apre col doppio clic**, senza Node e senza server. È la cartella da copiare su
-una chiavetta o da mandare a un collega — va copiata tutta, non il solo HTML.
+e `dist/contratti.html` **si aprono col doppio clic**, senza Node e senza server, e i
+link della toolbar continuano a funzionare. È la cartella da copiare su una chiavetta o
+da mandare a un collega — va copiata tutta, non il solo HTML.
 
 ## Struttura
 
 ```
-index.html                    pagina: toolbar, centro del tabellone, pannello regole
-src/main.ts                   entry: importa il CSS e monta le caselle
+index.html                    pagina plancia: toolbar, centro del tabellone, regole
+contratti.html                pagina contratti: solo toolbar e contenitore dei fogli
+src/main.ts                   entry plancia: importa il CSS e monta le caselle
+src/contratti.ts              entry contratti: importa il CSS e monta le carte
 src/dati/caselle.ts           le 40 caselle e i loro tipi  <-- il file da modificare
+src/dati/contratti.ts         canoni, costo Aggiornamenti e ipoteche, per indice di casella
 src/render/tabellone.ts       genera il markup e calcola posizione/rotazione
-src/render/tabellone.test.ts  test
-src/css/tabellone.css         stile, in millimetri, con le regole @page per la stampa
+src/render/contratti.ts       genera le carte contratto e le impagina 9 per foglio
+src/render/*.test.ts          test
+src/css/comune.css            palette, reset e toolbar: condivisi dalle due pagine
+src/css/tabellone.css         stile della plancia, in mm, con le @page per l'A3
+src/css/contratti.css         stile delle carte, in mm, con le @page per l'A4
 public/resources/             immagini, copiate in dist/ senza rinomina
 ```
 
@@ -117,6 +133,28 @@ I nomi dei gruppi colore (`Configurazione`, `Formazione`, `Web`, `Mobile`, `Dida
 `Simulatori`, `Ufficio`, `Sportello`) compaiono anche nella legenda dentro
 [`index.html`](index.html): se li rinomini, allineali in entrambi i posti.
 
+## Modificare i contratti
+
+Le carte prendono nome, reparto, colore e prezzo d'acquisto da `src/dati/caselle.ts`:
+se rinomini un prodotto sul tabellone, la sua carta si aggiorna da sola.
+
+Canoni, costo degli Aggiornamenti e valore ipotecario stanno invece in
+[`src/dati/contratti.ts`](src/dati/contratti.ts), indicizzati per **numero di casella**
+(non per colore: nel Monopoli originale i canoni dipendono dalla posizione):
+
+```ts
+26: { canoni: { solo: 22, aggiornamenti: [110, 330, 800, 975], release: 1150 },
+      costoAggiornamento: 150, ipoteca: 130 },
+```
+
+- `solo` è il canone della licenza senza migliorie, `aggiornamenti` i quattro canoni
+  con 1-4 Aggiornamenti (le "case"), `release` quello con la Major Release (l'"albergo").
+- Se aggiungi una casella `proprieta` al tabellone senza darle un contratto, la pagina
+  si ferma con un errore esplicito invece di stampare una carta vuota.
+- Fastweb (le "stazioni") e Enel / Impianto clima (le "società") hanno canoni fissi,
+  in fondo allo stesso file, e sono agganciate agli indici `INDICI_FASTWEB` e
+  `INDICI_SERVIZI`: se le sposti sul tabellone, aggiorna quelle due liste.
+
 ## Cambiare la foto centrale
 
 Metti l'immagine in `public/resources/` e aggiorna il `src` dell'`<img class="team-photo">`
@@ -131,7 +169,7 @@ risulta scentrato, ritocca `object-position` nella regola `.team-photo` di
 npm test
 ```
 
-Coprono tre cose:
+Per la plancia coprono tre cose:
 
 1. **La geometria** — tutte e 40 le caselle cadono sul perimetro della griglia 11×11,
    nessuna si sovrappone, gli angoli non ruotano e ogni lato ha la rotazione giusta.
@@ -144,7 +182,12 @@ Coprono tre cose:
    cambia anche una sola cella, il test fallisce. È la rete di sicurezza che permette
    di rimaneggiare il renderer senza ristampare per controllare.
 
+Per i contratti: c'è una carta per ogni casella acquistabile e nessuna di troppo, i canoni
+crescono sempre dal solo servizio alla Major Release, l'ipoteca è la metà del prezzo
+d'acquisto, il canone Fastweb raddoppia a ogni casella in più, e le 28 carte finiscono
+su 4 fogli senza perderne nessuna.
+
 ## Da fare
 
 - Fogli di stampa per i mazzi Imprevisti e Probabilità
-- Cartellini delle proprietà (generabili dagli stessi dati: servono le tabelle dei canoni)
+- Banconote dei Buoni Pasto

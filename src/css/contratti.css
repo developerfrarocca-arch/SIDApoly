@@ -1,0 +1,150 @@
+@import './comune.css';
+
+/* ============================================================
+   Carte contratto — grafica del Monopoli classico.
+   Fogli A4 verticali, griglia 3x3 (9 carte per foglio).
+   ============================================================ */
+
+:root{
+  --carta-w:60mm;
+  --carta-h:88mm;
+  --carta-gap:4mm;
+}
+
+.sheets{padding:24px;display:flex;flex-direction:column;align-items:center;gap:24px;}
+
+.sheet{
+  width:210mm;height:297mm;
+  background:#fff;
+  box-shadow:0 0 24px rgba(0,0,0,.4);
+  padding:9mm;
+  display:flex;flex-direction:column;
+  flex-shrink:0;
+}
+.sheet-grid{
+  display:grid;
+  grid-template-columns:repeat(3,var(--carta-w));
+  grid-auto-rows:var(--carta-h);
+  gap:var(--carta-gap);
+  justify-content:center;align-content:start;
+}
+.sheet-foot{
+  margin-top:auto;text-align:center;
+  font-size:2.2mm;color:#888;letter-spacing:.3px;
+}
+
+/* ---------- La carta ---------- */
+.contract{
+  border:.4mm solid var(--line);
+  background:var(--panel);
+  display:flex;flex-direction:column;
+  overflow:hidden;
+  padding:1.6mm;
+  gap:1.2mm;
+}
+
+/* Riga "Questo contratto vale ..." */
+.contract .value{
+  border:.3mm solid var(--line);
+  background:#EDEAE0;
+  text-align:center;
+  font-size:2.3mm;line-height:1.1;
+  padding:1.1mm .5mm;
+  flex:0 0 auto;
+}
+.contract .value b{font-size:2.9mm;}
+
+/* Fascia colorata con il nome del prodotto */
+.contract .head{
+  border:.3mm solid var(--line);
+  background:var(--yellow);
+  text-align:center;
+  padding:1mm 1mm 1.4mm;
+  flex:0 0 auto;
+}
+.contract .kind{
+  font-size:1.9mm;font-weight:700;text-transform:uppercase;letter-spacing:.6px;
+  line-height:1;
+}
+.contract .title{
+  margin:.6mm 0 0;
+  font-size:3.9mm;line-height:1.05;
+  font-weight:800;text-transform:uppercase;letter-spacing:.2px;
+  outline:.3mm dashed transparent;border-radius:1mm;padding:0 .5mm;
+  cursor:text;
+  overflow-wrap:anywhere;
+}
+.contract .title.lungo{font-size:3.1mm;}
+.contract .title:hover,.contract .title:focus{outline-color:var(--ink);background:#fff8e0;}
+.contract .dept{
+  margin-top:.5mm;
+  font-size:1.9mm;font-weight:700;text-transform:uppercase;letter-spacing:.4px;
+  line-height:1;
+}
+.contract.scuro .head{color:#fff;}
+.contract.scuro .title:hover,.contract.scuro .title:focus{outline-color:#fff;background:rgba(255,255,255,.18);}
+.contract.g-societa .head{background:var(--ink);color:#fff;}
+.contract.g-societa .title:hover,.contract.g-societa .title:focus{outline-color:#fff;background:rgba(255,255,255,.18);}
+
+.contract.g-brown    .head{background:var(--brown);}
+.contract.g-lightblue .head{background:var(--lightblue);}
+.contract.g-pink     .head{background:var(--pink);}
+.contract.g-orange   .head{background:var(--orange);}
+.contract.g-red      .head{background:var(--red);}
+.contract.g-yellow   .head{background:var(--yellow);}
+.contract.g-green    .head{background:var(--green);}
+.contract.g-darkblue .head{background:var(--darkblue);}
+
+/* ---------- Corpo: canoni, regola del gruppo, costi, ipoteca ---------- */
+.contract .body{
+  flex:1 1 auto;
+  display:flex;flex-direction:column;
+  padding:0 .8mm;
+}
+.contract table{width:100%;border-collapse:collapse;font-size:2.25mm;}
+.contract table th,.contract table td{padding:.25mm 0;vertical-align:baseline;}
+.contract .rents{margin-top:1.2mm;}
+.contract .rents th{
+  text-align:left;font-weight:800;white-space:nowrap;width:11mm;
+}
+.contract .rents td{text-align:left;}
+.contract .rents .v{text-align:right;font-weight:700;white-space:nowrap;}
+
+.contract .rule{
+  margin:1.4mm 0 0;
+  font-size:1.95mm;line-height:1.2;text-align:justify;
+  hyphens:auto;
+}
+.contract .dice{margin-top:1mm;}
+.contract .dice .rule{margin-top:1.6mm;font-size:2.1mm;line-height:1.25;}
+
+.contract .costs{margin-top:1.6mm;}
+.contract .costs th{text-align:left;font-weight:700;}
+.contract .costs .v{text-align:right;font-weight:800;white-space:nowrap;}
+.contract .costs .plus{
+  text-align:center;font-size:1.9mm;font-style:italic;color:#444;padding-top:0;
+}
+
+.contract .mortgage{
+  margin-top:auto;
+  display:flex;align-items:baseline;gap:1mm;
+  font-size:2.1mm;font-weight:700;
+  padding-top:1.4mm;
+}
+.contract .mortgage .dots{
+  flex:1 1 auto;
+  border-bottom:.25mm dotted var(--ink);
+  transform:translateY(-.4mm);
+}
+.contract .mortgage b{white-space:nowrap;}
+
+/* ---------- Stampa ---------- */
+@page{size:A4 portrait;margin:0;}
+@media print{
+  .sheets{padding:0;gap:0;}
+  .sheet{box-shadow:none;break-after:page;}
+  .sheet:last-child{break-after:auto;}
+  .contract{break-inside:avoid;}
+  /* Le fasce colorate devono restare colorate anche in stampa. */
+  .contract .head,.contract .value{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+}
