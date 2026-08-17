@@ -37,9 +37,10 @@
   .toolbar button:hover{background:#e0b93a;}
 
   /* ---------- Pagina A3 orizzontale ---------- */
-  .page-wrap{padding:24px;display:flex;justify-content:center;}
+  .page-wrap{padding:24px;overflow:auto;}
   .page{
     width:420mm;height:297mm;
+    margin:0 auto;
     background:#fff;
     box-shadow:0 0 24px rgba(0,0,0,.4);
     padding:8mm;
