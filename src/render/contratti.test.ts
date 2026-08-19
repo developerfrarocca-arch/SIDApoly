@@ -15,7 +15,10 @@ import {
   fogli,
   htmlContratti,
   htmlContratto,
+  htmlRetri,
+  htmlRetroCarta,
   montaContratti,
+  montaRetri,
   numero,
 } from './contratti';
 
@@ -179,5 +182,27 @@ describe('montaContratti', () => {
       Number(c.getAttribute('data-casella')),
     );
     expect(indici).toEqual(CARTE.map((c) => c.indice));
+  });
+});
+
+describe('retro delle carte', () => {
+  it('è identico per ogni carta, senza dati della casella', () => {
+    const retro = htmlRetroCarta();
+    expect(retro).toContain('contract-back');
+    expect(retro).not.toContain('data-casella');
+  });
+
+  it('segue lo stesso numero di fogli e carte per foglio dei fronti', () => {
+    const html = htmlRetri();
+    expect(html).toContain('retro 1');
+    expect(html).toContain('retro 4');
+    expect(html).not.toContain('retro 5');
+  });
+
+  it('monta lo stesso numero di retri dei fronti, in fogli separati', () => {
+    const root = document.createElement('div');
+    montaRetri(root);
+    expect(root.querySelectorAll('.sheet-retro')).toHaveLength(4);
+    expect(root.querySelectorAll('.contract-back')).toHaveLength(28);
   });
 });

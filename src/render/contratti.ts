@@ -203,3 +203,48 @@ export function montaContratti(
 ): void {
   root.insertAdjacentHTML('beforeend', htmlContratti(carte, perFoglio));
 }
+
+/**
+ * Il retro è identico per tutte le carte, quindi non serve abbinare un retro
+ * preciso a ogni fronte: si tagliano le due pile separatamente e si accoppiano
+ * a caso. Per questo i fogli di retro seguono solo il numero di carte per
+ * foglio dei fronti (9, 9, 9, 1), non il loro contenuto.
+ */
+export function htmlRetroCarta(): string {
+  return (
+    '<article class="contract-back">' +
+    '<div class="stripe stripe-top"></div>' +
+    '<div class="back-mark">' +
+    '<img class="back-logo" src="/resources/logo-sida.svg" alt="">' +
+    '<div class="back-title">Il Monopoli<br>d\'Ufficio</div>' +
+    '<div class="back-brand">SIDA Autosoft Multimedia</div>' +
+    '</div>' +
+    '<div class="stripe stripe-bottom"></div>' +
+    '</article>'
+  );
+}
+
+/** Il markup di tutti i fogli di retro, uno per ogni foglio di fronti. */
+export function htmlRetri(
+  carte: readonly Contratto[] = contratti(),
+  perFoglio = CARTE_PER_FOGLIO,
+): string {
+  return fogli(carte, perFoglio)
+    .map(
+      (foglio, n) =>
+        '<section class="sheet sheet-retro">' +
+        `<div class="sheet-grid">${foglio.map(() => htmlRetroCarta()).join('')}</div>` +
+        `<div class="sheet-foot">Il Monopoli d'Ufficio — SIDA Autosoft Multimedia · retro ${n + 1}</div>` +
+        '</section>',
+    )
+    .join('');
+}
+
+/** Inserisce i fogli di retro nel contenitore della pagina. */
+export function montaRetri(
+  root: HTMLElement,
+  carte: readonly Contratto[] = contratti(),
+  perFoglio = CARTE_PER_FOGLIO,
+): void {
+  root.insertAdjacentHTML('beforeend', htmlRetri(carte, perFoglio));
+}

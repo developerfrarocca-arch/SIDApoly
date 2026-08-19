@@ -13,6 +13,11 @@
 
 .sheets{padding:24px;display:flex;flex-direction:column;align-items:center;gap:24px;}
 
+.sheets-divider{
+  text-align:center;color:#eee;font-size:14px;font-weight:700;
+  letter-spacing:.3px;padding:8px 16px;
+}
+
 .sheet{
   width:210mm;height:297mm;
   background:#fff;
@@ -138,13 +143,51 @@
 }
 .contract .mortgage b{white-space:nowrap;}
 
+/* ---------- Il retro ---------- */
+.contract-back{
+  border:.4mm solid var(--line);
+  background:var(--panel);
+  position:relative;
+  overflow:hidden;
+  display:flex;flex-direction:column;
+}
+.contract-back .stripe{
+  flex:0 0 4mm;
+  background:linear-gradient(90deg,
+    var(--brown) 0 12.5%, var(--lightblue) 12.5% 25%, var(--pink) 25% 37.5%,
+    var(--orange) 37.5% 50%, var(--red) 50% 62.5%, var(--yellow) 62.5% 75%,
+    var(--green) 75% 87.5%, var(--darkblue) 87.5% 100%);
+}
+.contract-back .back-mark{
+  flex:1 1 auto;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2.4mm;
+  padding:3mm;
+}
+.contract-back .back-mark::before{
+  content:"";
+  position:absolute;inset:5.5mm 2.5mm;
+  border:.3mm solid var(--gold);
+  pointer-events:none;
+}
+.contract-back .back-logo{width:20mm;height:auto;}
+.contract-back .back-title{
+  font-size:4.4mm;line-height:1.15;font-weight:800;text-transform:uppercase;
+  text-align:center;color:var(--red);letter-spacing:.2px;
+}
+.contract-back .back-brand{
+  font-size:2mm;font-weight:700;text-transform:uppercase;letter-spacing:.5px;
+  color:var(--darkblue);text-align:center;
+}
+
 /* ---------- Stampa ---------- */
 @page{size:A4 portrait;margin:0;}
 @media print{
+  .sheets-divider{display:none;}
   .sheets{padding:0;gap:0;}
   .sheet{box-shadow:none;break-after:page;}
   .sheet:last-child{break-after:auto;}
   .contract{break-inside:avoid;}
   /* Le fasce colorate devono restare colorate anche in stampa. */
-  .contract .head,.contract .value{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .contract .head,.contract .value,
+  .contract-back .stripe{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
 }

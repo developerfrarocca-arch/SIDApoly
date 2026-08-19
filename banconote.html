@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<title>Banconote dei Buoni Pasto — Il Monopoli d'Ufficio</title>
+</head>
+<body>
+
+  <div class="toolbar">
+    <span><b>Banconote dei Buoni Pasto</b> — SIDA Autosoft Multimedia</span>
+    <span>Un foglio per ogni taglio (5, 10, 20, 50, 100, 200, 500 BP), 10 banconote a foglio, tutte
+      attaccate: taglia lungo le <b>linee tratteggiate</b>. Formato <b>A4 verticale</b>.
+      Se ti servono più copie di un taglio, ristampa solo quel foglio.</span>
+    <span class="spacer"></span>
+    <a href="./index.html">🎲 Tabellone</a>
+    <a href="./contratti.html">📄 Contratti</a>
+    <a href="./banconote.html" aria-current="page">💶 Banconote</a>
+    <button onclick="window.print()">🖨️ Stampa tutto</button>
+  </div>
+
+  <!-- I fogli di banconote sono generati da src/render/banconote.ts
+       (tagli in src/dati/banconote.ts) -->
+  <div class="sheets" id="sheets"></div>
+
+  <script type="module" src="/src/banconote.ts"></script>
+</body>
+</html>
