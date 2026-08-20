@@ -1,11 +1,15 @@
 # SIDApoly — Il Monopoli d'Ufficio
 
-Generatore delle stampe del Monopoli in versione SIDA Autosoft Multimedia. Due pagine:
+Generatore delle stampe del Monopoli in versione SIDA Autosoft Multimedia. Quattro pagine:
 
 - **`index.html`** — la plancia: un foglio A3 orizzontale con il tabellone da 40 caselle
   e il pannello del regolamento.
 - **`contratti.html`** — i contratti delle proprietà: 28 carte in stile Monopoli classico
   (22 prodotti/servizi, 4 Fastweb, 2 caselle servizio) su 4 fogli A4 verticali da ritagliare.
+- **`carte.html`** — i mazzi Probabilità e Imprevisti: 32 carte orizzontali (16 per mazzo,
+  58×38mm, proporzioni dei due segnaposto al centro della plancia) su 2 fogli A4
+  verticali, più i retri (un colore pieno per mazzo).
+- **`banconote.html`** — le banconote dei Buoni Pasto: 7 tagli, 10 banconote a foglio.
 
 Si passa da una all'altra coi link nella toolbar in alto.
 
@@ -42,7 +46,7 @@ Poi apri **http://localhost:5173**.
 
 Dal browser: **Ctrl+P**, poi in "Altre impostazioni":
 
-| Impostazione | Plancia (`index.html`) | Contratti (`contratti.html`) |
+| Impostazione | Plancia (`index.html`) | Contratti (`contratti.html`) / Carte (`carte.html`) / Banconote (`banconote.html`) |
 |---|---|---|
 | Formato | **A3** | **A4** |
 | Orientamento | **Orizzontale** | **Verticale** |
@@ -81,26 +85,33 @@ produrre una plancia sbagliata.
 npm run build
 ```
 
-Genera la cartella `dist/`, autosufficiente e con percorsi relativi: `dist/index.html`
-e `dist/contratti.html` **si aprono col doppio clic**, senza Node e senza server, e i
-link della toolbar continuano a funzionare. È la cartella da copiare su una chiavetta o
-da mandare a un collega — va copiata tutta, non il solo HTML.
+Genera la cartella `dist/`, autosufficiente e con percorsi relativi: `dist/index.html`,
+`dist/contratti.html`, `dist/carte.html` e `dist/banconote.html` **si aprono col doppio
+clic**, senza Node e senza server, e i link della toolbar continuano a funzionare. È la
+cartella da copiare su una chiavetta o da mandare a un collega — va copiata tutta, non
+il solo HTML.
 
 ## Struttura
 
 ```
 index.html                    pagina plancia: toolbar, centro del tabellone, regole
 contratti.html                pagina contratti: solo toolbar e contenitore dei fogli
+carte.html                    pagina carte Probabilità/Imprevisti: toolbar e contenitori fronti/retri
+banconote.html                pagina banconote: solo toolbar e contenitore dei fogli
 src/main.ts                   entry plancia: importa il CSS e monta le caselle
 src/contratti.ts              entry contratti: importa il CSS e monta le carte
+src/carte.ts                  entry carte: importa il CSS e monta fronti e retri dei due mazzi
 src/dati/caselle.ts           le 40 caselle e i loro tipi  <-- il file da modificare
 src/dati/contratti.ts         canoni, costo Aggiornamenti e ipoteche, per indice di casella
+src/dati/carte.ts             i testi delle 16+16 carte Probabilità e Imprevisti
 src/render/tabellone.ts       genera il markup e calcola posizione/rotazione
 src/render/contratti.ts       genera le carte contratto e le impagina 9 per foglio
+src/render/carte.ts           genera fronti e retri dei mazzi Probabilità/Imprevisti, 9 per foglio
 src/render/*.test.ts          test
-src/css/comune.css            palette, reset e toolbar: condivisi dalle due pagine
+src/css/comune.css            palette, reset e toolbar: condivisi da tutte le pagine
 src/css/tabellone.css         stile della plancia, in mm, con le @page per l'A3
-src/css/contratti.css         stile delle carte, in mm, con le @page per l'A4
+src/css/contratti.css         stile delle carte contratto, in mm, con le @page per l'A4
+src/css/carte.css             stile delle carte Probabilità/Imprevisti, in mm, con le @page per l'A4
 public/resources/             immagini, copiate in dist/ senza rinomina
 ```
 
@@ -155,6 +166,18 @@ Canoni, costo degli Aggiornamenti e valore ipotecario stanno invece in
   in fondo allo stesso file, e sono agganciate agli indici `INDICI_FASTWEB` e
   `INDICI_SERVIZI`: se le sposti sul tabellone, aggiorna quelle due liste.
 
+## Modificare le carte Probabilità/Imprevisti
+
+I testi stanno in [`src/dati/carte.ts`](src/dati/carte.ts), due liste separate
+(`CARTE_PROBABILITA` e `CARTE_IMPREVISTI`) di 16 elementi ciascuna: per cambiare, aggiungere
+o togliere una carta basta modificare quella lista, senza toccare il renderer. Ogni carta
+è solo testo (`{ testo: "..." }`): l'effetto lo applicano i giocatori a voce, come nel
+Monopoli classico non c'è nessuna logica da eseguire in automatico.
+
+Il retro è uguale per tutte le carte dello stesso mazzo (un colore pieno, come le carte
+proprietà del Monopoli classico), quindi non serve abbinare un fronte preciso al suo
+retro: si tagliano le due pile separatamente, basta non mescolare i retri dei due mazzi.
+
 ## Cambiare la foto centrale
 
 Metti l'immagine in `public/resources/` e aggiorna il `src` dell'`<img class="team-photo">`
@@ -187,7 +210,6 @@ crescono sempre dal solo servizio alla Major Release, l'ipoteca è la metà del 
 d'acquisto, il canone Fastweb raddoppia a ogni casella in più, e le 28 carte finiscono
 su 4 fogli senza perderne nessuna.
 
-## Da fare
-
-- Fogli di stampa per i mazzi Imprevisti e Probabilità
-- Banconote dei Buoni Pasto
+Per le carte Probabilità/Imprevisti: 16 carte per mazzo, il retro non dipende dal
+contenuto della singola carta ma solo dal mazzo, e ogni retro corrisponde al mazzo
+della carta nella stessa posizione sul fronte, foglio per foglio.

@@ -8,12 +8,14 @@ export default defineConfig({
     outDir: 'dist',
     // Le immagini restano file separati: una foto da 8 MB non va inlineata.
     assetsInlineLimit: 4096,
-    // Tre pagine: il tabellone (A3), le carte contratto e le banconote (A4).
+    // Quattro pagine: il tabellone (A3), le carte contratto, le carte
+    // Imprevisti/Probabilità e le banconote (A4).
     // I percorsi sono relativi alla radice del progetto.
     rollupOptions: {
       input: {
         index: 'index.html',
         contratti: 'contratti.html',
+        carte: 'carte.html',
         banconote: 'banconote.html',
       },
     },

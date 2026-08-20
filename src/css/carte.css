@@ -1,0 +1,101 @@
+@import './comune.css';
+
+/* ============================================================
+   Carte Probabilità e Imprevisti — stile Monopoli classico.
+   A differenza dei contratti (verticali, come le proprietà) queste carte
+   sono orizzontali, come le vere carte Probabilità/Imprevisti: il testo
+   corre in larghezza invece che in colonna stretta.
+   Le proporzioni (58x38mm, rapporto 58:38) sono le stesse dei due
+   segnaposto dei mazzi al centro della plancia (.deck in tabellone.css,
+   38x58mm in verticale: qui ruotate in orizzontale).
+   Fogli A4 verticali, griglia 3x6 (18 carte per foglio).
+   ============================================================ */
+
+:root{
+  --carta-w:58mm;
+  --carta-h:38mm;
+  --carta-gap:4mm;
+}
+
+.sheets{padding:24px;display:flex;flex-direction:column;align-items:center;gap:24px;}
+
+.sheets-divider{
+  text-align:center;color:#eee;font-size:14px;font-weight:700;
+  letter-spacing:.3px;padding:8px 16px;
+}
+
+.sheet{
+  width:210mm;height:297mm;
+  background:#fff;
+  box-shadow:0 0 24px rgba(0,0,0,.4);
+  padding:9mm;
+  display:flex;flex-direction:column;
+  flex-shrink:0;
+}
+.sheet-grid{
+  display:grid;
+  grid-template-columns:repeat(3,var(--carta-w));
+  grid-auto-rows:var(--carta-h);
+  gap:var(--carta-gap);
+  justify-content:center;align-content:start;
+}
+.sheet-foot{
+  margin-top:auto;text-align:center;
+  font-size:2.2mm;color:#888;letter-spacing:.3px;
+}
+
+/* ---------- La carta (fronte) ---------- */
+.card{
+  border:.4mm solid var(--line);
+  display:flex;flex-direction:column;
+  overflow:hidden;
+  padding:1.8mm 2.6mm 2mm;
+  gap:1mm;
+}
+.card-probabilita{background:color-mix(in srgb, var(--orange) 24%, var(--panel));}
+.card-imprevisti{background:color-mix(in srgb, var(--lightblue) 32%, var(--panel));}
+
+/* Fascia superiore: icona a sinistra, nome del mazzo a destra, come sulle carte vere. */
+.card .card-head{
+  flex:0 0 auto;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.card .card-icon{font-size:4mm;line-height:1;}
+.card .card-mazzo{
+  font-size:1.5mm;font-weight:800;text-transform:uppercase;letter-spacing:.4px;
+  color:var(--ink);opacity:.65;
+}
+
+/* Il testo riempie il resto della carta in orizzontale, centrato. */
+.card .card-testo{
+  flex:1 1 auto;
+  display:flex;align-items:center;justify-content:center;text-align:center;
+  font-size:2.35mm;line-height:1.3;font-weight:700;
+  hyphens:auto;
+}
+
+/* ---------- Il retro: un colore pieno per mazzo, uguale per tutte le sue carte ---------- */
+.card-retro{
+  align-items:center;justify-content:center;text-align:center;
+  padding:1.8mm 2.6mm;gap:1.2mm;
+}
+.card-retro .card-icon-grande{font-size:7.5mm;}
+.card-retro .card-mazzo-retro{
+  font-size:2.5mm;font-weight:800;text-transform:uppercase;letter-spacing:.3px;
+}
+.card-retro .card-brand{
+  font-size:1.4mm;font-weight:700;text-transform:uppercase;letter-spacing:.4px;
+  opacity:.75;
+}
+.card-probabilita.card-retro{background:var(--orange);color:var(--ink);}
+.card-imprevisti.card-retro{background:var(--darkblue);color:#fff;}
+
+/* ---------- Stampa ---------- */
+@page{size:A4 portrait;margin:0;}
+@media print{
+  .sheets-divider{display:none;}
+  .sheets{padding:0;gap:0;}
+  .sheet{box-shadow:none;break-after:page;}
+  .sheet:last-child{break-after:auto;}
+  .card{break-inside:avoid;-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+}
