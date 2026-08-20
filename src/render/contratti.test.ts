@@ -14,10 +14,12 @@ import {
   contratti,
   fogli,
   htmlContratti,
+  htmlContrattiFronteRetro,
   htmlContratto,
   htmlRetri,
   htmlRetroCarta,
   montaContratti,
+  montaContrattiFronteRetro,
   montaRetri,
   numero,
 } from './contratti';
@@ -204,5 +206,29 @@ describe('retro delle carte', () => {
     montaRetri(root);
     expect(root.querySelectorAll('.sheet-retro')).toHaveLength(4);
     expect(root.querySelectorAll('.contract-back')).toHaveLength(28);
+  });
+});
+
+describe('fogli fronte-retro allineati', () => {
+  it('alterna un foglio di fronti e uno di retro per ogni gruppo di carte', () => {
+    const html = htmlContrattiFronteRetro();
+    expect(html.indexOf('foglio 1')).toBeLessThan(html.indexOf('retro 1'));
+    expect(html.indexOf('retro 1')).toBeLessThan(html.indexOf('foglio 2'));
+    expect(html.indexOf('foglio 4')).toBeLessThan(html.indexOf('retro 4'));
+    expect(html).not.toContain('foglio 5');
+    expect(html).not.toContain('retro 5');
+  });
+
+  it('monta lo stesso numero di fronti e retri, nello stesso contenitore', () => {
+    const root = document.createElement('div');
+    montaContrattiFronteRetro(root);
+    expect(root.querySelectorAll('.sheet:not(.sheet-retro)')).toHaveLength(4);
+    expect(root.querySelectorAll('.sheet-retro')).toHaveLength(4);
+    expect(root.querySelectorAll('.contract')).toHaveLength(28);
+    expect(root.querySelectorAll('.contract-back')).toHaveLength(28);
+    // il primo foglio di fronti precede il primo foglio di retro nel DOM
+    const sezioni = [...root.querySelectorAll('section.sheet')];
+    expect(sezioni[0]!.classList.contains('sheet-retro')).toBe(false);
+    expect(sezioni[1]!.classList.contains('sheet-retro')).toBe(true);
   });
 });

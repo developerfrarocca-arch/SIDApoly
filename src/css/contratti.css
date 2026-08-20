@@ -8,7 +8,7 @@
 :root{
   --carta-w:60mm;
   --carta-h:88mm;
-  --carta-gap:4mm;
+  --carta-gap:0mm;
 }
 
 .sheets{padding:24px;display:flex;flex-direction:column;align-items:center;gap:24px;}
@@ -39,6 +39,9 @@
 }
 
 /* ---------- La carta ---------- */
+/* Nessuno spazio fra una carta e l'altra: restano attaccate, così il bordo di
+   ogni carta diventa la linea di taglio e si tagliano dritte poche strisce
+   invece di ritagliare 28 rettangoli separati. */
 .contract{
   border:.4mm solid var(--line);
   background:var(--panel);

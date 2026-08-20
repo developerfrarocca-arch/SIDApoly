@@ -179,19 +179,23 @@ export function fogli(carte: readonly Contratto[], perFoglio = CARTE_PER_FOGLIO)
   return out;
 }
 
+/** Il foglio di fronti n. n (0-based) di un gruppo di carte. */
+function htmlFoglioFronte(foglio: readonly Contratto[], n: number): string {
+  return (
+    '<section class="sheet">' +
+    `<div class="sheet-grid">${foglio.map(htmlContratto).join('')}</div>` +
+    `<div class="sheet-foot">Il Monopoli d'Ufficio — SIDA Autosoft Multimedia · foglio ${n + 1}</div>` +
+    '</section>'
+  );
+}
+
 /** Il markup di tutti i fogli di contratti. */
 export function htmlContratti(
   carte: readonly Contratto[] = contratti(),
   perFoglio = CARTE_PER_FOGLIO,
 ): string {
   return fogli(carte, perFoglio)
-    .map(
-      (foglio, n) =>
-        '<section class="sheet">' +
-        `<div class="sheet-grid">${foglio.map(htmlContratto).join('')}</div>` +
-        `<div class="sheet-foot">Il Monopoli d'Ufficio — SIDA Autosoft Multimedia · foglio ${n + 1}</div>` +
-        '</section>',
-    )
+    .map(htmlFoglioFronte)
     .join('');
 }
 
@@ -224,19 +228,23 @@ export function htmlRetroCarta(): string {
   );
 }
 
+/** Il foglio di retro n. n (0-based), con lo stesso numero di carte del foglio di fronti. */
+function htmlFoglioRetro(foglio: readonly Contratto[], n: number): string {
+  return (
+    '<section class="sheet sheet-retro">' +
+    `<div class="sheet-grid">${foglio.map(() => htmlRetroCarta()).join('')}</div>` +
+    `<div class="sheet-foot">Il Monopoli d'Ufficio — SIDA Autosoft Multimedia · retro ${n + 1}</div>` +
+    '</section>'
+  );
+}
+
 /** Il markup di tutti i fogli di retro, uno per ogni foglio di fronti. */
 export function htmlRetri(
   carte: readonly Contratto[] = contratti(),
   perFoglio = CARTE_PER_FOGLIO,
 ): string {
   return fogli(carte, perFoglio)
-    .map(
-      (foglio, n) =>
-        '<section class="sheet sheet-retro">' +
-        `<div class="sheet-grid">${foglio.map(() => htmlRetroCarta()).join('')}</div>` +
-        `<div class="sheet-foot">Il Monopoli d'Ufficio — SIDA Autosoft Multimedia · retro ${n + 1}</div>` +
-        '</section>',
-    )
+    .map(htmlFoglioRetro)
     .join('');
 }
 
@@ -247,4 +255,28 @@ export function montaRetri(
   perFoglio = CARTE_PER_FOGLIO,
 ): void {
   root.insertAdjacentHTML('beforeend', htmlRetri(carte, perFoglio));
+}
+
+/**
+ * Il markup dei fogli con fronte e retro alternati (foglio 1 fronte, foglio 1
+ * retro, foglio 2 fronte, ...): usando la stampa fronte-retro del browser
+ * (bordo lungo), ogni foglio fisico esce già con fronte e retro allineati,
+ * senza bisogno di tagliare due pile separate.
+ */
+export function htmlContrattiFronteRetro(
+  carte: readonly Contratto[] = contratti(),
+  perFoglio = CARTE_PER_FOGLIO,
+): string {
+  return fogli(carte, perFoglio)
+    .map((foglio, n) => htmlFoglioFronte(foglio, n) + htmlFoglioRetro(foglio, n))
+    .join('');
+}
+
+/** Inserisce i fogli con fronte e retro alternati nel contenitore della pagina. */
+export function montaContrattiFronteRetro(
+  root: HTMLElement,
+  carte: readonly Contratto[] = contratti(),
+  perFoglio = CARTE_PER_FOGLIO,
+): void {
+  root.insertAdjacentHTML('beforeend', htmlContrattiFronteRetro(carte, perFoglio));
 }

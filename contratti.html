@@ -8,9 +8,11 @@
 
   <div class="toolbar">
     <span><b>Contratti delle proprietà</b> — SIDA Autosoft Multimedia</span>
-    <span>Stampa prima i <b>fronti</b>, poi su un altro pacco di fogli i <b>retri</b>: sono uguali
-      per ogni carta, quindi non serve abbinarli — si tagliano e si incollano a caso.
-      Formato <b>A4 verticale</b>.</span>
+    <span id="istruzioni-stampa"></span>
+    <label class="switch-fronteretro">
+      <input type="checkbox" id="fronte-retro">
+      Stampa fronte-retro allineata
+    </label>
     <span class="spacer"></span>
     <a href="./index.html">🎲 Tabellone</a>
     <a href="./contratti.html" aria-current="page">📄 Contratti</a>
@@ -23,7 +25,7 @@
        (canoni in src/dati/contratti.ts, nomi in src/dati/caselle.ts) -->
   <div class="sheets" id="sheets"></div>
 
-  <div class="sheets-divider">Retro delle carte — uguale per tutte, da stampare a parte</div>
+  <div class="sheets-divider" id="divisore-retro">Retro delle carte — uguale per tutte, da stampare a parte</div>
   <div class="sheets" id="sheets-retro"></div>
 
   <script type="module" src="/src/contratti.ts"></script>

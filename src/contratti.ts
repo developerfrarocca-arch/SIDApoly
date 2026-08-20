@@ -1,10 +1,51 @@
 import './css/contratti.css';
-import { montaContratti, montaRetri } from './render/contratti';
+import { htmlContrattiFronteRetro, montaContratti, montaRetri } from './render/contratti';
 
-const fogli = document.getElementById('sheets');
-if (!fogli) throw new Error('Manca il contenitore #sheets nella pagina');
-montaContratti(fogli);
+/** Legge un elemento richiesto dalla pagina, con un tipo già non nullable. */
+function elemento(id: string): HTMLElement {
+  const el = document.getElementById(id);
+  if (!el) throw new Error(`Manca il contenitore #${id} nella pagina`);
+  return el;
+}
 
-const retri = document.getElementById('sheets-retro');
-if (!retri) throw new Error('Manca il contenitore #sheets-retro nella pagina');
-montaRetri(retri);
+const fogli = elemento('sheets');
+const retri = elemento('sheets-retro');
+const divisoreRetro = elemento('divisore-retro');
+const istruzioni = elemento('istruzioni-stampa');
+
+const fronteRetroEl = elemento('fronte-retro');
+if (!(fronteRetroEl instanceof HTMLInputElement)) {
+  throw new Error('Il selettore #fronte-retro deve essere un input nella pagina');
+}
+const fronteRetro = fronteRetroEl;
+
+const ISTRUZIONI_PILE_SEPARATE =
+  'Stampa prima i <b>fronti</b>, poi su un altro pacco di fogli i <b>retri</b>: sono uguali ' +
+  'per ogni carta, quindi non serve abbinarli — si tagliano e si incollano a caso. ' +
+  'Formato <b>A4 verticale</b>.';
+
+const ISTRUZIONI_FRONTE_RETRO =
+  'Nella finestra di stampa attiva <b>Stampa fronte e retro</b> (bordo lungo): fronte e retro ' +
+  'di ogni foglio combaceranno da soli, senza bisogno di abbinarli dopo il taglio. ' +
+  'Formato <b>A4 verticale</b>.';
+
+/** Rigenera i fogli secondo la modalità scelta (pile separate o fronte-retro allineato). */
+function aggiorna(): void {
+  fogli.innerHTML = '';
+  retri.innerHTML = '';
+  if (fronteRetro.checked) {
+    istruzioni.innerHTML = ISTRUZIONI_FRONTE_RETRO;
+    divisoreRetro.style.display = 'none';
+    retri.style.display = 'none';
+    fogli.insertAdjacentHTML('beforeend', htmlContrattiFronteRetro());
+  } else {
+    istruzioni.innerHTML = ISTRUZIONI_PILE_SEPARATE;
+    divisoreRetro.style.display = '';
+    retri.style.display = '';
+    montaContratti(fogli);
+    montaRetri(retri);
+  }
+}
+
+fronteRetro.addEventListener('change', aggiorna);
+aggiorna();
