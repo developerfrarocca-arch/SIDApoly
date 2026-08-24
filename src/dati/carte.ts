@@ -74,5 +74,5 @@ export const CARTE_IMPREVISTI: readonly Carta[] = [
   { testo: 'Il cloud provider AWS vi riconosce un credito per il disservizio: incassate 125 BP' },
   { testo: 'Donate 50 BP al fondo per gli incidenti autostradali' },
   { testo: 'La build critica finisce in produzione senza revisione: andate direttamente in Riunione, senza passare da «Avvio sprint!»' },
-  { testo: "Un'autoscuola storica ordina software, tablet e manuali per una nuova sede: incassate 100 BP" },
+  { testo: "Un cliente arrabbiato vi sequestra nella sua autoscuola. Gli fate causa e venite rimborsati di 150 BP" },
 ];
