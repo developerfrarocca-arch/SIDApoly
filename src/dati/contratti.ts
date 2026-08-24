@@ -29,37 +29,37 @@ export interface DatiContratto {
  * non dal colore, quindi la chiave è l'indice.
  */
 export const CONTRATTI: Readonly<Record<number, DatiContratto>> = {
-  1: { canoni: { solo: 2, aggiornamenti: [10, 30, 90, 160], release: 250 }, costoAggiornamento: 50, ipoteca: 30 },
-  3: { canoni: { solo: 4, aggiornamenti: [20, 60, 180, 320], release: 450 }, costoAggiornamento: 50, ipoteca: 30 },
-  6: { canoni: { solo: 6, aggiornamenti: [30, 90, 270, 400], release: 550 }, costoAggiornamento: 50, ipoteca: 50 },
-  8: { canoni: { solo: 6, aggiornamenti: [30, 90, 270, 400], release: 550 }, costoAggiornamento: 50, ipoteca: 50 },
-  9: { canoni: { solo: 8, aggiornamenti: [40, 100, 300, 450], release: 600 }, costoAggiornamento: 50, ipoteca: 60 },
-  11: { canoni: { solo: 10, aggiornamenti: [50, 150, 450, 625], release: 750 }, costoAggiornamento: 100, ipoteca: 70 },
-  13: { canoni: { solo: 10, aggiornamenti: [50, 150, 450, 625], release: 750 }, costoAggiornamento: 100, ipoteca: 70 },
-  14: { canoni: { solo: 12, aggiornamenti: [60, 180, 500, 700], release: 900 }, costoAggiornamento: 100, ipoteca: 80 },
-  16: { canoni: { solo: 14, aggiornamenti: [70, 200, 550, 750], release: 950 }, costoAggiornamento: 100, ipoteca: 90 },
-  18: { canoni: { solo: 14, aggiornamenti: [70, 200, 550, 750], release: 950 }, costoAggiornamento: 100, ipoteca: 90 },
-  19: { canoni: { solo: 16, aggiornamenti: [80, 220, 600, 800], release: 1000 }, costoAggiornamento: 100, ipoteca: 100 },
-  21: { canoni: { solo: 18, aggiornamenti: [90, 250, 700, 875], release: 1050 }, costoAggiornamento: 150, ipoteca: 110 },
-  23: { canoni: { solo: 18, aggiornamenti: [90, 250, 700, 875], release: 1050 }, costoAggiornamento: 150, ipoteca: 110 },
-  24: { canoni: { solo: 20, aggiornamenti: [100, 300, 750, 925], release: 1100 }, costoAggiornamento: 150, ipoteca: 120 },
-  26: { canoni: { solo: 22, aggiornamenti: [110, 330, 800, 975], release: 1150 }, costoAggiornamento: 150, ipoteca: 130 },
-  27: { canoni: { solo: 22, aggiornamenti: [110, 330, 800, 975], release: 1150 }, costoAggiornamento: 150, ipoteca: 130 },
-  29: { canoni: { solo: 24, aggiornamenti: [120, 360, 850, 1025], release: 1200 }, costoAggiornamento: 150, ipoteca: 140 },
-  31: { canoni: { solo: 26, aggiornamenti: [130, 390, 900, 1100], release: 1275 }, costoAggiornamento: 200, ipoteca: 150 },
-  32: { canoni: { solo: 26, aggiornamenti: [130, 390, 900, 1100], release: 1275 }, costoAggiornamento: 200, ipoteca: 150 },
-  34: { canoni: { solo: 28, aggiornamenti: [150, 450, 1000, 1200], release: 1400 }, costoAggiornamento: 200, ipoteca: 160 },
-  37: { canoni: { solo: 35, aggiornamenti: [175, 500, 1100, 1300], release: 1500 }, costoAggiornamento: 200, ipoteca: 175 },
-  39: { canoni: { solo: 50, aggiornamenti: [200, 600, 1400, 1700], release: 2000 }, costoAggiornamento: 200, ipoteca: 200 },
+  1: { canoni: { solo: 5, aggiornamenti: [25, 75, 225, 400], release: 625 }, costoAggiornamento: 125, ipoteca: 75 },
+  3: { canoni: { solo: 10, aggiornamenti: [50, 150, 450, 800], release: 1125 }, costoAggiornamento: 500, ipoteca: 75 },
+  6: { canoni: { solo: 15, aggiornamenti: [75, 225, 675, 1000], release: 1375 }, costoAggiornamento: 125, ipoteca: 125 },
+  8: { canoni: { solo: 15, aggiornamenti: [75, 225, 675, 1000], release: 1375 }, costoAggiornamento: 125, ipoteca: 125 },
+  9: { canoni: { solo: 20, aggiornamenti: [100, 250, 750, 1125], release: 1500 }, costoAggiornamento: 125, ipoteca: 150 },
+  11: { canoni: { solo: 25, aggiornamenti: [125, 360, 1025, 1435], release: 1875 }, costoAggiornamento: 250, ipoteca: 175 },
+  13: { canoni: { solo: 25, aggiornamenti: [125, 360, 1025, 1435], release: 1875 }, costoAggiornamento: 250, ipoteca: 175 },
+  14: { canoni: { solo: 30, aggiornamenti: [150, 400, 1125, 1565], release: 2000 }, costoAggiornamento: 250, ipoteca: 200 },
+  16: { canoni: { solo: 35, aggiornamenti: [175, 500, 1375, 1875], release: 2375 }, costoAggiornamento: 250, ipoteca: 225 },
+  18: { canoni: { solo: 35, aggiornamenti: [175, 500, 1375, 1875], release: 2375 }, costoAggiornamento: 250, ipoteca: 225 },
+  19: { canoni: { solo: 40, aggiornamenti: [200, 550, 1500, 2000], release: 2500 }, costoAggiornamento: 250, ipoteca: 250 },
+  21: { canoni: { solo: 45, aggiornamenti: [225, 625, 1750, 2200], release: 2625 }, costoAggiornamento: 375, ipoteca: 275 },
+  23: { canoni: { solo: 45, aggiornamenti: [225, 625, 1750, 2200], release: 2625 }, costoAggiornamento: 375, ipoteca: 275 },
+  24: { canoni: { solo: 50, aggiornamenti: [250, 750, 1875, 2250], release: 2750 }, costoAggiornamento: 375, ipoteca: 300 },
+  26: { canoni: { solo: 55, aggiornamenti: [275, 825, 2000, 2500], release: 3000 }, costoAggiornamento: 375, ipoteca: 325 },
+  27: { canoni: { solo: 55, aggiornamenti: [275, 825, 2000, 2500], release: 3000 }, costoAggiornamento: 375, ipoteca: 325 },
+  29: { canoni: { solo: 60, aggiornamenti: [300, 900, 2125, 2625], release: 3125 }, costoAggiornamento: 375, ipoteca: 350 },
+  31: { canoni: { solo: 65, aggiornamenti: [325, 1000, 2250, 2750], release: 3250 }, costoAggiornamento: 500, ipoteca: 375 },
+  32: { canoni: { solo: 65, aggiornamenti: [325, 1000, 2250, 2750], release: 3250 }, costoAggiornamento: 500, ipoteca: 375 },
+  34: { canoni: { solo: 70, aggiornamenti: [375, 1125, 2500, 3000], release: 3500 }, costoAggiornamento: 500, ipoteca: 400 },
+  37: { canoni: { solo: 90, aggiornamenti: [500, 1250, 2750, 3250], release: 3750 }, costoAggiornamento: 500, ipoteca: 450 },
+  39: { canoni: { solo: 125, aggiornamenti: [500, 1500, 3500, 4250], release: 5000 }, costoAggiornamento: 500, ipoteca: 500 },
 };
 
-/** Le 4 caselle Fastweb: le "stazioni" del Monopoli classico. */
-export const INDICI_FASTWEB: readonly number[] = [5, 15, 25, 35];
+/** Le 4 caselle Consulenza (i referenti di zona): le "stazioni" del Monopoli classico. */
+export const INDICI_CONSULENZA: readonly number[] = [5, 15, 25, 35];
 
-/** Canone Fastweb con 1, 2, 3 e 4 caselle possedute dallo stesso giocatore. */
-export const CANONI_FASTWEB: readonly [number, number, number, number] = [25, 50, 100, 200];
+/** Canone Consulenza con 1, 2, 3 e 4 caselle possedute dallo stesso giocatore. */
+export const CANONI_CONSULENZA: readonly [number, number, number, number] = [60, 120, 240, 480];
 
-export const IPOTECA_FASTWEB = 100;
+export const IPOTECA_CONSULENZA = 240;
 
 /** Enel e Impianto clima: le "società" del Monopoli classico. */
 export const INDICI_SERVIZI: readonly number[] = [12, 28];
@@ -70,4 +70,4 @@ export const MOLTIPLICATORE_SERVIZIO = 4;
 /** Moltiplicatore del tiro di dado con entrambe le caselle servizio. */
 export const MOLTIPLICATORE_SERVIZI = 10;
 
-export const IPOTECA_SERVIZIO = 75;
+export const IPOTECA_SERVIZIO = 190;

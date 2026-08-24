@@ -5,7 +5,7 @@ Generatore delle stampe del Monopoli in versione SIDA Autosoft Multimedia. Quatt
 - **`index.html`** — la plancia: un foglio A3 orizzontale con il tabellone da 40 caselle
   e il pannello del regolamento.
 - **`contratti.html`** — i contratti delle proprietà: 28 carte in stile Monopoli classico
-  (22 prodotti/servizi, 4 Fastweb, 2 caselle servizio) su 4 fogli A4 verticali da ritagliare.
+  (22 prodotti/servizi, 4 Consulenza, 2 caselle servizio) su 4 fogli A4 verticali da ritagliare.
 - **`carte.html`** — i mazzi Probabilità e Imprevisti: 32 carte orizzontali (16 per mazzo,
   58×38mm, proporzioni dei due segnaposto al centro della plancia) su 2 fogli A4
   verticali, più i retri (un colore pieno per mazzo).
@@ -124,7 +124,7 @@ di casella:
 ```ts
 { tipo: "angolo",    icona: "☕", nome: "Pausa caffè", sotto: "Sosta gratuita" }
 { tipo: "proprieta", gruppo: "red", reparto: "Didattica", nome: "Aula", prezzo: 220 }
-{ tipo: "speciale",  icona: "📡", nome: "Fastweb", prezzo: 200 }
+{ tipo: "speciale",  icona: "💼", nome: "Consulenza Nord", prezzo: 200 }
 { tipo: "carta",     icona: "🎲", nome: "Imprevisti" }
 ```
 
@@ -162,9 +162,10 @@ Canoni, costo degli Aggiornamenti e valore ipotecario stanno invece in
   con 1-4 Aggiornamenti (le "case"), `release` quello con la Major Release (l'"albergo").
 - Se aggiungi una casella `proprieta` al tabellone senza darle un contratto, la pagina
   si ferma con un errore esplicito invece di stampare una carta vuota.
-- Fastweb (le "stazioni") e Enel / Impianto clima (le "società") hanno canoni fissi,
-  in fondo allo stesso file, e sono agganciate agli indici `INDICI_FASTWEB` e
-  `INDICI_SERVIZI`: se le sposti sul tabellone, aggiorna quelle due liste.
+- Le quattro caselle Consulenza (i referenti di zona Nord/Sud/Est/Ovest, le "stazioni")
+  e Enel / Impianto clima (le "società") hanno canoni fissi, in fondo allo stesso file,
+  e sono agganciate agli indici `INDICI_CONSULENZA` e `INDICI_SERVIZI`: se le sposti sul
+  tabellone, aggiorna quelle due liste.
 
 ## Modificare le carte Probabilità/Imprevisti
 
@@ -207,7 +208,7 @@ Per la plancia coprono tre cose:
 
 Per i contratti: c'è una carta per ogni casella acquistabile e nessuna di troppo, i canoni
 crescono sempre dal solo servizio alla Major Release, l'ipoteca è la metà del prezzo
-d'acquisto, il canone Fastweb raddoppia a ogni casella in più, e le 28 carte finiscono
+d'acquisto, il canone Consulenza raddoppia a ogni casella in più, e le 28 carte finiscono
 su 4 fogli senza perderne nessuna.
 
 Per le carte Probabilità/Imprevisti: 16 carte per mazzo, il retro non dipende dal

@@ -5,11 +5,11 @@
 
 import { CASELLE, type Casella, type Proprieta, type Speciale } from '../dati/caselle';
 import {
-  CANONI_FASTWEB,
+  CANONI_CONSULENZA,
   CONTRATTI,
-  INDICI_FASTWEB,
+  INDICI_CONSULENZA,
   INDICI_SERVIZI,
-  IPOTECA_FASTWEB,
+  IPOTECA_CONSULENZA,
   IPOTECA_SERVIZIO,
   MOLTIPLICATORE_SERVIZI,
   MOLTIPLICATORE_SERVIZIO,
@@ -17,10 +17,10 @@ import {
 } from '../dati/contratti';
 import { esc } from './tabellone';
 
-/** Una carta contratto: prodotto/servizio, casella Fastweb o casella servizio. */
+/** Una carta contratto: prodotto/servizio, casella Consulenza o casella servizio. */
 export type Contratto =
   | { tipo: 'proprieta'; indice: number; casella: Proprieta; dati: DatiContratto }
-  | { tipo: 'fastweb'; indice: number; casella: Speciale }
+  | { tipo: 'consulenza'; indice: number; casella: Speciale }
   | { tipo: 'servizio'; indice: number; casella: Speciale };
 
 /** Carte per foglio A4 verticale: griglia 3x3. */
@@ -31,7 +31,7 @@ const NOME_LUNGO = 16;
 
 /**
  * Tutte le carte contratto, nell'ordine del tabellone:
- * le 22 caselle prodotto/servizio, le 4 Fastweb e le 2 caselle servizio.
+ * le 22 caselle prodotto/servizio, le 4 Consulenza e le 2 caselle servizio.
  */
 export function contratti(caselle: readonly Casella[] = CASELLE): Contratto[] {
   const carte: Contratto[] = [];
@@ -40,8 +40,8 @@ export function contratti(caselle: readonly Casella[] = CASELLE): Contratto[] {
       const dati = CONTRATTI[indice];
       if (!dati) throw new Error(`Manca il contratto della casella ${indice} (${casella.nome})`);
       carte.push({ tipo: 'proprieta', indice, casella, dati });
-    } else if (casella.tipo === 'speciale' && INDICI_FASTWEB.includes(indice)) {
-      carte.push({ tipo: 'fastweb', indice, casella });
+    } else if (casella.tipo === 'speciale' && INDICI_CONSULENZA.includes(indice)) {
+      carte.push({ tipo: 'consulenza', indice, casella });
     } else if (casella.tipo === 'speciale' && INDICI_SERVIZI.includes(indice)) {
       carte.push({ tipo: 'servizio', indice, casella });
     }
@@ -110,19 +110,19 @@ export function corpoProprieta({ canoni, costoAggiornamento, ipoteca: mutuo }: D
   );
 }
 
-/** Corpo della carta Fastweb (le "stazioni"). */
-export function corpoFastweb(): string {
-  const [uno, due, tre, quattro] = CANONI_FASTWEB;
+/** Corpo della carta Consulenza (le "stazioni"). */
+export function corpoConsulenza(): string {
+  const [uno, due, tre, quattro] = CANONI_CONSULENZA;
   const righe =
     riga('Canone', 'una sola casella', bp(uno)) +
-    riga('»', 'con 2 caselle Fastweb', numero(due)) +
-    riga('»', 'con 3 caselle Fastweb', numero(tre)) +
-    riga('»', 'con 4 caselle Fastweb', numero(quattro));
+    riga('»', 'con 2 caselle Consulenza', numero(due)) +
+    riga('»', 'con 3 caselle Consulenza', numero(tre)) +
+    riga('»', 'con 4 caselle Consulenza', numero(quattro));
   return (
     `<table class="rents"><tbody>${righe}</tbody></table>` +
-    '<p class="rule">Il canone <b>raddoppia</b> per ogni casella Fastweb in più ' +
+    '<p class="rule">Il canone <b>raddoppia</b> per ogni casella Consulenza in più ' +
     'posseduta dallo stesso giocatore.</p>' +
-    ipoteca(IPOTECA_FASTWEB)
+    ipoteca(IPOTECA_CONSULENZA)
   );
 }
 
@@ -152,14 +152,14 @@ export function htmlContratto(c: Contratto): string {
   const sotto =
     c.tipo === 'proprieta'
       ? c.casella.reparto
-      : c.tipo === 'fastweb'
-        ? `${c.casella.icona} Connettività`
+      : c.tipo === 'consulenza'
+        ? `${c.casella.icona} Referente di zona`
         : `${c.casella.icona} Servizi di sede`;
   const corpo =
     c.tipo === 'proprieta'
       ? corpoProprieta(c.dati)
-      : c.tipo === 'fastweb'
-        ? corpoFastweb()
+      : c.tipo === 'consulenza'
+        ? corpoConsulenza()
         : corpoServizio();
   return (
     `<article class="${classiCarta(c)}" data-casella="${c.indice}">` +

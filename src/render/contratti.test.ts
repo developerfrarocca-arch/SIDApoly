@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest';
 import { CASELLE } from '../dati/caselle';
 import {
-  CANONI_FASTWEB,
+  CANONI_CONSULENZA,
   CONTRATTI,
-  INDICI_FASTWEB,
+  INDICI_CONSULENZA,
   INDICI_SERVIZI,
   type DatiContratto,
 } from '../dati/contratti';
@@ -58,24 +58,24 @@ describe('dati dei contratti', () => {
     }
   });
 
-  it('punta a Fastweb e alle caselle servizio giuste', () => {
-    for (const i of INDICI_FASTWEB) expect(CASELLE[i]!.nome).toBe('Fastweb');
+  it('punta alle caselle Consulenza e servizio giuste', () => {
+    for (const i of INDICI_CONSULENZA) expect(CASELLE[i]!.nome).toMatch(/^Consulenza /);
     expect(INDICI_SERVIZI.map((i) => CASELLE[i]!.nome)).toEqual(['Enel', 'Impianto clima']);
   });
 
-  it('raddoppia il canone Fastweb a ogni casella in più', () => {
-    for (let n = 1; n < CANONI_FASTWEB.length; n++) {
-      expect(CANONI_FASTWEB[n]).toBe(CANONI_FASTWEB[n - 1]! * 2);
+  it('raddoppia il canone Consulenza a ogni casella in più', () => {
+    for (let n = 1; n < CANONI_CONSULENZA.length; n++) {
+      expect(CANONI_CONSULENZA[n]).toBe(CANONI_CONSULENZA[n - 1]! * 2);
     }
   });
 });
 
 describe('contratti', () => {
-  it('produce 28 carte: 22 proprietà, 4 Fastweb e 2 servizi', () => {
+  it('produce 28 carte: 22 proprietà, 4 Consulenza e 2 servizi', () => {
     expect(CARTE).toHaveLength(28);
     const per = (t: string) => CARTE.filter((c) => c.tipo === t).length;
     expect(per('proprieta')).toBe(22);
-    expect(per('fastweb')).toBe(4);
+    expect(per('consulenza')).toBe(4);
     expect(per('servizio')).toBe(2);
   });
 
@@ -117,17 +117,17 @@ describe('markup delle carte', () => {
     expect(perGruppo('yellow')).toBe('contract g-yellow');
     expect(perGruppo('darkblue')).toBe('contract g-darkblue scuro');
     expect(perGruppo('brown')).toBe('contract g-brown scuro');
-    expect(classiCarta(CARTE.find((c) => c.tipo === 'fastweb')!)).toBe('contract g-societa');
+    expect(classiCarta(CARTE.find((c) => c.tipo === 'consulenza')!)).toBe('contract g-societa');
   });
 
   it('stampa prezzo, canoni, costi e ipoteca di una proprietà', () => {
     const carta = htmlContratto(CARTE.find((c) => c.indice === 39)!);
-    expect(carta).toContain('Questo contratto vale <b>400 BP</b>');
+    expect(carta).toContain('Questo contratto vale <b>1.000 BP</b>');
     expect(carta).toContain('SIDA PagoPa');
     expect(carta).toContain('Sportello');
-    expect(carta).toContain('50 BP'); // canone base
-    expect(carta).toContain('2.000'); // canone con Major Release
-    expect(carta).toContain('200 BP'); // costo Aggiornamento e ipoteca
+    expect(carta).toContain('125 BP'); // canone base
+    expect(carta).toContain('5.000'); // canone con Major Release
+    expect(carta).toContain('500 BP'); // costo Aggiornamento e ipoteca
     expect(carta).toContain('Valore ipotecario');
   });
 

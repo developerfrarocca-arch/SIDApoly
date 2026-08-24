@@ -84,19 +84,19 @@ describe('dati delle caselle', () => {
     }
   });
 
-  it('mantiene la scala dei prezzi del tabellone originale', () => {
+  it('mantiene la scala dei prezzi approvata (contratti aggiornati x2,5)', () => {
     const prezzi = CASELLE.filter((c) => c.tipo === 'proprieta').map((c) =>
       c.tipo === 'proprieta' ? c.prezzo : 0,
     );
     expect(prezzi).toEqual([
-      60, 60, 100, 100, 120, 140, 140, 160, 180, 180, 200, 220, 220, 240, 260, 260, 280, 300, 300,
-      320, 350, 400,
+      150, 150, 250, 250, 300, 350, 350, 400, 450, 450, 500, 550, 550, 600, 650, 650, 700, 750,
+      750, 800, 900, 1000,
     ]);
   });
 
-  it('ha i 4 Fastweb e le 2 societa fra le caselle speciali', () => {
+  it('ha le 4 Consulenza e le 2 societa fra le caselle speciali', () => {
     const nomi = CASELLE.filter((c) => c.tipo === 'speciale').map((c) => c.nome);
-    expect(nomi.filter((n) => n === 'Fastweb')).toHaveLength(4);
+    expect(nomi.filter((n) => n.startsWith('Consulenza '))).toHaveLength(4);
     expect(nomi).toContain('Enel');
     expect(nomi).toContain('Impianto clima');
   });
@@ -140,7 +140,7 @@ describe('markup', () => {
     expect(classi({ tipo: 'carta', icona: '?', nome: 'Probabilità' }, 'rot90')).toBe(
       'cell special rot90 card',
     );
-    expect(classi({ tipo: 'speciale', icona: '!', nome: 'Fastweb', prezzo: 200 }, 'rot90')).toBe(
+    expect(classi({ tipo: 'speciale', icona: '!', nome: 'Consulenza Nord', prezzo: 200 }, 'rot90')).toBe(
       'cell special rot90',
     );
   });
@@ -188,12 +188,12 @@ describe('montaTabellone', () => {
   });
 
   it('produce lo stesso tabellone della versione statica verificata nel browser', () => {
-    // Valori catturati dal tabellone statico prima del refactor: se cambiano,
+    // Valori catturati dal tabellone approvato (con le 4 caselle Consulenza): se cambiano,
     // il tabellone stampato non è più identico a quello approvato.
     const board = document.createElement('div');
     montaTabellone(board);
     const f = firma(board);
-    expect(f.length).toBe(3897);
-    expect(hash(f)).toBe(-431749917);
+    expect(f.length).toBe(3971);
+    expect(hash(f)).toBe(2351148);
   });
 });

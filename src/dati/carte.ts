@@ -59,7 +59,7 @@ export const CARTE_IMPREVISTI: readonly Carta[] = [
   { testo: 'Il vostro SIDA QuizApp diventa virale tra i candidati: incassate 250 BP' },
   {
     testo:
-      'Partecipate alla fiera nazionale delle autoscuole: andate alla casella Fastweb più vicina; ' +
+      'Partecipate alla fiera nazionale delle autoscuole: andate alla casella Consulenza più vicina; ' +
       'se passate da «Avvio sprint!» incassate 500 BP',
   },
   { testo: 'Nuove specifiche ministeriali a progetto quasi finito: pagate 100 BP per ogni Aggiornamento e 250 BP per ogni Major Release posseduti' },
