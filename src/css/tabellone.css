@@ -20,7 +20,6 @@
     grid-template-columns:repeat(11,var(--cell));
     grid-template-rows:repeat(11,var(--cell));
     background:var(--cream);
-    border:1.3mm solid var(--line);
     position:relative;
     flex-shrink:0;
   }

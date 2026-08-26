@@ -55,11 +55,11 @@ export type Casella = Angolo | Proprieta | Speciale | CasellaCarta;
 export const NUMERO_CASELLE = 40;
 
 export const CASELLE: readonly Casella[] = [
-  /*  0 */ { tipo: "angolo", icona: "▶️", nome: "Avvio sprint!", sotto: "Ritira 200 BP" },
+  /*  0 */ { tipo: "angolo", icona: "▶️", nome: "Avvio sprint!", sotto: "Ritira 500 BP" },
   /*  1 */ { tipo: "proprieta", gruppo: "pink", reparto: "Configurazione", nome: "SIDA Sync Test", prezzo: 150 },
   /*  2 */ { tipo: "carta", icona: "❓", nome: "Probabilità" },
   /*  3 */ { tipo: "proprieta", gruppo: "pink", reparto: "Configurazione", nome: "SIDA Connect", prezzo: 150 },
-  /*  4 */ { tipo: "speciale", icona: "💶", nome: "Tasse", prezzo: "Paga 200 BP" },
+  /*  4 */ { tipo: "speciale", icona: "💶", nome: "Tasse", prezzo: "Paga 500 BP" },
   /*  5 */ { tipo: "speciale", icona: "🧑‍💼", nome: "Consulenza Sud", prezzo: 480 },
   /*  6 */ { tipo: "proprieta", gruppo: "lightblue", reparto: "Formazione", nome: "Tachigrafo", prezzo: 250 },
   /*  7 */ { tipo: "carta", icona: "🎲", nome: "Imprevisti" },
@@ -93,6 +93,6 @@ export const CASELLE: readonly Casella[] = [
   /* 35 */ { tipo: "speciale", icona: "🧑‍💼", nome: "Consulenza Est", prezzo: 480 },
   /* 36 */ { tipo: "carta", icona: "🎲", nome: "Imprevisti" },
   /* 37 */ { tipo: "proprieta", gruppo: "darkblue", reparto: "Sportello", nome: "TuttoPrenota", prezzo: 900 },
-  /* 38 */ { tipo: "speciale", icona: "📄", nome: "Intrè", prezzo: "Paga 100 BP" },
+  /* 38 */ { tipo: "speciale", icona: "📄", nome: "Intrè", prezzo: "Paga 250 BP" },
   /* 39 */ { tipo: "proprieta", gruppo: "darkblue", reparto: "Sportello", nome: "SIDA PagoPa", prezzo: 1000 },
 ];
