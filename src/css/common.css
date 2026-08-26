@@ -57,8 +57,30 @@ body{
 }
 .stampa:hover{background:#e0b93a;}
 
-.opzione{display:flex;align-items:flex-start;gap:8px;cursor:pointer;}
-.opzione input{cursor:pointer;flex:0 0 auto;margin:2px 0 0;}
+.opzione{display:flex;align-items:flex-start;gap:10px;cursor:pointer;}
+
+.opzione input{
+  appearance:none;-webkit-appearance:none;
+  flex:0 0 auto;
+  width:34px;height:18px;margin:1px 0 0;
+  border:1px solid rgba(255,255,255,.4);
+  border-radius:9px;
+  background:rgba(255,255,255,.18);
+  position:relative;
+  cursor:pointer;
+  transition:background .15s ease, border-color .15s ease;
+}
+.opzione input::after{
+  content:"";
+  position:absolute;top:2px;left:2px;
+  width:12px;height:12px;border-radius:50%;
+  background:#fff;
+  transition:transform .15s ease, background .15s ease;
+}
+.opzione input:hover{border-color:var(--gold);}
+.opzione input:checked{background:var(--gold);border-color:var(--gold);}
+.opzione input:checked::after{transform:translateX(16px);background:var(--ink);}
+.opzione input:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
 
 /* ---------- Barra laterale ---------- */
 .app{display:flex;align-items:flex-start;}
