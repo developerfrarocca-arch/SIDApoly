@@ -107,7 +107,7 @@
     transform:translate(-50%,-50%) rotate(-45deg);
     overflow:hidden;
     z-index:1;
-    background-image:url(/resources/extendedVersion.png);
+    background-image:url(../immagini/extendedVersion.png);
     background-size:cover;
     background-position:50% 45%;
   }
