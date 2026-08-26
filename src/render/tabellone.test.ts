@@ -1,6 +1,15 @@
 import { describe, expect, it } from 'vitest';
 import { CASELLE, NUMERO_CASELLE, type Casella, type Gruppo } from '../dati/caselle';
-import { classi, contenuto, esc, htmlCasella, montaTabellone, posizione, prezzo } from './tabellone';
+import {
+  classi,
+  contenuto,
+  esc,
+  htmlCasella,
+  montaTabellone,
+  posizione,
+  prezzo,
+  type Rotazione,
+} from './tabellone';
 
 const indici = [...Array(NUMERO_CASELLE).keys()];
 const ANGOLI = [0, 10, 20, 30];
@@ -24,15 +33,21 @@ describe('posizione', () => {
   });
 
   it('procede in senso orario partendo dall angolo in basso a destra', () => {
-    expect(posizione(0)).toEqual({ col: 11, row: 11, rot: '' });
-    expect(posizione(10)).toEqual({ col: 1, row: 11, rot: '' });
-    expect(posizione(20)).toEqual({ col: 1, row: 1, rot: '' });
-    expect(posizione(30)).toEqual({ col: 11, row: 1, rot: '' });
+    expect(posizione(0)).toEqual({ col: 11, row: 11, rot: 'rot315' });
+    expect(posizione(10)).toEqual({ col: 1, row: 11, rot: 'rot45' });
+    expect(posizione(20)).toEqual({ col: 1, row: 1, rot: 'rot135' });
+    expect(posizione(30)).toEqual({ col: 11, row: 1, rot: 'rot225' });
     expect(posizione(39)).toEqual({ col: 11, row: 10, rot: 'rot270' });
   });
 
-  it('ruota il contenuto secondo il lato, lasciando gli angoli diritti', () => {
-    for (const i of ANGOLI) expect(posizione(i).rot).toBe('');
+  it('ruota il contenuto secondo il lato, e gli angoli di 45° verso il centro', () => {
+    const angoliAttesi: Record<number, Rotazione> = {
+      0: 'rot315',
+      10: 'rot45',
+      20: 'rot135',
+      30: 'rot225',
+    };
+    for (const i of ANGOLI) expect(posizione(i).rot).toBe(angoliAttesi[i]);
     for (const i of indici) {
       if (ANGOLI.includes(i)) continue;
       const atteso = i < 10 ? '' : i < 20 ? 'rot90' : i < 30 ? 'rot180' : 'rot270';
@@ -193,7 +208,7 @@ describe('montaTabellone', () => {
     const board = document.createElement('div');
     montaTabellone(board);
     const f = firma(board);
-    expect(f.length).toBe(3971);
-    expect(hash(f)).toBe(2351148);
+    expect(f.length).toBe(3998);
+    expect(hash(f)).toBe(1311559154);
   });
 });

@@ -4,8 +4,8 @@
 
 import { CASELLE, NUMERO_CASELLE, type Casella } from '../dati/caselle';
 
-/** Rotazione del contenuto di una casella, in base al lato del tabellone. */
-export type Rotazione = '' | 'rot90' | 'rot180' | 'rot270';
+/** Rotazione del contenuto di una casella, in base al lato del tabellone (o alla diagonale, per gli angoli). */
+export type Rotazione = '' | 'rot45' | 'rot90' | 'rot135' | 'rot180' | 'rot225' | 'rot270' | 'rot315';
 
 /** Posizione di una casella nella griglia 11x11 (colonne e righe 1-based). */
 export interface Posizione {
@@ -24,17 +24,19 @@ export interface Posizione {
  *   21-29  lato alto, verso destra      (rot180)
  *   30     angolo in alto a destra
  *   31-39  lato destro, verso il basso  (rot270)
- * Gli angoli non ruotano.
+ * Gli angoli ruotano di 45° verso l'interno del tabellone (rot45/rot135/rot225/rot315).
  */
 export function posizione(i: number): Posizione {
   if (!Number.isInteger(i) || i < 0 || i >= NUMERO_CASELLE) {
     throw new RangeError(`Indice casella fuori range: ${i}`);
   }
-  if (i <= 10) return { col: 11 - i, row: 11, rot: '' };
+  if (i === 0) return { col: 11, row: 11, rot: 'rot315' };
+  if (i < 10) return { col: 11 - i, row: 11, rot: '' };
+  if (i === 10) return { col: 1, row: 11, rot: 'rot45' };
   if (i < 20) return { col: 1, row: 21 - i, rot: 'rot90' };
-  if (i === 20) return { col: 1, row: 1, rot: '' };
+  if (i === 20) return { col: 1, row: 1, rot: 'rot135' };
   if (i < 30) return { col: i - 19, row: 1, rot: 'rot180' };
-  if (i === 30) return { col: 11, row: 1, rot: '' };
+  if (i === 30) return { col: 11, row: 1, rot: 'rot225' };
   return { col: 11, row: i - 29, rot: 'rot270' };
 }
 

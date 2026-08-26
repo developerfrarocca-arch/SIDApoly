@@ -39,6 +39,11 @@
   .rot90 .inner{transform:rotate(90deg);}
   .rot180 .inner{transform:rotate(180deg);}
   .rot270 .inner{transform:rotate(270deg);}
+  /* Gli angoli ruotano di 45° verso il centro; scala ridotta per non uscire dal quadrato della cella. */
+  .rot45 .inner{transform:rotate(45deg) scale(.82);}
+  .rot135 .inner{transform:rotate(135deg) scale(.82);}
+  .rot225 .inner{transform:rotate(225deg) scale(.82);}
+  .rot315 .inner{transform:rotate(315deg) scale(.82);}
 
   .bar{width:100%;height:4mm;flex:0 0 auto;border-bottom:.25mm solid var(--line);}
   .dept{
