@@ -14,6 +14,8 @@ import {
   bp,
   classiCarta,
   contratti,
+  corpoConsulenza,
+  corpoServizio,
   fogli,
   htmlContratti,
   htmlContrattiFronteRetro,
@@ -163,6 +165,38 @@ describe('markup delle carte', () => {
 
   it('non rende i nomi modificabili', () => {
     expect(htmlContratto(CARTE[0]!)).not.toContain('contenteditable');
+  });
+});
+
+describe('segno grande', () => {
+  it('lo mettono solo le carte che hanno già un\'icona sul tabellone', () => {
+    const conSegno = CARTE.filter((c) => htmlContratto(c).includes('class="mark"'));
+    expect(conSegno).toHaveLength(6);
+    expect(conSegno.map((c) => c.tipo).sort()).toEqual([
+      'consulenza',
+      'consulenza',
+      'consulenza',
+      'consulenza',
+      'servizio',
+      'servizio',
+    ]);
+    for (const c of CARTE.filter((x) => x.tipo === 'proprieta')) {
+      expect(htmlContratto(c), c.casella.nome).not.toContain('class="mark"');
+    }
+  });
+
+  it('usa l\'icona della casella, senza ripeterla nella riga del reparto', () => {
+    const consulenza = CARTE.find((c) => c.tipo === 'consulenza')!;
+    const html = htmlContratto(consulenza);
+    expect(html).toContain(`<div class="mark">${consulenza.casella.icona}</div>`);
+    expect(html).toContain('<div class="dept">Referente di zona</div>');
+    const servizio = CARTE.find((c) => c.tipo === 'servizio')!;
+    expect(htmlContratto(servizio)).toContain('<div class="dept">Servizi di sede</div>');
+  });
+
+  it('senza icona non lascia un contenitore vuoto', () => {
+    expect(corpoConsulenza()).not.toContain('mark');
+    expect(corpoServizio()).not.toContain('mark');
   });
 });
 

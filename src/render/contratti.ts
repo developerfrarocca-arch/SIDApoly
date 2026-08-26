@@ -86,6 +86,16 @@ function testa(valore: string, nome: string, sotto: string): string {
   );
 }
 
+/**
+ * Il segno grande al centro della carta, come la locomotiva delle stazioni nel
+ * Monopoli classico. Ce l'hanno solo le carte che hanno già un'icona sul
+ * tabellone (Consulenza e servizi): le proprietà non ne hanno una, e non se ne
+ * inventa una per loro.
+ */
+function segno(icona: string): string {
+  return icona ? `<div class="mark">${esc(icona)}</div>` : '';
+}
+
 /** Piede comune: valore ipotecario con la linea puntinata del Monopoli classico. */
 function ipoteca(v: number): string {
   return (
@@ -123,8 +133,8 @@ export function corpoProprieta({ canoni, costoAggiornamento, ipoteca: mutuo }: D
   );
 }
 
-/** Corpo della carta Consulenza (le "stazioni"). */
-export function corpoConsulenza(): string {
+/** Corpo della carta Consulenza (le "stazioni"), col segno grande in testa. */
+export function corpoConsulenza(icona = ''): string {
   const [uno, due, tre, quattro] = CANONI_CONSULENZA;
   const righe =
     riga('Canone', 'una sola casella', bp(uno)) +
@@ -132,6 +142,7 @@ export function corpoConsulenza(): string {
     riga('»', 'con 3 caselle Consulenza', numero(tre)) +
     riga('»', 'con 4 caselle Consulenza', numero(quattro));
   return (
+    segno(icona) +
     `<table class="rents"><tbody>${righe}</tbody></table>` +
     '<p class="rule">Il canone <b>raddoppia</b> per ogni casella Consulenza in più ' +
     'posseduta dallo stesso giocatore.</p>' +
@@ -139,9 +150,10 @@ export function corpoConsulenza(): string {
   );
 }
 
-/** Corpo della carta Enel / Impianto clima (le "società"). */
-export function corpoServizio(): string {
+/** Corpo della carta Enel / Impianto clima (le "società"), col segno grande in testa. */
+export function corpoServizio(icona = ''): string {
   return (
+    segno(icona) +
     '<div class="dice">' +
     `<p class="rule">Se un giocatore possiede <b>una sola</b> casella servizio, il canone è pari a <b>${MOLTIPLICATORE_SERVIZIO} volte</b> il numero mostrato dai dadi.</p>` +
     `<p class="rule">Se possiede <b>entrambe</b> le caselle servizio, il canone è pari a <b>${MOLTIPLICATORE_SERVIZI} volte</b> il numero mostrato dai dadi.</p>` +
@@ -166,14 +178,14 @@ export function htmlContratto(c: Contratto): string {
     c.tipo === 'proprieta'
       ? c.casella.reparto
       : c.tipo === 'consulenza'
-        ? `${c.casella.icona} Referente di zona`
-        : `${c.casella.icona} Servizi di sede`;
+        ? 'Referente di zona'
+        : 'Servizi di sede';
   const corpo =
     c.tipo === 'proprieta'
       ? corpoProprieta(c.dati)
       : c.tipo === 'consulenza'
-        ? corpoConsulenza()
-        : corpoServizio();
+        ? corpoConsulenza(c.casella.icona)
+        : corpoServizio(c.casella.icona);
   return (
     `<article class="${classiCarta(c)}" data-casella="${c.indice}">` +
     testa(prezzo, c.casella.nome, sotto) +

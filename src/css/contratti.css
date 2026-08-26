@@ -44,7 +44,6 @@
    invece di ritagliare 28 rettangoli separati. */
 .contract{
   border:.4mm solid var(--line);
-  background:var(--panel);
   display:flex;flex-direction:column;
   overflow:hidden;
   padding:1.6mm;
@@ -99,6 +98,13 @@
 .contract.g-green    .head{background:var(--green);}
 .contract.g-darkblue .head{background:var(--darkblue);}
 
+/* Il segno grande delle carte Consulenza e servizi (le proprietà non ce l'hanno). */
+.contract .mark{
+  font-size:16mm;line-height:1;text-align:center;
+  padding:2.5mm 0 2mm;
+  flex:0 0 auto;
+}
+
 /* ---------- Corpo: canoni, regola del gruppo, costi, ipoteca ---------- */
 .contract .body{
   flex:1 1 auto;
@@ -145,7 +151,6 @@
 /* ---------- Il retro ---------- */
 .contract-back{
   border:.4mm solid var(--line);
-  background:var(--panel);
   overflow:hidden;
   display:flex;
   padding:3mm;
