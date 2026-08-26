@@ -81,8 +81,8 @@ describe('impaginazione', () => {
     expect(html).toContain('foglio 1');
     expect(html).toContain(`foglio ${TAGLI.length}`);
     expect(html).not.toContain(`foglio ${TAGLI.length + 1}`);
-    expect(html).toContain('Buoni Pasto da 5 BP');
-    expect(html).toContain('Buoni Pasto da 500 BP');
+    expect(html).toContain('Buoni Pasto da 5\u00a0BP');
+    expect(html).toContain('Buoni Pasto da 500\u00a0BP');
   });
 });
 

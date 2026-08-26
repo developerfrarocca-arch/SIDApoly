@@ -8,6 +8,7 @@ import {
   montaTabellone,
   posizione,
   prezzo,
+  valuta,
   type Rotazione,
 } from './tabellone';
 
@@ -132,10 +133,26 @@ describe('dati delle caselle', () => {
   });
 });
 
+describe('valuta', () => {
+  it('lega BP al numero con uno spazio insecabile', () => {
+    expect(valuta('200 BP')).toBe('200\u00a0BP');
+    expect(valuta('pagate 125 BP di sanzione')).toBe('pagate 125\u00a0BP di sanzione');
+    expect(valuta('60 BP per Aggiornamento e 250 BP per Major Release')).toBe(
+      '60\u00a0BP per Aggiornamento e 250\u00a0BP per Major Release',
+    );
+  });
+
+  it('non tocca il testo dove BP non è un importo', () => {
+    expect(valuta('Buoni Pasto (BP)')).toBe('Buoni Pasto (BP)');
+    expect(valuta('BP')).toBe('BP');
+    expect(valuta('Pausa caffè')).toBe('Pausa caffè');
+  });
+});
+
 describe('markup', () => {
-  it('formatta il prezzo numerico in BP e lascia intatto quello testuale', () => {
-    expect(prezzo(240)).toBe('240 BP');
-    expect(prezzo('Paga 200 BP')).toBe('Paga 200 BP');
+  it('formatta il prezzo in BP, con la valuta legata al numero', () => {
+    expect(prezzo(240)).toBe('240\u00a0BP');
+    expect(prezzo('Paga 200 BP')).toBe('Paga 200\u00a0BP');
   });
 
   it('fa escape dei caratteri HTML', () => {
@@ -209,6 +226,8 @@ describe('montaTabellone', () => {
     montaTabellone(board);
     const f = firma(board);
     expect(f.length).toBe(3998);
-    expect(hash(f)).toBe(1311559154);
+    // 216464882: aggiornato quando "60 BP" è diventato "60&nbsp;BP" (stessa
+    // lunghezza, un carattere diverso), vedi valuta() in tabellone.ts
+    expect(hash(f)).toBe(216464882);
   });
 });

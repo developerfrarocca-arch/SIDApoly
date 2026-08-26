@@ -77,7 +77,9 @@ body.senza-sfondo .card{background:none;}
   flex:1 1 auto;
   display:flex;align-items:center;justify-content:center;text-align:center;
   font-size:3.2mm;line-height:1.3;font-weight:700;
-  hyphens:auto;
+  /* Niente sillabazione: spezzare le parole con il trattino rende il testo
+     della carta faticoso da leggere a colpo d'occhio. */
+  hyphens:none;
 }
 
 /* ---------- Stampa ---------- */

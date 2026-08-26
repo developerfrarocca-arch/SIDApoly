@@ -15,7 +15,7 @@ import {
   MOLTIPLICATORE_SERVIZIO,
   type DatiContratto,
 } from '../dati/contratti';
-import { esc } from './tabellone';
+import { esc, valuta } from './tabellone';
 
 /** Una carta contratto: prodotto/servizio, casella Consulenza o casella servizio. */
 export type Contratto =
@@ -61,9 +61,9 @@ export function numero(v: number): string {
   return String(v).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 }
 
-/** 260 -> "260 BP". */
+/** 260 -> "260 BP", con la valuta legata al numero. */
 export function bp(v: number): string {
-  return `${numero(v)} BP`;
+  return valuta(`${numero(v)} BP`);
 }
 
 /** Riga dei canoni: etichetta a sinistra, descrizione, importo a destra. */

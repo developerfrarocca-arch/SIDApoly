@@ -110,7 +110,7 @@ describe('formattazione', () => {
     expect(numero(60)).toBe('60');
     expect(numero(1150)).toBe('1.150');
     expect(numero(2000)).toBe('2.000');
-    expect(bp(320)).toBe('320 BP');
+    expect(bp(320)).toBe('320\u00a0BP');
   });
 });
 
@@ -126,12 +126,12 @@ describe('markup delle carte', () => {
 
   it('stampa prezzo, canoni, costi e ipoteca di una proprietà', () => {
     const carta = htmlContratto(CARTE.find((c) => c.indice === 39)!);
-    expect(carta).toContain('Questo contratto vale <b>1.000 BP</b>');
+    expect(carta).toContain('Questo contratto vale <b>1.000\u00a0BP</b>');
     expect(carta).toContain('SIDA PagoPa');
     expect(carta).toContain('Sportello');
-    expect(carta).toContain('125 BP'); // canone base
+    expect(carta).toContain('125\u00a0BP'); // canone base
     expect(carta).toContain('5.000'); // canone con Major Release
-    expect(carta).toContain('500 BP'); // costo Aggiornamento e ipoteca
+    expect(carta).toContain('500\u00a0BP'); // costo Aggiornamento e ipoteca
     expect(carta).toContain('Valore ipotecario');
   });
 

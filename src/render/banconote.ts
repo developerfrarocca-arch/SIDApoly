@@ -5,7 +5,7 @@
 
 import { COPIE_PER_TAGLIO, TAGLI, type Taglio } from '../dati/banconote';
 import { numero } from './contratti';
-import { esc } from './tabellone';
+import { esc, valuta } from './tabellone';
 
 /** Banconote per foglio A4 verticale: griglia 2x5. */
 export const BANCONOTE_PER_FOGLIO = 10;
@@ -96,7 +96,8 @@ export function htmlBanconote(
       return (
         '<section class="sheet">' +
         `<div class="sheet-grid">${foglio.map(htmlBanconota).join('')}</div>` +
-        `<div class="sheet-foot">Il Monopoli di SIDA — Buoni Pasto da ${esc(numero(valore ?? 0))} BP · foglio ${n + 1}</div>` +
+        '<div class="sheet-foot">Il Monopoli di SIDA — Buoni Pasto da ' +
+        `${valuta(`${esc(numero(valore ?? 0))} BP`)} · foglio ${n + 1}</div>` +
         '</section>'
       );
     })

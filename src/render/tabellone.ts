@@ -45,9 +45,17 @@ export function esc(s: string): string {
   return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
 
+/**
+ * Lega la valuta al suo numero con uno spazio insecabile: "200 BP" è un importo,
+ * e a fine riga non deve mai spezzarsi lasciando "BP" orfano sulla riga dopo.
+ */
+export function valuta(s: string): string {
+  return s.replace(/(\d)\s+BP/g, '$1\u00a0BP');
+}
+
 /** "60 BP" per i numeri, testo invariato per le stringhe ("Paga 200 BP"). */
 export function prezzo(v: number | string): string {
-  return typeof v === 'number' ? `${v} BP` : v;
+  return valuta(typeof v === 'number' ? `${v} BP` : v);
 }
 
 /** Le classi CSS della cella: tipo, gruppo colore, rotazione, mazzo carte. */

@@ -10,6 +10,7 @@ import {
   fogliPerMazzo,
   montaCarte,
 } from './carte';
+import { valuta } from './tabellone';
 
 const CARTE = carteMazzi();
 
@@ -42,10 +43,21 @@ describe('markup del fronte', () => {
   it('stampa il testo e il nome del mazzo in testa', () => {
     const html = htmlCartaFronte(CARTE[0]!);
     expect(html).toContain('card-probabilita');
-    expect(html).toContain(CARTE_PROBABILITA[0]!.testo);
+    expect(html).toContain(valuta(CARTE_PROBABILITA[0]!.testo));
     expect(html).toContain('Probabilità');
     expect(html).toContain('data-mazzo="probabilita"');
     expect(html).toContain('data-indice="1"');
+  });
+
+  it('non stacca mai BP dal suo numero, nemmeno a fine riga', () => {
+    const html = htmlCarte();
+    // in tutte e 32 le carte, un importo non deve avere spazi normali fra numero e valuta
+    expect(html).not.toMatch(/\d BP/);
+    const conImporti = CARTE.filter((c) => /\d\s+BP/.test(c.carta.testo));
+    expect(conImporti.length).toBeGreaterThan(0);
+    for (const c of conImporti) {
+      expect(htmlCartaFronte(c), c.carta.testo).toMatch(/\d\u00a0BP/);
+    }
   });
 
   it('non stampa emoji: sul cartoncino colorato il bianco non è inchiostro', () => {

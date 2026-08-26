@@ -4,7 +4,7 @@
 - [x] Colore del prezzo "gold" deve essere reso piu chiaro e tenue per evidenziare il contrasto con le scritte
 - [ ] Aggiustare logo BP (ora risulta tagliato)
 - [x] Opzione toggle per colore sfondo in imprevisti/probabilità (se volessi stampare su cartoncino già colorato)
-- [ ] Controllare a capo di imprevisti/probabilità, evitare di tagliare il testo con - e BP che è la valuta e non andrebbe mai divisa dal numero
+- [x] Controllare a capo di imprevisti/probabilità, evitare di tagliare il testo con - e BP che è la valuta e non andrebbe mai divisa dal numero
 - [ ] Cambiare da check a toggle (quello che si sposta a dx e sx)
 - [x] Migliorare topbar, considerare eventuale sidebar per le altre pagine che non siano la plancia
 - [ ] Optional: logo SIDA in bianco sulla plancia dove c'è "Il monopoli di sida" al posto della parola "SIDA"

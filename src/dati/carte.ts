@@ -31,13 +31,13 @@ export const CARTE_PROBABILITA: readonly Carta[] = [
       'Andate direttamente in Riunione, senza passare da «Avvio sprint!»',
   },
   { testo: 'Maturano i canoni annuali delle licenze: incassate 60 BP' },
-  { testo: 'Un cliente lascia una recensione a 5 stelle sul Playstore: ritirate 25 BP' },
+  { testo: 'Un influencer si appropria delle nostre videolezioni: causa vinta, incassate 25 BP' },
   { testo: "Rimborso per il credito d'imposta di ricerca e sviluppo: incassate 50 BP" },
-  { testo: 'Un dipendente ha installato RAD Studio senza licenza: pagate 125 BP di sanzione' },
+  { testo: 'Un dipendente ha installato un software senza licenza: pagate 125 BP di sanzione' },
   {
     testo:
       'Il manuale è stato stampato con le immagini non aggiornate: pagate 25 BP oppure pescate ' +
-      'un «Imprevisto aziendale»',
+      'un «Imprevisto»',
   },
 ];
 
@@ -70,9 +70,13 @@ export const CARTE_IMPREVISTI: readonly Carta[] = [
       'senza ordine del giorno oppure vendetela',
   },
   { testo: 'Degli hacker crittografano il server di produzione: pagate 375 BP di riscatto' },
-  { testo: 'Multa di 40 BP: il furgone dimostrativo era parcheggiato nello spazio riservato agli esaminatori' },
+  { testo: 'Multa di 40 BP: il furgone simulatori era parcheggiato nel posto disabili' },
   { testo: 'Il cloud provider AWS vi riconosce un credito per il disservizio: incassate 125 BP' },
-  { testo: 'Donate 50 BP al fondo per gli incidenti autostradali' },
+  {
+    testo:
+      "L'installazione dei pannelli solari buca il tetto: dopo la pioggia gli uffici " +
+      'sono allagati, pagate 50 BP',
+  },
   { testo: 'La build critica finisce in produzione senza revisione: andate direttamente in Riunione, senza passare da «Avvio sprint!»' },
   { testo: "Un cliente arrabbiato vi sequestra nella sua autoscuola. Gli fate causa e venite rimborsati di 150 BP" },
 ];

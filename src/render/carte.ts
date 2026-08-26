@@ -5,7 +5,7 @@
    Le carte sono a una faccia sola: il dorso è il cartoncino su cui si stampa. */
 
 import { CARTE_IMPREVISTI, CARTE_PROBABILITA, type Carta } from '../dati/carte';
-import { esc } from './tabellone';
+import { esc, valuta } from './tabellone';
 
 /** Chiave di un mazzo: usata come classe CSS e attributo dati. */
 export type ChiaveMazzo = 'probabilita' | 'imprevisti';
@@ -52,7 +52,7 @@ export function htmlCartaFronte(c: CartaMazzo): string {
   return (
     `<article class="card card-${c.mazzo.chiave}" data-mazzo="${c.mazzo.chiave}" data-indice="${c.indice}">` +
     `<div class="card-head"><span class="card-mazzo">${esc(c.mazzo.nome)}</span></div>` +
-    `<div class="card-testo">${esc(c.carta.testo)}</div>` +
+    `<div class="card-testo">${valuta(esc(c.carta.testo))}</div>` +
     '</article>'
   );
 }
