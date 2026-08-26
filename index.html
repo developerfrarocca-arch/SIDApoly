@@ -2,20 +2,36 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="/resources/favicon.svg">
 <title>Il Monopoli di SIDA — SIDA Autosoft Multimedia</title>
+<link rel="stylesheet" href="/src/css/tabellone.css">
 </head>
 <body>
 
-  <div class="toolbar">
-    <span><b>Il Monopoli di SIDA</b> — SIDA Autosoft Multimedia</span>
-    <span>Stampa in <b>A3 orizzontale</b>.</span>
-    <span class="spacer"></span>
-    <a href="./index.html" aria-current="page">🎲 Tabellone</a>
-    <a href="./contratti.html">📄 Contratti</a>
-    <a href="./carte.html">🎴 Imprevisti/Probabilità</a>
-    <a href="./banconote.html">💶 Banconote</a>
-    <button onclick="window.print()">🖨️ Stampa tabellone</button>
-  </div>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <img class="brand-logo" src="/resources/logo-sida.svg" alt="SIDA Autosoft Multimedia" width="34" height="17">
+        <span class="brand-name">Il Monopoli di SIDA</span>
+      </div>
+      <h1>Tabellone</h1>
+      <nav class="nav">
+        <a href="./index.html" aria-current="page">&#127922; Tabellone</a>
+        <a href="./contratti.html">&#128196; Contratti</a>
+        <a href="./carte.html">&#127924; Imprevisti/Probabilit&agrave;</a>
+        <a href="./banconote.html">&#128182; Banconote</a>
+      </nav>
+      <div class="pannello">
+        <h2>Come stampare</h2>
+        <p>Un foglio solo, formato <b>A3 orizzontale</b>: plancia e pannello delle
+          regole stanno affiancati sullo stesso foglio.</p>
+        <p>Se la plancia non entra nella finestra, scorri in orizzontale: in stampa
+          esce comunque intera.</p>
+      </div>
+      <button class="stampa" onclick="window.print()">&#128424; Stampa tabellone</button>
+    </aside>
+
+    <main class="app-main">
 
   <div class="page-wrap">
     <div class="page">
@@ -92,6 +108,9 @@
         </div>
       </div>
     </div>
+  </div>
+
+    </main>
   </div>
 
   <script type="module" src="/src/main.ts"></script>

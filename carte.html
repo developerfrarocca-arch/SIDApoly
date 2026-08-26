@@ -2,28 +2,46 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="/resources/favicon.svg">
 <title>Carte Imprevisti e Probabilità — Il Monopoli di SIDA</title>
+<link rel="stylesheet" href="/src/css/carte.css">
 </head>
 <body>
 
-  <div class="toolbar">
-    <span><b>Carte Imprevisti e Probabilità</b> — SIDA Autosoft Multimedia</span>
-    <span>Carte a una faccia, <b>un mazzo per foglio</b>: stampa ogni foglio sul suo
-      cartoncino e taglia lungo i bordi. Formato <b>A4 verticale</b>.</span>
-    <label class="switch-sfondo" title="Togli la spunta se stampi su cartoncino già colorato: le carte escono senza fondo.">
-      <input type="checkbox" id="sfondo-colorato" checked>
-      Sfondo colorato
-    </label>
-    <span class="spacer"></span>
-    <a href="./index.html">🎲 Tabellone</a>
-    <a href="./contratti.html">📄 Contratti</a>
-    <a href="./carte.html" aria-current="page">🎴 Imprevisti/Probabilità</a>
-    <a href="./banconote.html">💶 Banconote</a>
-    <button onclick="window.print()">🖨️ Stampa tutto</button>
-  </div>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <img class="brand-logo" src="/resources/logo-sida.svg" alt="SIDA Autosoft Multimedia" width="34" height="17">
+        <span class="brand-name">Il Monopoli di SIDA</span>
+      </div>
+      <h1>Imprevisti e Probabilit&agrave;</h1>
+      <nav class="nav">
+        <a href="./index.html">&#127922; Tabellone</a>
+        <a href="./contratti.html">&#128196; Contratti</a>
+        <a href="./carte.html" aria-current="page">&#127924; Imprevisti/Probabilit&agrave;</a>
+        <a href="./banconote.html">&#128182; Banconote</a>
+      </nav>
+      <div class="pannello">
+        <h2>Opzioni</h2>
+        <label class="opzione" title="Togli la spunta se stampi su cartoncino gi&agrave; colorato: le carte escono senza fondo.">
+          <input type="checkbox" id="sfondo-colorato" checked>
+          <span>Sfondo colorato</span>
+        </label>
+      </div>
+      <div class="pannello">
+        <h2>Come stampare</h2>
+        <p>Carte a una faccia, <b>un mazzo per foglio</b>: stampa ogni foglio sul suo
+          cartoncino e taglia lungo i bordi. Formato <b>A4 verticale</b>.</p>
+      </div>
+      <button class="stampa" onclick="window.print()">&#128424; Stampa tutto</button>
+    </aside>
+
+    <main class="app-main">
 
   <!-- I fogli di carte sono generati da src/render/carte.ts (testi in src/dati/carte.ts) -->
-  <div class="sheets" id="sheets"></div>
+      <div class="sheets" id="sheets"></div>
+    </main>
+  </div>
 
   <script type="module" src="/src/carte.ts"></script>
 </body>

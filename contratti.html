@@ -2,31 +2,49 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="/resources/favicon.svg">
 <title>Contratti delle proprietà — Il Monopoli di SIDA</title>
+<link rel="stylesheet" href="/src/css/contratti.css">
 </head>
 <body>
 
-  <div class="toolbar">
-    <span><b>Contratti delle proprietà</b> — SIDA Autosoft Multimedia</span>
-    <span id="istruzioni-stampa"></span>
-    <label class="switch-fronteretro">
-      <input type="checkbox" id="fronte-retro">
-      Stampa fronte-retro allineata
-    </label>
-    <span class="spacer"></span>
-    <a href="./index.html">🎲 Tabellone</a>
-    <a href="./contratti.html" aria-current="page">📄 Contratti</a>
-    <a href="./carte.html">🎴 Imprevisti/Probabilità</a>
-    <a href="./banconote.html">💶 Banconote</a>
-    <button onclick="window.print()">🖨️ Stampa tutto</button>
-  </div>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <img class="brand-logo" src="/resources/logo-sida.svg" alt="SIDA Autosoft Multimedia" width="34" height="17">
+        <span class="brand-name">Il Monopoli di SIDA</span>
+      </div>
+      <h1>Contratti delle propriet&agrave;</h1>
+      <nav class="nav">
+        <a href="./index.html">&#127922; Tabellone</a>
+        <a href="./contratti.html" aria-current="page">&#128196; Contratti</a>
+        <a href="./carte.html">&#127924; Imprevisti/Probabilit&agrave;</a>
+        <a href="./banconote.html">&#128182; Banconote</a>
+      </nav>
+      <div class="pannello">
+        <h2>Opzioni</h2>
+        <label class="opzione">
+          <input type="checkbox" id="fronte-retro">
+          <span>Stampa fronte-retro allineata</span>
+        </label>
+      </div>
+      <div class="pannello">
+        <h2>Come stampare</h2>
+        <p id="istruzioni-stampa"></p>
+      </div>
+      <button class="stampa" onclick="window.print()">&#128424; Stampa tutto</button>
+    </aside>
+
+    <main class="app-main">
 
   <!-- I fogli di carte sono generati da src/render/contratti.ts
        (canoni in src/dati/contratti.ts, nomi in src/dati/caselle.ts) -->
   <div class="sheets" id="sheets"></div>
 
-  <div class="sheets-divider" id="divisore-retro">Retro delle carte — uguale per tutte, da stampare a parte</div>
-  <div class="sheets" id="sheets-retro"></div>
+  <div class="sheets-divider" id="divisore-retro">Retro delle carte — uno per carta, da stampare a parte</div>
+      <div class="sheets" id="sheets-retro"></div>
+    </main>
+  </div>
 
   <script type="module" src="/src/contratti.ts"></script>
 </body>

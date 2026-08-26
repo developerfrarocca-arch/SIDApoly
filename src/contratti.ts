@@ -1,4 +1,3 @@
-import './css/contratti.css';
 import { htmlContrattiFronteRetro, montaContratti, montaRetri } from './render/contratti';
 
 /** Legge un elemento richiesto dalla pagina, con un tipo già non nullable. */

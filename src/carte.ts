@@ -1,4 +1,3 @@
-import './css/carte.css';
 import { montaCarte } from './render/carte';
 
 const fogli = document.getElementById('sheets');

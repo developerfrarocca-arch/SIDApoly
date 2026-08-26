@@ -1,4 +1,3 @@
-import './css/banconote.css';
 import { montaBanconote } from './render/banconote';
 
 const fogli = document.getElementById('sheets');

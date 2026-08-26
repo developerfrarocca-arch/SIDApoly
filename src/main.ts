@@ -1,4 +1,3 @@
-import './css/tabellone.css';
 import { montaTabellone } from './render/tabellone';
 
 const board = document.getElementById('board');
