@@ -17,8 +17,8 @@
   .board{
     width:275mm;height:275mm;
     display:grid;
-    grid-template-columns:repeat(11,var(--cell));
-    grid-template-rows:repeat(11,var(--cell));
+    grid-template-columns:var(--corner) repeat(9,var(--cell)) var(--corner);
+    grid-template-rows:var(--corner) repeat(9,var(--cell)) var(--corner);
     background:var(--cream);
     position:relative;
     flex-shrink:0;
@@ -30,20 +30,23 @@
     background:var(--panel);
   }
   .inner{
-    width:100%;height:100%;
+    position:absolute;left:50%;top:50%;
+    width:var(--cell);height:var(--corner);
     display:flex;flex-direction:column;
     align-items:center;justify-content:flex-start;
     text-align:center;
     padding:.6mm;
+    transform:translate(-50%,-50%);
   }
-  .rot90 .inner{transform:rotate(90deg);}
-  .rot180 .inner{transform:rotate(180deg);}
-  .rot270 .inner{transform:rotate(270deg);}
+  .rot90 .inner{transform:translate(-50%,-50%) rotate(90deg);}
+  .rot180 .inner{transform:translate(-50%,-50%) rotate(180deg);}
+  .rot270 .inner{transform:translate(-50%,-50%) rotate(270deg);}
   /* Gli angoli ruotano di 45° verso il centro; scala ridotta per non uscire dal quadrato della cella. */
-  .rot45 .inner{transform:rotate(45deg) scale(.82);}
-  .rot135 .inner{transform:rotate(135deg) scale(.82);}
-  .rot225 .inner{transform:rotate(225deg) scale(.82);}
-  .rot315 .inner{transform:rotate(315deg) scale(.82);}
+  .corner .inner{width:var(--corner);height:var(--corner);}
+  .rot45 .inner{transform:translate(-50%,-50%) rotate(45deg) scale(.82);}
+  .rot135 .inner{transform:translate(-50%,-50%) rotate(135deg) scale(.82);}
+  .rot225 .inner{transform:translate(-50%,-50%) rotate(225deg) scale(.82);}
+  .rot315 .inner{transform:translate(-50%,-50%) rotate(315deg) scale(.82);}
 
   .bar{width:100%;height:4mm;flex:0 0 auto;border-bottom:.25mm solid var(--line);}
   .dept{
@@ -68,9 +71,9 @@
   .special.card .icon{margin-top:0;}
 
   .corner .inner{justify-content:center;padding:1mm;}
-  .corner .icon{font-size:8mm;line-height:1;}
-  .corner .label{font-size:2.7mm;font-weight:800;text-transform:uppercase;margin-top:1mm;line-height:1.05;}
-  .corner .sub{font-size:1.8mm;margin-top:.8mm;font-style:italic;}
+  .corner .icon{font-size:10.5mm;line-height:1;}
+  .corner .label{font-size:3.4mm;font-weight:800;text-transform:uppercase;margin-top:1.2mm;line-height:1.05;}
+  .corner .sub{font-size:2.3mm;margin-top:1mm;font-style:italic;}
 
   .brown   .bar{background:var(--brown);}
   .lightblue .bar{background:var(--lightblue);}
