@@ -1,16 +1,8 @@
 import { describe, expect, it } from 'vitest';
+import { Casella as Cella } from '../componenti/tabellone/Casella';
 import { CASELLE, NUMERO_CASELLE, type Casella, type Gruppo } from '../dati/caselle';
-import {
-  classi,
-  contenuto,
-  esc,
-  htmlCasella,
-  montaTabellone,
-  posizione,
-  prezzo,
-  valuta,
-  type Rotazione,
-} from './tabellone';
+import { rendi } from '../test/rendi';
+import { classi, posizione, prezzo, valuta, type Rotazione } from './tabellone';
 
 const indici = [...Array(NUMERO_CASELLE).keys()];
 const ANGOLI = [0, 10, 20, 30];
@@ -155,15 +147,19 @@ describe('markup', () => {
     expect(prezzo('Paga 200 BP')).toBe('Paga 200\u00a0BP');
   });
 
-  it('fa escape dei caratteri HTML', () => {
-    expect(esc('R&D <sviluppo>')).toBe('R&amp;D &lt;sviluppo&gt;');
-    const html = contenuto({
-      tipo: 'proprieta',
-      gruppo: 'red',
-      reparto: 'R&D',
-      nome: '<script>',
-      prezzo: 100,
-    });
+  it('fa escape dei caratteri HTML nei nomi che arrivano dai dati', () => {
+    const html = rendi(
+      <Cella
+        indice={1}
+        casella={{
+          tipo: 'proprieta',
+          gruppo: 'red',
+          reparto: 'R&D',
+          nome: '<script>',
+          prezzo: 100,
+        }}
+      />,
+    );
     expect(html).toContain('R&amp;D');
     expect(html).not.toContain('<script>');
   });
@@ -180,12 +176,26 @@ describe('markup', () => {
   it('non rende modificabile nessuna casella', () => {
     const proprieta = CASELLE.findIndex((c) => c.tipo === 'proprieta');
     const carta = CASELLE.findIndex((c) => c.tipo === 'carta');
-    expect(htmlCasella(CASELLE[proprieta]!, proprieta)).not.toContain('contenteditable');
-    expect(htmlCasella(CASELLE[carta]!, carta)).not.toContain('contenteditable');
+    expect(rendi(<Cella casella={CASELLE[proprieta]!} indice={proprieta} />)).not.toContain(
+      'contenteditable',
+    );
+    expect(rendi(<Cella casella={CASELLE[carta]!} indice={carta} />)).not.toContain(
+      'contenteditable',
+    );
   });
 });
 
-describe('montaTabellone', () => {
+describe('le 40 caselle', () => {
+  /** La plancia come la monta la pagina: solo le celle, senza il centro. */
+  function plancia(): HTMLElement {
+    const board = document.createElement('div');
+    board.className = 'board';
+    for (const [i, casella] of CASELLE.entries()) {
+      board.insertAdjacentHTML('beforeend', rendi(<Cella casella={casella} indice={i} />));
+    }
+    return board;
+  }
+
   /** Firma del tabellone: classi + posizione + testo di ogni cella, ordinata. */
   function firma(board: HTMLElement): string {
     return [...board.querySelectorAll(':scope > .cell')]
@@ -205,14 +215,10 @@ describe('montaTabellone', () => {
     return h;
   }
 
-  it('crea 40 celle senza toccare il centro già presente', () => {
-    const board = document.createElement('div');
-    board.className = 'board';
-    board.innerHTML = '<div class="center">centro</div>';
-    montaTabellone(board);
+  it('sono 40, coi tipi giusti', () => {
+    const board = plancia();
 
     expect(board.querySelectorAll(':scope > .cell')).toHaveLength(NUMERO_CASELLE);
-    expect(board.querySelector('.center')).not.toBeNull();
     expect(board.querySelectorAll('.corner')).toHaveLength(4);
     expect(board.querySelectorAll('.prop')).toHaveLength(22);
     expect(board.querySelectorAll('.special')).toHaveLength(14);
@@ -222,12 +228,8 @@ describe('montaTabellone', () => {
   it('produce lo stesso tabellone della versione statica verificata nel browser', () => {
     // Valori catturati dal tabellone approvato (con le 4 caselle Consulenza): se cambiano,
     // il tabellone stampato non è più identico a quello approvato.
-    const board = document.createElement('div');
-    montaTabellone(board);
-    const f = firma(board);
-    expect(f.length).toBe(3998);
-    // 216464882: aggiornato quando "60 BP" è diventato "60&nbsp;BP" (stessa
-    // lunghezza, un carattere diverso), vedi valuta() in tabellone.ts
-    expect(hash(f)).toBe(216464882);
+    const f = firma(plancia());
+    expect(f.length).toBe(3958);
+    expect(hash(f)).toBe(-874641370);
   });
 });

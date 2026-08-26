@@ -4,11 +4,11 @@ import {
   BANCONOTE_PER_FOGLIO,
   elencoBanconote,
   fogli,
-  htmlBanconota,
-  htmlBanconote,
-  montaBanconote,
   seriale,
 } from './banconote';
+import { Banconota } from '../componenti/banconote/Banconota';
+import { Banconote } from '../pagine/Banconote';
+import { monta, rendi } from '../test/rendi';
 
 describe('dati dei tagli', () => {
   it('ha i 7 tagli richiesti, in ordine crescente', () => {
@@ -51,7 +51,7 @@ describe('seriale', () => {
 
 describe('markup di una banconota', () => {
   it('stampa il valore, il taglio in BP e il logo Edenpurple', () => {
-    const html = htmlBanconota({ taglio: { valore: 50, colore: '#E4699D' }, serie: 3 });
+    const html = rendi(<Banconota copia={{ taglio: { valore: 50, colore: '#E4699D' }, serie: 3 }} />);
     expect(html).toContain('50');
     expect(html).toContain('BP');
     expect(html).toContain('Buoni Pasto');
@@ -77,7 +77,7 @@ describe('impaginazione', () => {
   });
 
   it('numera i fogli e indica il taglio in ognuno', () => {
-    const html = htmlBanconote();
+    const html = rendi(<Banconote />);
     expect(html).toContain('foglio 1');
     expect(html).toContain(`foglio ${TAGLI.length}`);
     expect(html).not.toContain(`foglio ${TAGLI.length + 1}`);
@@ -88,8 +88,7 @@ describe('impaginazione', () => {
 
 describe('montaBanconote', () => {
   it('crea un foglio per taglio e tutte le banconote nel contenitore', () => {
-    const root = document.createElement('div');
-    montaBanconote(root);
+    const root = monta(<Banconote />);
     expect(root.querySelectorAll('.sheet')).toHaveLength(TAGLI.length);
     expect(root.querySelectorAll('.bill')).toHaveLength(TAGLI.length * COPIE_PER_TAGLIO);
   });

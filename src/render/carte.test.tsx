@@ -5,12 +5,12 @@ import {
   MAZZI,
   carteMazzi,
   fogli,
-  htmlCarte,
-  htmlCartaFronte,
   fogliPerMazzo,
-  montaCarte,
 } from './carte';
 import { valuta } from './tabellone';
+import { CartaMazzo as Carta } from '../componenti/carte/CartaMazzo';
+import { Carte } from '../pagine/Carte';
+import { monta, rendi } from '../test/rendi';
 
 const CARTE = carteMazzi();
 
@@ -41,7 +41,7 @@ describe('carteMazzi', () => {
 
 describe('markup del fronte', () => {
   it('stampa il testo e il nome del mazzo in testa', () => {
-    const html = htmlCartaFronte(CARTE[0]!);
+    const html = rendi(<Carta carta={CARTE[0]!} />);
     expect(html).toContain('card-probabilita');
     expect(html).toContain(valuta(CARTE_PROBABILITA[0]!.testo));
     expect(html).toContain('Probabilità');
@@ -50,29 +50,27 @@ describe('markup del fronte', () => {
   });
 
   it('non stacca mai BP dal suo numero, nemmeno a fine riga', () => {
-    const html = htmlCarte();
+    const html = rendi(<Carte />);
     // in tutte e 32 le carte, un importo non deve avere spazi normali fra numero e valuta
     expect(html).not.toMatch(/\d BP/);
     const conImporti = CARTE.filter((c) => /\d\s+BP/.test(c.carta.testo));
     expect(conImporti.length).toBeGreaterThan(0);
     for (const c of conImporti) {
-      expect(htmlCartaFronte(c), c.carta.testo).toMatch(/\d\u00a0BP/);
+      expect(rendi(<Carta carta={c} />), c.carta.testo).toMatch(/\d\u00a0BP/);
     }
   });
 
   it('non stampa emoji: sul cartoncino colorato il bianco non è inchiostro', () => {
-    const html = htmlCarte();
-    expect(html).not.toContain('❓');
-    expect(html).not.toContain('🎲');
-    expect(html).not.toContain('card-icon');
+    const carte = CARTE.map((c) => rendi(<Carta carta={c} />)).join('');
+    expect(carte).not.toContain('❓');
+    expect(carte).not.toContain('🎲');
+    expect(carte).not.toContain('card-icon');
   });
 
   it('rende sicuro il testo delle carte', () => {
-    const html = htmlCartaFronte({
-      mazzo: MAZZI[0]!,
-      carta: { testo: '<script>x</script> & co' },
-      indice: 1,
-    });
+    const html = rendi(
+      <Carta carta={{ mazzo: MAZZI[0]!, carta: { testo: '<script>x</script> & co' }, indice: 1 }} />,
+    );
     expect(html).not.toContain('<script>');
     expect(html).toContain('&lt;script&gt;');
     expect(html).toContain('&amp; co');
@@ -94,7 +92,7 @@ describe('impaginazione', () => {
   });
 
   it('numera i fogli', () => {
-    const html = htmlCarte();
+    const html = rendi(<Carte />);
     expect(html).toContain('foglio 1');
     expect(html).toContain('foglio 2');
     expect(html).not.toContain('foglio 3');
@@ -119,7 +117,7 @@ describe('impaginazione', () => {
   });
 
   it('scrive il nome del mazzo nel piede di ogni foglio', () => {
-    const html = htmlCarte();
+    const html = rendi(<Carte />);
     expect(html).toContain('Probabilità · foglio 1');
     expect(html).toContain('Imprevisti · foglio 2');
   });
@@ -127,8 +125,7 @@ describe('impaginazione', () => {
 
 describe('montaCarte', () => {
   it('crea i fogli con tutte le carte, senza retri', () => {
-    const fronti = document.createElement('div');
-    montaCarte(fronti);
+    const fronti = monta(<Carte />);
     expect(fronti.querySelectorAll('.sheet')).toHaveLength(2);
     expect(fronti.querySelectorAll('.card')).toHaveLength(32);
     expect(fronti.querySelectorAll('.sheet-retro')).toHaveLength(0);
@@ -136,16 +133,14 @@ describe('montaCarte', () => {
   });
 
   it('tiene i due mazzi in blocco, Probabilità e poi Imprevisti', () => {
-    const fronti = document.createElement('div');
-    montaCarte(fronti);
+    const fronti = monta(<Carte />);
     const mazzi = [...fronti.querySelectorAll('.card')].map((c) => c.getAttribute('data-mazzo'));
     expect(mazzi.slice(0, 16).every((m) => m === 'probabilita')).toBe(true);
     expect(mazzi.slice(16).every((m) => m === 'imprevisti')).toBe(true);
   });
 
   it('dà a ogni foglio un solo mazzo, marcato sul foglio stesso', () => {
-    const fronti = document.createElement('div');
-    montaCarte(fronti);
+    const fronti = monta(<Carte />);
     const sezioni = [...fronti.querySelectorAll('section.sheet')];
     expect(sezioni.map((s) => s.getAttribute('data-mazzo'))).toEqual(['probabilita', 'imprevisti']);
     for (const s of sezioni) {

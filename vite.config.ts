@@ -1,6 +1,8 @@
+import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
+  plugins: [react()],
   // Percorsi relativi nell'output: così dist/index.html si apre anche con
   // un doppio clic (file://), senza bisogno di un server web.
   base: './',
@@ -22,6 +24,6 @@ export default defineConfig({
   },
   test: {
     environment: 'jsdom',
-    include: ['src/**/*.test.ts'],
+    include: ['src/**/*.test.ts', 'src/**/*.test.tsx'],
   },
 });

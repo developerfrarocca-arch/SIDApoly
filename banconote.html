@@ -8,37 +8,9 @@
 </head>
 <body>
 
-  <div class="app">
-    <aside class="sidebar">
-      <div class="brand">
-        <img class="brand-logo" src="/resources/logo-sida.svg" alt="SIDA Autosoft Multimedia" width="34" height="17">
-        <span class="brand-name">Il Monopoli di SIDA</span>
-      </div>
-      <h1>Banconote dei Buoni Pasto</h1>
-      <nav class="nav">
-        <a href="./index.html">&#127922; Tabellone</a>
-        <a href="./contratti.html">&#128196; Contratti</a>
-        <a href="./carte.html">&#127924; Imprevisti/Probabilit&agrave;</a>
-        <a href="./banconote.html" aria-current="page">&#128182; Banconote</a>
-      </nav>
-      <div class="pannello">
-        <h2>Come stampare</h2>
-        <p>Un foglio per ogni taglio (5, 10, 20, 50, 100, 200, 500 BP), 10 banconote a
-          foglio, tutte attaccate: taglia lungo le <b>linee tratteggiate</b>.
-          Formato <b>A4 verticale</b>.</p>
-        <p>Se ti servono pi&ugrave; copie di un taglio, ristampa solo quel foglio.</p>
-      </div>
-      <button class="stampa" onclick="window.print()">&#128424; Stampa tutto</button>
-    </aside>
+  <!-- La pagina è composta dai componenti in src/pagine e src/componenti -->
+  <div id="app"></div>
 
-    <main class="app-main">
-
-  <!-- I fogli di banconote sono generati da src/render/banconote.ts
-       (tagli in src/dati/banconote.ts) -->
-      <div class="sheets" id="sheets"></div>
-    </main>
-  </div>
-
-  <script type="module" src="/src/banconote.ts"></script>
+  <script type="module" src="/src/banconote.tsx"></script>
 </body>
 </html>

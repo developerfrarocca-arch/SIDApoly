@@ -1,11 +1,8 @@
-/* Genera le carte dei mazzi Probabilità e Imprevisti a partire dai testi in
-   src/dati/carte.ts. Come per tabellone, contratti e banconote, le funzioni
-   sono pure tranne montaCarte: così il foglio stampabile è verificabile
-   senza aprire il browser.
-   Le carte sono a una faccia sola: il dorso è il cartoncino su cui si stampa. */
+/* I due mazzi Probabilità e Imprevisti: composizione dei mazzi e impaginazione.
+   Funzioni pure, verificabili senza browser; il markup lo fa il componente in
+   src/componenti/carte. */
 
 import { CARTE_IMPREVISTI, CARTE_PROBABILITA, type Carta } from '../dati/carte';
-import { esc, valuta } from './tabellone';
 
 /** Chiave di un mazzo: usata come classe CSS e attributo dati. */
 export type ChiaveMazzo = 'probabilita' | 'imprevisti';
@@ -47,16 +44,6 @@ export function carteMazzi(mazzi: readonly Mazzo[] = MAZZI): CartaMazzo[] {
   return out;
 }
 
-/** Il markup del fronte di una carta: orizzontale, nome del mazzo in testa. */
-export function htmlCartaFronte(c: CartaMazzo): string {
-  return (
-    `<article class="card card-${c.mazzo.chiave}" data-mazzo="${c.mazzo.chiave}" data-indice="${c.indice}">` +
-    `<div class="card-head"><span class="card-mazzo">${esc(c.mazzo.nome)}</span></div>` +
-    `<div class="card-testo">${valuta(esc(c.carta.testo))}</div>` +
-    '</article>'
-  );
-}
-
 /** Divide le carte in fogli da CARTE_PER_FOGLIO, così schermo e stampa coincidono. */
 export function fogli(carte: readonly CartaMazzo[], perFoglio = CARTE_PER_FOGLIO): CartaMazzo[][] {
   if (!Number.isInteger(perFoglio) || perFoglio < 1) {
@@ -83,32 +70,4 @@ export function fogliPerMazzo(
     else gruppi.set(c.mazzo.chiave, [c]);
   }
   return [...gruppi.values()].flatMap((gruppo) => fogli(gruppo, perFoglio));
-}
-
-/** Il markup di tutti i fogli di fronti, un mazzo per foglio. */
-export function htmlCarte(
-  carte: readonly CartaMazzo[] = carteMazzi(),
-  perFoglio = CARTE_PER_FOGLIO,
-): string {
-  return fogliPerMazzo(carte, perFoglio)
-    .map((foglio, n) => {
-      const mazzo = foglio[0]?.mazzo.nome ?? '';
-      return (
-        `<section class="sheet" data-mazzo="${foglio[0]?.mazzo.chiave ?? ''}">` +
-        `<div class="sheet-grid">${foglio.map(htmlCartaFronte).join('')}</div>` +
-        '<div class="sheet-foot">Il Monopoli di SIDA — SIDA Autosoft Multimedia · ' +
-        `${esc(mazzo)} · foglio ${n + 1}</div>` +
-        '</section>'
-      );
-    })
-    .join('');
-}
-
-/** Inserisce i fogli di fronti nel contenitore della pagina. */
-export function montaCarte(
-  root: HTMLElement,
-  carte: readonly CartaMazzo[] = carteMazzi(),
-  perFoglio = CARTE_PER_FOGLIO,
-): void {
-  root.insertAdjacentHTML('beforeend', htmlCarte(carte, perFoglio));
 }

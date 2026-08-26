@@ -57,7 +57,7 @@
 
 /* Sfondo spento: la carta resta senza fondo, per stampare su cartoncino
    già colorato senza ristampare il colore. */
-body.senza-sfondo .card{background:none;}
+.senza-sfondo .card{background:none;}
 
 /* Titolo in testa, centrato: solo inchiostro, così si stampa su qualunque
    cartoncino. Il filetto lo separa dal testo anche senza sfondo. */

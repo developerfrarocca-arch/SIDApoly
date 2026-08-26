@@ -14,21 +14,15 @@ import {
   bp,
   classiCarta,
   contratti,
-  corpoConsulenza,
-  corpoServizio,
   fogli,
-  htmlContratti,
-  htmlContrattiFronteRetro,
-  htmlContratto,
-  htmlRetri,
-  htmlRetroCarta,
   ipotecaCarta,
-  montaContratti,
-  montaContrattiFronteRetro,
-  montaRetri,
   numero,
   specchiaRighe,
 } from './contratti';
+import { CartaContratto } from '../componenti/contratti/CartaContratto';
+import { RetroContratto } from '../componenti/contratti/RetroContratto';
+import { FogliContratti } from '../pagine/Contratti';
+import { monta, rendi } from '../test/rendi';
 
 const CARTE = contratti();
 
@@ -127,7 +121,7 @@ describe('markup delle carte', () => {
   });
 
   it('stampa prezzo, canoni, costi e ipoteca di una proprietà', () => {
-    const carta = htmlContratto(CARTE.find((c) => c.indice === 39)!);
+    const carta = rendi(<CartaContratto carta={CARTE.find((c) => c.indice === 39)!} />);
     expect(carta).toContain('Questo contratto vale <b>1.000\u00a0BP</b>');
     expect(carta).toContain('SIDA PagoPa');
     expect(carta).toContain('Sportello');
@@ -138,15 +132,15 @@ describe('markup delle carte', () => {
   });
 
   it('usa il testo dei dadi per Enel e Impianto clima', () => {
-    const carta = htmlContratto(CARTE.find((c) => c.tipo === 'servizio')!);
+    const carta = rendi(<CartaContratto carta={CARTE.find((c) => c.tipo === 'servizio')!} />);
     expect(carta).toContain('4 volte');
     expect(carta).toContain('10 volte');
     expect(carta).not.toContain('Aggiornamenti');
   });
 
   it('rimpicciolisce i nomi lunghi, che devono stare su una riga sola', () => {
-    const lungo = htmlContratto(CARTE.find((c) => c.casella.nome === 'SIDA Drive Controller')!);
-    const corto = htmlContratto(CARTE.find((c) => c.casella.nome === 'Tachigrafo')!);
+    const lungo = rendi(<CartaContratto carta={CARTE.find((c) => c.casella.nome === 'SIDA Drive Controller')!} />);
+    const corto = rendi(<CartaContratto carta={CARTE.find((c) => c.casella.nome === 'Tachigrafo')!} />);
     expect(lungo).toContain('class="title lungo"');
     expect(corto).toContain('class="title"');
   });
@@ -159,18 +153,18 @@ describe('markup delle carte', () => {
 
   it('lascia il nome come sta nei dati, senza forzare le maiuscole', () => {
     const aeb = CARTE.find((c) => c.casella.nome === 'Manuale AeB')!;
-    expect(htmlContratto(aeb)).toContain('Manuale AeB');
-    expect(htmlRetroCarta(aeb)).toContain('Manuale AeB');
+    expect(rendi(<CartaContratto carta={aeb} />)).toContain('Manuale AeB');
+    expect(rendi(<RetroContratto carta={aeb} />)).toContain('Manuale AeB');
   });
 
   it('non rende i nomi modificabili', () => {
-    expect(htmlContratto(CARTE[0]!)).not.toContain('contenteditable');
+    expect(rendi(<CartaContratto carta={CARTE[0]!} />)).not.toContain('contenteditable');
   });
 });
 
 describe('segno grande', () => {
   it('lo mettono solo le carte che hanno già un\'icona sul tabellone', () => {
-    const conSegno = CARTE.filter((c) => htmlContratto(c).includes('class="mark"'));
+    const conSegno = CARTE.filter((c) => rendi(<CartaContratto carta={c} />).includes('class="mark"'));
     expect(conSegno).toHaveLength(6);
     expect(conSegno.map((c) => c.tipo).sort()).toEqual([
       'consulenza',
@@ -181,22 +175,23 @@ describe('segno grande', () => {
       'servizio',
     ]);
     for (const c of CARTE.filter((x) => x.tipo === 'proprieta')) {
-      expect(htmlContratto(c), c.casella.nome).not.toContain('class="mark"');
+      expect(rendi(<CartaContratto carta={c} />), c.casella.nome).not.toContain('class="mark"');
     }
   });
 
   it('usa l\'icona della casella, senza ripeterla nella riga del reparto', () => {
     const consulenza = CARTE.find((c) => c.tipo === 'consulenza')!;
-    const html = htmlContratto(consulenza);
+    const html = rendi(<CartaContratto carta={consulenza} />);
     expect(html).toContain(`<div class="mark">${consulenza.casella.icona}</div>`);
     expect(html).toContain('<div class="dept">Referente di zona</div>');
     const servizio = CARTE.find((c) => c.tipo === 'servizio')!;
-    expect(htmlContratto(servizio)).toContain('<div class="dept">Servizi di sede</div>');
+    expect(rendi(<CartaContratto carta={servizio} />)).toContain('<div class="dept">Servizi di sede</div>');
   });
 
-  it('senza icona non lascia un contenitore vuoto', () => {
-    expect(corpoConsulenza()).not.toContain('mark');
-    expect(corpoServizio()).not.toContain('mark');
+  it('le proprietà non hanno nessun contenitore del segno, nemmeno vuoto', () => {
+    for (const c of CARTE.filter((x) => x.tipo === 'proprieta')) {
+      expect(rendi(<CartaContratto carta={c} />), c.casella.nome).not.toContain('mark');
+    }
   });
 });
 
@@ -215,18 +210,17 @@ describe('impaginazione', () => {
   });
 
   it('numera i fogli', () => {
-    const html = htmlContratti();
+    const html = rendi(<FogliContratti fronteRetro={false} />);
     expect(html).toContain('foglio 1');
     expect(html).toContain('foglio 4');
     expect(html).not.toContain('foglio 5');
   });
 });
 
-describe('montaContratti', () => {
+describe('fogli a pile separate', () => {
   it('crea i fogli e le 28 carte nel contenitore', () => {
-    const root = document.createElement('div');
-    montaContratti(root);
-    expect(root.querySelectorAll('.sheet')).toHaveLength(4);
+    const root = monta(<FogliContratti fronteRetro={false} />);
+    expect(root.querySelectorAll('.sheet:not(.sheet-retro)')).toHaveLength(4);
     expect(root.querySelectorAll('.contract')).toHaveLength(28);
     expect(root.querySelectorAll('.contract .mortgage')).toHaveLength(28);
     // ogni carta è collegata alla sua casella sul tabellone
@@ -240,7 +234,7 @@ describe('montaContratti', () => {
 describe('retro delle carte', () => {
   it('riporta nome e importo dell\'ipoteca della propria carta', () => {
     const carta = CARTE.find((c) => c.tipo === 'proprieta')!;
-    const retro = htmlRetroCarta(carta);
+    const retro = rendi(<RetroContratto carta={carta} />);
     expect(retro).toContain('contract-back');
     expect(retro).toContain(`data-casella="${carta.indice}"`);
     expect(retro).toContain('Ipotecato');
@@ -249,7 +243,7 @@ describe('retro delle carte', () => {
   });
 
   it('ha un retro diverso per ogni carta, abbinato al proprio fronte', () => {
-    const retri = CARTE.map(htmlRetroCarta);
+    const retri = CARTE.map((c) => rendi(<RetroContratto carta={c} />));
     expect(new Set(retri).size).toBe(CARTE.length);
     const indici = retri.map((r) => Number(/data-casella="(\d+)"/.exec(r)![1]));
     expect(indici).toEqual(CARTE.map((c) => c.indice));
@@ -268,8 +262,7 @@ describe('retro delle carte', () => {
   });
 
   it('nei fogli a pile separate tiene l\'ordine dei fronti', () => {
-    const root = document.createElement('div');
-    montaRetri(root);
+    const root = monta(<FogliContratti fronteRetro={false} />);
     const indici = [...root.querySelectorAll('.contract-back')].map((e) =>
       Number(e.getAttribute('data-casella')),
     );
@@ -277,15 +270,14 @@ describe('retro delle carte', () => {
   });
 
   it('segue lo stesso numero di fogli e carte per foglio dei fronti', () => {
-    const html = htmlRetri();
+    const html = rendi(<FogliContratti fronteRetro={false} />);
     expect(html).toContain('retro 1');
     expect(html).toContain('retro 4');
     expect(html).not.toContain('retro 5');
   });
 
   it('monta lo stesso numero di retri dei fronti, in fogli separati', () => {
-    const root = document.createElement('div');
-    montaRetri(root);
+    const root = monta(<FogliContratti fronteRetro={false} />);
     expect(root.querySelectorAll('.sheet-retro')).toHaveLength(4);
     expect(root.querySelectorAll('.contract-back')).toHaveLength(28);
   });
@@ -320,8 +312,7 @@ describe('specchiaRighe', () => {
 
 describe('fogli fronte-retro allineati', () => {
   it('mette ogni retro dietro al proprio fronte, specchiando le colonne', () => {
-    const root = document.createElement('div');
-    montaContrattiFronteRetro(root);
+    const root = monta(<FogliContratti fronteRetro />);
     const sezioni = [...root.querySelectorAll('section.sheet')];
     for (let i = 0; i < sezioni.length; i += 2) {
       const fronti = [...sezioni[i]!.querySelectorAll('.contract')].map((e) =>
@@ -340,7 +331,7 @@ describe('fogli fronte-retro allineati', () => {
   });
 
   it('alterna un foglio di fronti e uno di retro per ogni gruppo di carte', () => {
-    const html = htmlContrattiFronteRetro();
+    const html = rendi(<FogliContratti fronteRetro />);
     expect(html.indexOf('foglio 1')).toBeLessThan(html.indexOf('retro 1'));
     expect(html.indexOf('retro 1')).toBeLessThan(html.indexOf('foglio 2'));
     expect(html.indexOf('foglio 4')).toBeLessThan(html.indexOf('retro 4'));
@@ -349,8 +340,7 @@ describe('fogli fronte-retro allineati', () => {
   });
 
   it('monta lo stesso numero di fronti e retri, nello stesso contenitore', () => {
-    const root = document.createElement('div');
-    montaContrattiFronteRetro(root);
+    const root = monta(<FogliContratti fronteRetro />);
     expect(root.querySelectorAll('.sheet:not(.sheet-retro)')).toHaveLength(4);
     expect(root.querySelectorAll('.sheet-retro')).toHaveLength(4);
     expect(root.querySelectorAll('.contract')).toHaveLength(28);
