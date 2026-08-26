@@ -29,8 +29,12 @@ export const CARTE_PER_FOGLIO = 9;
 /** Colonne della griglia di un foglio (vedi .sheet-grid in contratti.css). */
 export const COLONNE = 3;
 
-/** Oltre questa lunghezza il nome viene stampato più piccolo per stare in due righe. */
-const NOME_LUNGO = 16;
+/**
+ * Oltre questa lunghezza il nome viene stampato più piccolo, per restare su una
+ * riga sola: "SIDA Drive Controller" (21 caratteri) è il nome più lungo che la
+ * carta riesce a contenere, vedi il test sulla larghezza dei nomi.
+ */
+const NOME_LUNGO = 18;
 
 /**
  * Tutte le carte contratto, nell'ordine del tabellone:
@@ -223,12 +227,11 @@ export function montaContratti(
  * Essendo specifico della carta, ogni retro va abbinato al proprio fronte.
  */
 export function htmlRetroCarta(c: Contratto): string {
-  const classe = c.casella.nome.length > NOME_LUNGO ? 'back-name lungo' : 'back-name';
   return (
     `<article class="contract-back" data-casella="${c.indice}">` +
     '<div class="back-box">' +
     '<div class="back-title">Ipotecato</div>' +
-    `<div class="${classe}">${esc(c.casella.nome)}</div>` +
+    `<div class="back-name">${esc(c.casella.nome)}</div>` +
     '<div class="back-amount"><span>Importo ipoteca</span>' +
     `<b>${esc(bp(ipotecaCarta(c)))}</b></div>` +
     '<div class="back-star">★</div>' +

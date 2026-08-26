@@ -56,11 +56,11 @@
   border:.3mm solid var(--line);
   background:#EDEAE0;
   text-align:center;
-  font-size:2.3mm;line-height:1.1;
+  font-size:3mm;line-height:1.1;
   padding:1.1mm .5mm;
   flex:0 0 auto;
 }
-.contract .value b{font-size:2.9mm;}
+.contract .value b{font-size:3.75mm;}
 
 /* Fascia colorata con il nome del prodotto */
 .contract .head{
@@ -71,20 +71,20 @@
   flex:0 0 auto;
 }
 .contract .kind{
-  font-size:1.9mm;font-weight:700;text-transform:uppercase;letter-spacing:.6px;
+  font-size:2.45mm;font-weight:700;text-transform:uppercase;letter-spacing:.6px;
   line-height:1;
 }
 .contract .title{
   margin:.6mm 0 0;
-  font-size:3.9mm;line-height:1.05;
-  font-weight:800;text-transform:uppercase;letter-spacing:.2px;
+  font-size:5.05mm;line-height:1.05;
+  font-weight:800;letter-spacing:.2px;
   padding:0 .5mm;
-  overflow-wrap:anywhere;
+  white-space:nowrap;
 }
-.contract .title.lungo{font-size:3.1mm;}
+.contract .title.lungo{font-size:4.6mm;}
 .contract .dept{
   margin-top:.5mm;
-  font-size:1.9mm;font-weight:700;text-transform:uppercase;letter-spacing:.4px;
+  font-size:2.45mm;font-weight:700;text-transform:uppercase;letter-spacing:.4px;
   line-height:1;
 }
 .contract.scuro .head{color:#fff;}
@@ -105,34 +105,34 @@
   display:flex;flex-direction:column;
   padding:0 .8mm;
 }
-.contract table{width:100%;border-collapse:collapse;font-size:2.25mm;}
+.contract table{width:100%;border-collapse:collapse;font-size:2.9mm;}
 .contract table th,.contract table td{padding:.25mm 0;vertical-align:baseline;}
 .contract .rents{margin-top:1.2mm;}
 .contract .rents th{
-  text-align:left;font-weight:800;white-space:nowrap;width:11mm;
+  text-align:left;font-weight:800;white-space:nowrap;width:14mm;
 }
 .contract .rents td{text-align:left;}
 .contract .rents .v{text-align:right;font-weight:700;white-space:nowrap;}
 
 .contract .rule{
   margin:1.4mm 0 0;
-  font-size:1.95mm;line-height:1.2;text-align:justify;
+  font-size:2.5mm;line-height:1.2;text-align:justify;
   hyphens:auto;
 }
 .contract .dice{margin-top:1mm;}
-.contract .dice .rule{margin-top:1.6mm;font-size:2.1mm;line-height:1.25;}
+.contract .dice .rule{margin-top:1.6mm;font-size:2.7mm;line-height:1.25;}
 
 .contract .costs{margin-top:1.6mm;}
 .contract .costs th{text-align:left;font-weight:700;}
 .contract .costs .v{text-align:right;font-weight:800;white-space:nowrap;}
 .contract .costs .plus{
-  text-align:center;font-size:1.9mm;font-style:italic;color:#444;padding-top:0;
+  text-align:center;font-size:2.45mm;font-style:italic;color:#444;padding-top:0;
 }
 
 .contract .mortgage{
   margin-top:auto;
   display:flex;align-items:baseline;gap:1mm;
-  font-size:2.1mm;font-weight:700;
+  font-size:2.7mm;font-weight:700;
   padding-top:1.4mm;
 }
 .contract .mortgage .dots{
@@ -166,21 +166,20 @@
 }
 .contract-back .back-name{
   width:100%;margin-top:5mm;
-  font-size:3.4mm;font-weight:800;text-transform:uppercase;line-height:1.15;
+  font-size:3.4mm;font-weight:800;line-height:1.15;
   border-bottom:.3mm solid var(--red);
   padding-bottom:2mm;
 }
-.contract-back .back-name.lungo{font-size:2.8mm;}
 .contract-back .back-amount{
   width:100%;margin-top:6mm;
   display:flex;align-items:baseline;justify-content:space-between;gap:2mm;
-  font-size:2.7mm;
+  font-size:3mm;
 }
 .contract-back .back-amount b{font-size:3.1mm;white-space:nowrap;}
 .contract-back .back-star{margin-top:7mm;font-size:3.6mm;line-height:1;}
 .contract-back .back-note{
   margin:auto 0 0;padding-top:4mm;
-  font-size:2.2mm;line-height:1.35;font-weight:700;font-style:italic;
+  font-size:2.5mm;line-height:1.35;font-weight:700;font-style:italic;
 }
 /* Cella vuota: tiene il posto quando la riga da specchiare non e' piena. */
 .back-vuoto{}

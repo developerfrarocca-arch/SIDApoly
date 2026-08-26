@@ -142,11 +142,23 @@ describe('markup delle carte', () => {
     expect(carta).not.toContain('Aggiornamenti');
   });
 
-  it('rimpicciolisce i nomi lunghi', () => {
+  it('rimpicciolisce i nomi lunghi, che devono stare su una riga sola', () => {
     const lungo = htmlContratto(CARTE.find((c) => c.casella.nome === 'SIDA Drive Controller')!);
     const corto = htmlContratto(CARTE.find((c) => c.casella.nome === 'Tachigrafo')!);
     expect(lungo).toContain('class="title lungo"');
     expect(corto).toContain('class="title"');
+  });
+
+  it('non ha nomi troppo lunghi per la carta', () => {
+    for (const c of CARTE) {
+      expect(c.casella.nome.length, c.casella.nome).toBeLessThanOrEqual(22);
+    }
+  });
+
+  it('lascia il nome come sta nei dati, senza forzare le maiuscole', () => {
+    const aeb = CARTE.find((c) => c.casella.nome === 'Manuale AeB')!;
+    expect(htmlContratto(aeb)).toContain('Manuale AeB');
+    expect(htmlRetroCarta(aeb)).toContain('Manuale AeB');
   });
 
   it('non rende i nomi modificabili', () => {
