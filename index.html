@@ -22,11 +22,20 @@
         <a href="./banconote.html">&#128182; Banconote</a>
       </nav>
       <div class="pannello">
+        <h2>Zoom</h2>
+        <div class="zoom">
+          <button type="button" id="zoom-meno" title="Riduci">&minus;</button>
+          <span id="zoom-valore">100%</span>
+          <button type="button" id="zoom-piu" title="Ingrandisci">+</button>
+        </div>
+        <button type="button" class="zoom-adatta" id="zoom-adatta">Adatta alla finestra</button>
+      </div>
+      <div class="pannello">
         <h2>Come stampare</h2>
         <p>Un foglio solo, formato <b>A3 orizzontale</b>: plancia e pannello delle
           regole stanno affiancati sullo stesso foglio.</p>
-        <p>Se la plancia non entra nella finestra, scorri in orizzontale: in stampa
-          esce comunque intera.</p>
+        <p>A schermo la plancia è rimpicciolita per stare nella finestra;
+          in stampa esce a grandezza naturale.</p>
       </div>
       <button class="stampa" onclick="window.print()">&#128424; Stampa tabellone</button>
     </aside>

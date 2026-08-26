@@ -87,6 +87,27 @@ body{
 
 .opzione + .opzione{margin-top:8px;}
 
+/* Comandi dello zoom: valgono solo per lo schermo, la stampa li ignora. */
+.zoom{display:flex;align-items:center;gap:8px;}
+.zoom button{
+  flex:0 0 auto;width:30px;height:28px;
+  background:rgba(255,255,255,.12);color:#fff;
+  border:1px solid rgba(255,255,255,.35);border-radius:5px;
+  font-size:16px;font-weight:800;line-height:1;cursor:pointer;
+}
+.zoom button:hover{background:rgba(255,255,255,.24);border-color:var(--gold);color:var(--gold);}
+.zoom span{
+  flex:1 1 auto;text-align:center;
+  font-weight:800;font-variant-numeric:tabular-nums;
+}
+.zoom-adatta{
+  margin-top:8px;width:100%;
+  background:none;color:#fff;
+  border:1px solid rgba(255,255,255,.35);border-radius:5px;
+  padding:6px 10px;font:inherit;font-weight:700;cursor:pointer;
+}
+.zoom-adatta:hover{border-color:var(--gold);color:var(--gold);}
+
 /* Il foglio non si stringe: se la finestra è stretta scorre, non si deforma. */
 .app-main{flex:1 1 auto;min-width:0;overflow-x:auto;}
 

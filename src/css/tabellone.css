@@ -1,7 +1,10 @@
   @import './comune.css';
 
   /* ---------- Pagina A3 orizzontale ---------- */
-  .page-wrap{padding:24px;overflow:auto;}
+  /* Alto quanto la finestra: se si ingrandisce la plancia oltre l'adattamento,
+     la barra di scorrimento orizzontale resta a portata di mano in basso invece
+     di finire in fondo a una pagina più alta dello schermo. */
+  .page-wrap{padding:24px;overflow:auto;height:100vh;}
   .page{
     width:420mm;height:297mm;
     margin:0 auto;
@@ -185,6 +188,7 @@
   /* ---------- Stampa ---------- */
   @page{size:A3 landscape;margin:0;}
   @media print{
-    .page-wrap{padding:0;}
-    .page{box-shadow:none;margin:0;}
+    .page-wrap{padding:0;height:auto;overflow:visible;}
+    /* !important: batte lo zoom inline messo da src/plancia.ts per lo schermo. */
+    .page{box-shadow:none;margin:0;zoom:1 !important;}
   }
