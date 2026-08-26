@@ -16,9 +16,9 @@ export default defineConfig({
     rollupOptions: {
       input: {
         index: 'index.html',
-        contratti: 'contratti.html',
-        carte: 'carte.html',
-        banconote: 'banconote.html',
+        contracts: 'contracts.html',
+        cards: 'cards.html',
+        money: 'money.html',
       },
     },
   },

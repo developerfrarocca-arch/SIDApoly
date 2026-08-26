@@ -1,0 +1,101 @@
+@import './common.css';
+
+/* ============================================================
+   Banconote dei Buoni Pasto — grafica ispirata al Monopoli classico.
+   Fogli A4 verticali, griglia 2x5 (10 banconote per foglio, un taglio a foglio).
+   ============================================================ */
+
+:root{
+  --bill-w:90mm;
+  --bill-h:44mm;
+  --bill-gap:0mm;
+}
+
+.sheets{padding:24px;display:flex;flex-direction:column;align-items:center;gap:24px;}
+
+.sheet{
+  width:210mm;height:297mm;
+  background:#fff;
+  box-shadow:0 0 24px rgba(0,0,0,.4);
+  padding:9mm;
+  display:flex;flex-direction:column;
+  flex-shrink:0;
+}
+.sheet-grid{
+  display:grid;
+  grid-template-columns:repeat(2,var(--bill-w));
+  grid-auto-rows:var(--bill-h);
+  gap:var(--bill-gap);
+  justify-content:center;align-content:start;
+}
+.sheet-foot{
+  margin-top:auto;text-align:center;
+  font-size:2.4mm;color:#888;letter-spacing:.3px;
+}
+
+/* ---------- La banconota ---------- */
+/* Nessuno spazio fra una banconota e l'altra: restano attaccate, e il taglio
+   a forbice o taglierina segue la linea tratteggiata (uguale per tutte,
+   così non si "mimetizza" quando due banconote dello stesso taglio si toccano). */
+.bill{
+  /* Il colore del taglio lo mette il componente come stile inline, che vince su
+     questa dichiarazione: qui serve da valore di riserva, e a dichiarare la
+     proprieta' per chi legge il CSS da solo. */
+  --bill-color:var(--ink);
+  --tint:color-mix(in srgb, var(--bill-color) 14%, white);
+  position:relative;
+  background:var(--tint);
+  border:.35mm dashed var(--ink);
+  display:flex;flex-direction:column;
+  overflow:hidden;
+  padding:2mm 3mm;
+}
+.bill::before{
+  content:"";
+  position:absolute;inset:2mm;
+  border:.5mm solid var(--bill-color);
+  opacity:.7;
+  pointer-events:none;
+}
+
+.bill .corner{
+  position:absolute;
+  font-weight:800;font-size:8mm;line-height:1;
+  color:var(--bill-color);
+  z-index:1;
+}
+.corner-tl{top:1.6mm;left:3mm;}
+.corner-tr{top:1.6mm;right:3mm;}
+.corner-bl{bottom:1.6mm;left:3mm;}
+.corner-br{bottom:1.6mm;right:3mm;}
+
+.bill-center{
+  flex:1 1 auto;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.6mm;
+  text-align:center;z-index:1;
+}
+.bill-logo{width:24mm;height:auto;}
+.bill-title{
+  font-size:2.6mm;font-weight:800;letter-spacing:.6px;text-transform:uppercase;
+  color:var(--bill-color);
+}
+.bill-value{font-size:8mm;font-weight:800;line-height:1;}
+.bill-value span{font-size:4mm;font-weight:700;margin-left:.5mm;}
+.bill-sub{font-size:1.7mm;letter-spacing:.2px;color:#555;}
+
+.bill-serial{
+  position:absolute;bottom:2.2mm;left:50%;transform:translateX(-50%);
+  font-size:1.6mm;letter-spacing:.4px;color:#777;
+  font-family:"Consolas","Courier New",monospace;
+  z-index:1;
+}
+
+/* ---------- Stampa ---------- */
+@page{size:A4 portrait;margin:0;}
+@media print{
+  .sheets{padding:0;gap:0;}
+  .sheet{box-shadow:none;break-after:page;}
+  .sheet:last-child{break-after:auto;}
+  .bill{break-inside:avoid;}
+  .bill,.bill::before{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+}

@@ -1,7 +1,7 @@
 import { createRoot } from 'react-dom/client';
-import { Board } from './pages/Board';
+import { Contracts } from './pages/Contracts';
 
 const root = document.getElementById('app');
 if (!root) throw new Error('Missing the #app container in the page');
 
-createRoot(root).render(<Board />);
+createRoot(root).render(<Contracts />);
