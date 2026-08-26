@@ -7,10 +7,8 @@ import {
   fogli,
   htmlCarte,
   htmlCartaFronte,
-  htmlCartaRetro,
-  htmlRetri,
+  fogliPerMazzo,
   montaCarte,
-  montaRetri,
 } from './carte';
 
 const CARTE = carteMazzi();
@@ -21,10 +19,9 @@ describe('dati dei mazzi', () => {
     expect(CARTE_IMPREVISTI).toHaveLength(16);
   });
 
-  it('espone i due mazzi con nome e icona coerenti col tabellone', () => {
+  it('espone i due mazzi con i nomi delle caselle del tabellone', () => {
     expect(MAZZI.map((m) => m.chiave)).toEqual(['probabilita', 'imprevisti']);
-    expect(MAZZI.find((m) => m.chiave === 'probabilita')!.icona).toBe('❓');
-    expect(MAZZI.find((m) => m.chiave === 'imprevisti')!.icona).toBe('🎲');
+    expect(MAZZI.map((m) => m.nome)).toEqual(['Probabilità', 'Imprevisti']);
   });
 });
 
@@ -42,14 +39,20 @@ describe('carteMazzi', () => {
 });
 
 describe('markup del fronte', () => {
-  it('stampa icona, testo e nome del mazzo', () => {
+  it('stampa il testo e il nome del mazzo in testa', () => {
     const html = htmlCartaFronte(CARTE[0]!);
     expect(html).toContain('card-probabilita');
-    expect(html).toContain('❓');
     expect(html).toContain(CARTE_PROBABILITA[0]!.testo);
     expect(html).toContain('Probabilità');
     expect(html).toContain('data-mazzo="probabilita"');
     expect(html).toContain('data-indice="1"');
+  });
+
+  it('non stampa emoji: sul cartoncino colorato il bianco non è inchiostro', () => {
+    const html = htmlCarte();
+    expect(html).not.toContain('❓');
+    expect(html).not.toContain('🎲');
+    expect(html).not.toContain('card-icon');
   });
 
   it('rende sicuro il testo delle carte', () => {
@@ -61,23 +64,6 @@ describe('markup del fronte', () => {
     expect(html).not.toContain('<script>');
     expect(html).toContain('&lt;script&gt;');
     expect(html).toContain('&amp; co');
-  });
-});
-
-describe('markup del retro', () => {
-  it('non dipende dal contenuto della singola carta', () => {
-    const retro = htmlCartaRetro(MAZZI[0]!);
-    expect(retro).toContain('card-retro');
-    expect(retro).toContain('card-probabilita');
-    expect(retro).toContain('Probabilità');
-    expect(retro).not.toContain(CARTE_PROBABILITA[0]!.testo);
-  });
-
-  it('distingue i due mazzi', () => {
-    const probabilita = htmlCartaRetro(MAZZI[0]!);
-    const imprevisti = htmlCartaRetro(MAZZI[1]!);
-    expect(probabilita).not.toBe(imprevisti);
-    expect(imprevisti).toContain('card-imprevisti');
   });
 });
 
@@ -102,35 +88,58 @@ describe('impaginazione', () => {
     expect(html).not.toContain('foglio 3');
   });
 
-  it('i retri seguono lo stesso numero di fogli e carte per foglio dei fronti', () => {
-    const html = htmlRetri();
-    expect(html).toContain('retro 1');
-    expect(html).toContain('retro 2');
-    expect(html).not.toContain('retro 3');
+  it('non mette due mazzi sullo stesso foglio', () => {
+    const gruppi = fogliPerMazzo(CARTE);
+    expect(gruppi).toHaveLength(2);
+    expect(gruppi.map((g) => g.length)).toEqual([16, 16]);
+    for (const gruppo of gruppi) {
+      expect(new Set(gruppo.map((c) => c.mazzo.chiave)).size).toBe(1);
+    }
+    expect(gruppi.flat()).toEqual(CARTE);
+  });
+
+  it('apre un foglio nuovo per ogni mazzo anche quando il mazzo sta in più fogli', () => {
+    const gruppi = fogliPerMazzo(CARTE, 6);
+    expect(gruppi.map((g) => g.length)).toEqual([6, 6, 4, 6, 6, 4]);
+    for (const gruppo of gruppi) {
+      expect(new Set(gruppo.map((c) => c.mazzo.chiave)).size).toBe(1);
+    }
+  });
+
+  it('scrive il nome del mazzo nel piede di ogni foglio', () => {
+    const html = htmlCarte();
+    expect(html).toContain('Probabilità · foglio 1');
+    expect(html).toContain('Imprevisti · foglio 2');
   });
 });
 
-describe('montaCarte e montaRetri', () => {
-  it('creano gli stessi fogli e lo stesso numero di carte', () => {
+describe('montaCarte', () => {
+  it('crea i fogli con tutte le carte, senza retri', () => {
     const fronti = document.createElement('div');
     montaCarte(fronti);
     expect(fronti.querySelectorAll('.sheet')).toHaveLength(2);
     expect(fronti.querySelectorAll('.card')).toHaveLength(32);
-
-    const retri = document.createElement('div');
-    montaRetri(retri);
-    expect(retri.querySelectorAll('.sheet-retro')).toHaveLength(2);
-    expect(retri.querySelectorAll('.card-retro')).toHaveLength(32);
+    expect(fronti.querySelectorAll('.sheet-retro')).toHaveLength(0);
+    expect(fronti.querySelectorAll('.card-retro')).toHaveLength(0);
   });
 
-  it('abbina ogni retro al mazzo della carta nella stessa posizione', () => {
+  it('tiene i due mazzi in blocco, Probabilità e poi Imprevisti', () => {
     const fronti = document.createElement('div');
     montaCarte(fronti);
-    const retri = document.createElement('div');
-    montaRetri(retri);
+    const mazzi = [...fronti.querySelectorAll('.card')].map((c) => c.getAttribute('data-mazzo'));
+    expect(mazzi.slice(0, 16).every((m) => m === 'probabilita')).toBe(true);
+    expect(mazzi.slice(16).every((m) => m === 'imprevisti')).toBe(true);
+  });
 
-    const mazziFronti = [...fronti.querySelectorAll('.card')].map((c) => c.getAttribute('data-mazzo'));
-    const mazziRetri = [...retri.querySelectorAll('.card-retro')].map((c) => c.getAttribute('data-mazzo'));
-    expect(mazziRetri).toEqual(mazziFronti);
+  it('dà a ogni foglio un solo mazzo, marcato sul foglio stesso', () => {
+    const fronti = document.createElement('div');
+    montaCarte(fronti);
+    const sezioni = [...fronti.querySelectorAll('section.sheet')];
+    expect(sezioni.map((s) => s.getAttribute('data-mazzo'))).toEqual(['probabilita', 'imprevisti']);
+    for (const s of sezioni) {
+      const mazzi = new Set([...s.querySelectorAll('.card')].map((c) => c.getAttribute('data-mazzo')));
+      expect(mazzi.size, s.getAttribute('data-mazzo') ?? '').toBe(1);
+      expect([...mazzi][0]).toBe(s.getAttribute('data-mazzo'));
+    }
   });
 });

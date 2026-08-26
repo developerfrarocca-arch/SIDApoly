@@ -1,7 +1,8 @@
 /* Genera le carte dei mazzi Probabilità e Imprevisti a partire dai testi in
    src/dati/carte.ts. Come per tabellone, contratti e banconote, le funzioni
-   sono pure tranne montaCarte/montaRetri: così il foglio stampabile è
-   verificabile senza aprire il browser. */
+   sono pure tranne montaCarte: così il foglio stampabile è verificabile
+   senza aprire il browser.
+   Le carte sono a una faccia sola: il dorso è il cartoncino su cui si stampa. */
 
 import { CARTE_IMPREVISTI, CARTE_PROBABILITA, type Carta } from '../dati/carte';
 import { esc } from './tabellone';
@@ -9,18 +10,22 @@ import { esc } from './tabellone';
 /** Chiave di un mazzo: usata come classe CSS e attributo dati. */
 export type ChiaveMazzo = 'probabilita' | 'imprevisti';
 
-/** Un mazzo pescabile: nome, icona (le stesse della casella sul tabellone) e carte. */
+/** Un mazzo pescabile: nome (come la casella sul tabellone) e carte. */
 export interface Mazzo {
   chiave: ChiaveMazzo;
   nome: string;
-  icona: string;
   carte: readonly Carta[];
 }
 
-/** I due mazzi, nell'ordine in cui compaiono sul tabellone (Probabilità, poi Imprevisti). */
+/**
+ * I due mazzi, nell'ordine in cui compaiono sul tabellone (Probabilità, poi
+ * Imprevisti). Sulla carta si stampa solo il nome: le icone del tabellone sono
+ * emoji con parti bianche, e il bianco su cartoncino colorato è la carta, non
+ * inchiostro.
+ */
 export const MAZZI: readonly Mazzo[] = [
-  { chiave: 'probabilita', nome: 'Probabilità', icona: '❓', carte: CARTE_PROBABILITA },
-  { chiave: 'imprevisti', nome: 'Imprevisti', icona: '🎲', carte: CARTE_IMPREVISTI },
+  { chiave: 'probabilita', nome: 'Probabilità', carte: CARTE_PROBABILITA },
+  { chiave: 'imprevisti', nome: 'Imprevisti', carte: CARTE_IMPREVISTI },
 ];
 
 /** Carte per foglio A4 verticale: griglia 3x6 (18 carte orizzontali per foglio). */
@@ -42,30 +47,12 @@ export function carteMazzi(mazzi: readonly Mazzo[] = MAZZI): CartaMazzo[] {
   return out;
 }
 
-/** Il markup del fronte di una carta: orizzontale, testo centrato in larghezza. */
+/** Il markup del fronte di una carta: orizzontale, nome del mazzo in testa. */
 export function htmlCartaFronte(c: CartaMazzo): string {
   return (
     `<article class="card card-${c.mazzo.chiave}" data-mazzo="${c.mazzo.chiave}" data-indice="${c.indice}">` +
-    '<div class="card-head">' +
-    `<span class="card-icon">${c.mazzo.icona}</span>` +
-    `<span class="card-mazzo">${esc(c.mazzo.nome)}</span>` +
-    '</div>' +
+    `<div class="card-head"><span class="card-mazzo">${esc(c.mazzo.nome)}</span></div>` +
     `<div class="card-testo">${esc(c.carta.testo)}</div>` +
-    '</article>'
-  );
-}
-
-/**
- * Il retro di una carta: uguale per tutte le carte dello stesso mazzo (un colore
- * per mazzo), così non serve abbinare un retro preciso a ogni fronte, ma solo
- * non mescolare i retri di un mazzo con quelli dell'altro.
- */
-export function htmlCartaRetro(mazzo: Mazzo): string {
-  return (
-    `<article class="card card-retro card-${mazzo.chiave}" data-mazzo="${mazzo.chiave}">` +
-    `<div class="card-icon card-icon-grande">${mazzo.icona}</div>` +
-    `<div class="card-mazzo-retro">${esc(mazzo.nome)}</div>` +
-    '<div class="card-brand">SIDA Autosoft Multimedia</div>' +
     '</article>'
   );
 }
@@ -80,19 +67,40 @@ export function fogli(carte: readonly CartaMazzo[], perFoglio = CARTE_PER_FOGLIO
   return out;
 }
 
-/** Il markup di tutti i fogli di fronti. */
+/**
+ * Come fogli, ma un foglio non mescola mai carte di mazzi diversi: ogni mazzo
+ * riparte da un foglio nuovo, così si può stampare ciascuno sul proprio
+ * cartoncino senza dover ritagliare due mazzi dallo stesso foglio.
+ */
+export function fogliPerMazzo(
+  carte: readonly CartaMazzo[] = carteMazzi(),
+  perFoglio = CARTE_PER_FOGLIO,
+): CartaMazzo[][] {
+  const gruppi = new Map<ChiaveMazzo, CartaMazzo[]>();
+  for (const c of carte) {
+    const gruppo = gruppi.get(c.mazzo.chiave);
+    if (gruppo) gruppo.push(c);
+    else gruppi.set(c.mazzo.chiave, [c]);
+  }
+  return [...gruppi.values()].flatMap((gruppo) => fogli(gruppo, perFoglio));
+}
+
+/** Il markup di tutti i fogli di fronti, un mazzo per foglio. */
 export function htmlCarte(
   carte: readonly CartaMazzo[] = carteMazzi(),
   perFoglio = CARTE_PER_FOGLIO,
 ): string {
-  return fogli(carte, perFoglio)
-    .map(
-      (foglio, n) =>
-        '<section class="sheet">' +
+  return fogliPerMazzo(carte, perFoglio)
+    .map((foglio, n) => {
+      const mazzo = foglio[0]?.mazzo.nome ?? '';
+      return (
+        `<section class="sheet" data-mazzo="${foglio[0]?.mazzo.chiave ?? ''}">` +
         `<div class="sheet-grid">${foglio.map(htmlCartaFronte).join('')}</div>` +
-        `<div class="sheet-foot">Il Monopoli di SIDA — SIDA Autosoft Multimedia · foglio ${n + 1}</div>` +
-        '</section>',
-    )
+        '<div class="sheet-foot">Il Monopoli di SIDA — SIDA Autosoft Multimedia · ' +
+        `${esc(mazzo)} · foglio ${n + 1}</div>` +
+        '</section>'
+      );
+    })
     .join('');
 }
 
@@ -103,34 +111,4 @@ export function montaCarte(
   perFoglio = CARTE_PER_FOGLIO,
 ): void {
   root.insertAdjacentHTML('beforeend', htmlCarte(carte, perFoglio));
-}
-
-/**
- * Il markup di tutti i fogli di retro, nello stesso ordine e con lo stesso
- * numero di carte per foglio dei fronti: la carta alla posizione N di un
- * foglio di retro è del mazzo giusto per la carta alla posizione N del
- * corrispondente foglio di fronti.
- */
-export function htmlRetri(
-  carte: readonly CartaMazzo[] = carteMazzi(),
-  perFoglio = CARTE_PER_FOGLIO,
-): string {
-  return fogli(carte, perFoglio)
-    .map(
-      (foglio, n) =>
-        '<section class="sheet sheet-retro">' +
-        `<div class="sheet-grid">${foglio.map((c) => htmlCartaRetro(c.mazzo)).join('')}</div>` +
-        `<div class="sheet-foot">Il Monopoli di SIDA — SIDA Autosoft Multimedia · retro ${n + 1}</div>` +
-        '</section>',
-    )
-    .join('');
-}
-
-/** Inserisce i fogli di retro nel contenitore della pagina. */
-export function montaRetri(
-  root: HTMLElement,
-  carte: readonly CartaMazzo[] = carteMazzi(),
-  perFoglio = CARTE_PER_FOGLIO,
-): void {
-  root.insertAdjacentHTML('beforeend', htmlRetri(carte, perFoglio));
 }

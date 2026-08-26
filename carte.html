@@ -8,9 +8,12 @@
 
   <div class="toolbar">
     <span><b>Carte Imprevisti e Probabilità</b> — SIDA Autosoft Multimedia</span>
-    <span>Stampa prima i <b>fronti</b>, poi su un altro pacco di fogli i <b>retri</b>: il retro
-      è uguale per tutte le carte dello stesso mazzo (colore), quindi non serve abbinarle una a una,
-      basta non mescolare i retri dei due mazzi. Formato <b>A4 verticale</b>.</span>
+    <span>Carte a una faccia, <b>un mazzo per foglio</b>: stampa ogni foglio sul suo
+      cartoncino e taglia lungo i bordi. Formato <b>A4 verticale</b>.</span>
+    <label class="switch-sfondo" title="Togli la spunta se stampi su cartoncino già colorato: le carte escono senza fondo.">
+      <input type="checkbox" id="sfondo-colorato" checked>
+      Sfondo colorato
+    </label>
     <span class="spacer"></span>
     <a href="./index.html">🎲 Tabellone</a>
     <a href="./contratti.html">📄 Contratti</a>
@@ -21,9 +24,6 @@
 
   <!-- I fogli di carte sono generati da src/render/carte.ts (testi in src/dati/carte.ts) -->
   <div class="sheets" id="sheets"></div>
-
-  <div class="sheets-divider">Retro delle carte — un colore per mazzo, da stampare a parte</div>
-  <div class="sheets" id="sheets-retro"></div>
 
   <script type="module" src="/src/carte.ts"></script>
 </body>
