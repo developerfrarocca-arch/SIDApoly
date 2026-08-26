@@ -1,5 +1,5 @@
 /* ============================================================
-   Dati dei mazzi Probabilità e Imprevisti - Il Monopoli d'Ufficio
+   Dati dei mazzi Probabilità e Imprevisti - Il Monopoli di SIDA
    Solo il testo delle carte: l'effetto lo applicano i giocatori,
    come nel Monopoli classico non c'è nessuna logica da eseguire.
    ============================================================ */

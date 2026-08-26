@@ -1,4 +1,4 @@
-# SIDApoly — Il Monopoli d'Ufficio
+# SIDApoly — Il Monopoli di SIDA
 
 Generatore delle stampe del Monopoli in versione SIDA Autosoft Multimedia. Quattro pagine:
 

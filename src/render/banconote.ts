@@ -96,7 +96,7 @@ export function htmlBanconote(
       return (
         '<section class="sheet">' +
         `<div class="sheet-grid">${foglio.map(htmlBanconota).join('')}</div>` +
-        `<div class="sheet-foot">Il Monopoli d'Ufficio — Buoni Pasto da ${esc(numero(valore ?? 0))} BP · foglio ${n + 1}</div>` +
+        `<div class="sheet-foot">Il Monopoli di SIDA — Buoni Pasto da ${esc(numero(valore ?? 0))} BP · foglio ${n + 1}</div>` +
         '</section>'
       );
     })

@@ -1,5 +1,5 @@
 /* ============================================================
-   Dati dei contratti (le "carte proprietà") - Il Monopoli d'Ufficio
+   Dati dei contratti (le "carte proprietà") - Il Monopoli di SIDA
    Canoni, costo degli Aggiornamenti e valore ipotecario del
    Monopoli classico, riferiti all'indice della casella sul
    tabellone (vedi src/dati/caselle.ts).

@@ -184,7 +184,7 @@ function htmlFoglioFronte(foglio: readonly Contratto[], n: number): string {
   return (
     '<section class="sheet">' +
     `<div class="sheet-grid">${foglio.map(htmlContratto).join('')}</div>` +
-    `<div class="sheet-foot">Il Monopoli d'Ufficio — SIDA Autosoft Multimedia · foglio ${n + 1}</div>` +
+    `<div class="sheet-foot">Il Monopoli di SIDA — SIDA Autosoft Multimedia · foglio ${n + 1}</div>` +
     '</section>'
   );
 }
@@ -233,7 +233,7 @@ function htmlFoglioRetro(foglio: readonly Contratto[], n: number): string {
   return (
     '<section class="sheet sheet-retro">' +
     `<div class="sheet-grid">${foglio.map(() => htmlRetroCarta()).join('')}</div>` +
-    `<div class="sheet-foot">Il Monopoli d'Ufficio — SIDA Autosoft Multimedia · retro ${n + 1}</div>` +
+    `<div class="sheet-foot">Il Monopoli di SIDA — SIDA Autosoft Multimedia · retro ${n + 1}</div>` +
     '</section>'
   );
 }

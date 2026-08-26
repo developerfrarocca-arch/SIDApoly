@@ -1,5 +1,5 @@
 /* ============================================================
-   Dati delle 40 caselle - Il Monopoli d'Ufficio (SIDA)
+   Dati delle 40 caselle - Il Monopoli di SIDA
    Ordine: dalla casella 0 (Avvio sprint!) in senso orario.
    ============================================================ */
 

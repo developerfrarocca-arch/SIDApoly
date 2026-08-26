@@ -90,7 +90,7 @@ export function htmlCarte(
       (foglio, n) =>
         '<section class="sheet">' +
         `<div class="sheet-grid">${foglio.map(htmlCartaFronte).join('')}</div>` +
-        `<div class="sheet-foot">Il Monopoli d'Ufficio — SIDA Autosoft Multimedia · foglio ${n + 1}</div>` +
+        `<div class="sheet-foot">Il Monopoli di SIDA — SIDA Autosoft Multimedia · foglio ${n + 1}</div>` +
         '</section>',
     )
     .join('');
@@ -120,7 +120,7 @@ export function htmlRetri(
       (foglio, n) =>
         '<section class="sheet sheet-retro">' +
         `<div class="sheet-grid">${foglio.map((c) => htmlCartaRetro(c.mazzo)).join('')}</div>` +
-        `<div class="sheet-foot">Il Monopoli d'Ufficio — SIDA Autosoft Multimedia · retro ${n + 1}</div>` +
+        `<div class="sheet-foot">Il Monopoli di SIDA — SIDA Autosoft Multimedia · retro ${n + 1}</div>` +
         '</section>',
     )
     .join('');
