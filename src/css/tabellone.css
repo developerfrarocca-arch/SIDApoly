@@ -174,7 +174,8 @@
   .swatch{display:flex;align-items:center;gap:1.5mm;font-size:2.4mm;}
   .swatch i{
     width:4mm;height:4mm;border-radius:.6mm;display:inline-block;flex:0 0 auto;
-    border:2mm solid transparent;outline:.25mm solid var(--line);
+    background:currentColor;
+    border:2mm solid currentColor;outline:.25mm solid var(--line);
   }
   .special-list{margin-top:1mm;}
   .special-list li{display:flex;gap:2mm;align-items:flex-start;margin-bottom:1.3mm;}
