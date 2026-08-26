@@ -160,10 +160,10 @@ describe('markup', () => {
     );
   });
 
-  it('rende le proprieta modificabili e le altre caselle no', () => {
+  it('non rende modificabile nessuna casella', () => {
     const proprieta = CASELLE.findIndex((c) => c.tipo === 'proprieta');
     const carta = CASELLE.findIndex((c) => c.tipo === 'carta');
-    expect(htmlCasella(CASELLE[proprieta]!, proprieta)).toContain('contenteditable="true"');
+    expect(htmlCasella(CASELLE[proprieta]!, proprieta)).not.toContain('contenteditable');
     expect(htmlCasella(CASELLE[carta]!, carta)).not.toContain('contenteditable');
   });
 });

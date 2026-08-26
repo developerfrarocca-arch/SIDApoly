@@ -73,7 +73,7 @@ function testa(valore: string, nome: string, sotto: string): string {
     `<div class="value">Questo contratto vale <b>${esc(valore)}</b></div>` +
     '<header class="head">' +
     '<div class="kind">Contratto</div>' +
-    `<h2 class="${classe}" contenteditable="true">${esc(nome)}</h2>` +
+    `<h2 class="${classe}">${esc(nome)}</h2>` +
     `<div class="dept">${esc(sotto)}</div>` +
     '</header>'
   );

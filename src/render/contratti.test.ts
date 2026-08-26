@@ -145,8 +145,8 @@ describe('markup delle carte', () => {
     expect(corto).toContain('class="title"');
   });
 
-  it('rende i nomi modificabili come sul tabellone', () => {
-    expect(htmlContratto(CARTE[0]!)).toContain('contenteditable="true"');
+  it('non rende i nomi modificabili', () => {
+    expect(htmlContratto(CARTE[0]!)).not.toContain('contenteditable');
   });
 });
 

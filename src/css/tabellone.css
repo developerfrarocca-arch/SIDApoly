@@ -52,10 +52,8 @@
   }
   .name{
     font-size:2.5mm;font-weight:700;margin-top:1mm;line-height:1.15;
-    outline:.3mm dashed transparent;border-radius:1mm;padding:0 .5mm;
-    cursor:text;
+    padding:0 .5mm;
   }
-  .name:hover,.name:focus{outline-color:var(--gold);background:#fff8e0;}
   .price{
     font-size:1.9mm;margin-top:auto;margin-bottom:.8mm;font-weight:600;color:#000;
     background:var(--gold);border-radius:1mm;padding:.3mm 1mm;
@@ -171,9 +169,6 @@
   .special-list{margin-top:1mm;}
   .special-list li{display:flex;gap:2mm;align-items:flex-start;margin-bottom:1.3mm;}
   .special-list .ic{font-size:3.6mm;flex:0 0 auto;}
-  .panel .note{
-    margin-top:3mm;padding:2mm;background:#fff8e0;border:.3mm dashed var(--gold);border-radius:1.5mm;font-size:2.3mm;
-  }
   .panel footer{margin-top:3mm;font-size:2.1mm;color:#777;text-align:center;}
 
   /* ---------- Stampa ---------- */

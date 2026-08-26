@@ -60,10 +60,8 @@ delle caselle e delle carte, e la stampa esce in bianco e nero.
 Le carte contratto misurano 60×88 mm e sono già distanziate di 4 mm: si taglia lungo
 il bordo nero di ogni carta.
 
-I nomi delle caselle e delle carte sono `contenteditable`: puoi correggerli cliccandoci sopra
-direttamente nella pagina, subito prima di stampare. **Le modifiche fatte così non
-vengono salvate**: se ricarichi la pagina tornano i valori del file di dati. Per renderle
-permanenti modifica [`src/dati/caselle.ts`](src/dati/caselle.ts).
+I nomi delle caselle e delle carte non sono modificabili dal browser: per cambiarli
+modifica [`src/dati/caselle.ts`](src/dati/caselle.ts).
 
 ## Comandi
 

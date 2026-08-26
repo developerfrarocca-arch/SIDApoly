@@ -74,7 +74,7 @@ export function contenuto(c: Casella): string {
       return (
         '<div class="bar"></div>' +
         `<div class="dept">${esc(c.reparto)}</div>` +
-        `<div class="name" contenteditable="true">${esc(c.nome)}</div>` +
+        `<div class="name">${esc(c.nome)}</div>` +
         `<div class="price">${esc(prezzo(c.prezzo))}</div>`
       );
     case 'speciale':
