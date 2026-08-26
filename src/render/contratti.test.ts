@@ -5,6 +5,8 @@ import {
   CONTRATTI,
   INDICI_CONSULENZA,
   INDICI_SERVIZI,
+  IPOTECA_CONSULENZA,
+  IPOTECA_SERVIZIO,
   type DatiContratto,
 } from '../dati/contratti';
 import {
@@ -18,10 +20,12 @@ import {
   htmlContratto,
   htmlRetri,
   htmlRetroCarta,
+  ipotecaCarta,
   montaContratti,
   montaContrattiFronteRetro,
   montaRetri,
   numero,
+  specchiaRighe,
 } from './contratti';
 
 const CARTE = contratti();
@@ -188,10 +192,42 @@ describe('montaContratti', () => {
 });
 
 describe('retro delle carte', () => {
-  it('è identico per ogni carta, senza dati della casella', () => {
-    const retro = htmlRetroCarta();
+  it('riporta nome e importo dell\'ipoteca della propria carta', () => {
+    const carta = CARTE.find((c) => c.tipo === 'proprieta')!;
+    const retro = htmlRetroCarta(carta);
     expect(retro).toContain('contract-back');
-    expect(retro).not.toContain('data-casella');
+    expect(retro).toContain(`data-casella="${carta.indice}"`);
+    expect(retro).toContain('Ipotecato');
+    expect(retro).toContain(carta.casella.nome);
+    expect(retro).toContain(bp(ipotecaCarta(carta)));
+  });
+
+  it('ha un retro diverso per ogni carta, abbinato al proprio fronte', () => {
+    const retri = CARTE.map(htmlRetroCarta);
+    expect(new Set(retri).size).toBe(CARTE.length);
+    const indici = retri.map((r) => Number(/data-casella="(\d+)"/.exec(r)![1]));
+    expect(indici).toEqual(CARTE.map((c) => c.indice));
+  });
+
+  it('prende il valore ipotecario dal tipo di carta', () => {
+    for (const c of CARTE) {
+      const atteso =
+        c.tipo === 'proprieta'
+          ? c.dati.ipoteca
+          : c.tipo === 'consulenza'
+            ? IPOTECA_CONSULENZA
+            : IPOTECA_SERVIZIO;
+      expect(ipotecaCarta(c), c.casella.nome).toBe(atteso);
+    }
+  });
+
+  it('nei fogli a pile separate tiene l\'ordine dei fronti', () => {
+    const root = document.createElement('div');
+    montaRetri(root);
+    const indici = [...root.querySelectorAll('.contract-back')].map((e) =>
+      Number(e.getAttribute('data-casella')),
+    );
+    expect(indici).toEqual(CARTE.map((c) => c.indice));
   });
 
   it('segue lo stesso numero di fogli e carte per foglio dei fronti', () => {
@@ -209,7 +245,54 @@ describe('retro delle carte', () => {
   });
 });
 
+describe('specchiaRighe', () => {
+  it('rovescia ogni riga di 3, perche\' girando il foglio le colonne si specchiano', () => {
+    const foglio = CARTE.slice(0, 9);
+    const attesi = [2, 1, 0, 5, 4, 3, 8, 7, 6].map((i) => foglio[i]);
+    expect(specchiaRighe(foglio)).toEqual(attesi);
+  });
+
+  it('riempie la riga incompleta, cosi\' l\'ultima carta finisce nella colonna giusta', () => {
+    const uno = CARTE.slice(0, 1);
+    expect(specchiaRighe(uno)).toEqual([null, null, uno[0]]);
+    const due = CARTE.slice(0, 2);
+    expect(specchiaRighe(due)).toEqual([null, due[1], due[0]]);
+  });
+
+  it('non perde ne\' duplica carte', () => {
+    for (const foglio of [CARTE.slice(0, 9), CARTE.slice(0, 4), CARTE.slice(27)]) {
+      const uscite = specchiaRighe(foglio).filter((c) => c !== null);
+      expect(new Set(uscite).size).toBe(foglio.length);
+    }
+  });
+
+  it('rifiuta un numero di colonne non valido', () => {
+    expect(() => specchiaRighe(CARTE.slice(0, 3), 0)).toThrow(RangeError);
+    expect(() => specchiaRighe(CARTE.slice(0, 3), 1.5)).toThrow(RangeError);
+  });
+});
+
 describe('fogli fronte-retro allineati', () => {
+  it('mette ogni retro dietro al proprio fronte, specchiando le colonne', () => {
+    const root = document.createElement('div');
+    montaContrattiFronteRetro(root);
+    const sezioni = [...root.querySelectorAll('section.sheet')];
+    for (let i = 0; i < sezioni.length; i += 2) {
+      const fronti = [...sezioni[i]!.querySelectorAll('.contract')].map((e) =>
+        e.getAttribute('data-casella'),
+      );
+      const celle = [...sezioni[i + 1]!.querySelectorAll('.contract-back,.back-vuoto')].map((e) =>
+        e.getAttribute('data-casella'),
+      );
+      // riga per riga, il retro sta nella colonna specchiata rispetto al fronte
+      for (let r = 0; r * 3 < fronti.length; r++) {
+        const riga = fronti.slice(r * 3, r * 3 + 3);
+        const rigaRetro = celle.slice(r * 3, r * 3 + 3);
+        expect(rigaRetro.filter((v) => v !== null)).toEqual([...riga].reverse());
+      }
+    }
+  });
+
   it('alterna un foglio di fronti e uno di retro per ogni gruppo di carte', () => {
     const html = htmlContrattiFronteRetro();
     expect(html.indexOf('foglio 1')).toBeLessThan(html.indexOf('retro 1'));

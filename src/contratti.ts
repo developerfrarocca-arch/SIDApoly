@@ -20,9 +20,9 @@ if (!(fronteRetroEl instanceof HTMLInputElement)) {
 const fronteRetro = fronteRetroEl;
 
 const ISTRUZIONI_PILE_SEPARATE =
-  'Stampa prima i <b>fronti</b>, poi su un altro pacco di fogli i <b>retri</b>: sono uguali ' +
-  'per ogni carta, quindi non serve abbinarli — si tagliano e si incollano a caso. ' +
-  'Formato <b>A4 verticale</b>.';
+  'Stampa prima i <b>fronti</b>, poi su un altro pacco di fogli i <b>retri</b>: ogni retro ' +
+  'riporta il nome della sua carta, quindi va abbinato al fronte corrispondente — i due ' +
+  'fogli hanno le carte nello stesso ordine. Formato <b>A4 verticale</b>.';
 
 const ISTRUZIONI_FRONTE_RETRO =
   'Nella finestra di stampa attiva <b>Stampa fronte e retro</b> (bordo lungo): fronte e retro ' +

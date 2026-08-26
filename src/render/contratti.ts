@@ -26,6 +26,9 @@ export type Contratto =
 /** Carte per foglio A4 verticale: griglia 3x3. */
 export const CARTE_PER_FOGLIO = 9;
 
+/** Colonne della griglia di un foglio (vedi .sheet-grid in contratti.css). */
+export const COLONNE = 3;
+
 /** Oltre questa lunghezza il nome viene stampato più piccolo per stare in due righe. */
 const NOME_LUNGO = 16;
 
@@ -85,6 +88,12 @@ function ipoteca(v: number): string {
     '<div class="mortgage"><span>Valore ipotecario</span>' +
     `<span class="dots"></span><b>${esc(bp(v))}</b></div>`
   );
+}
+
+/** Il valore ipotecario di una carta, qualunque sia il suo tipo. */
+export function ipotecaCarta(c: Contratto): number {
+  if (c.tipo === 'proprieta') return c.dati.ipoteca;
+  return c.tipo === 'consulenza' ? IPOTECA_CONSULENZA : IPOTECA_SERVIZIO;
 }
 
 /** Corpo della carta di una casella prodotto/servizio. */
@@ -209,30 +218,67 @@ export function montaContratti(
 }
 
 /**
- * Il retro è identico per tutte le carte, quindi non serve abbinare un retro
- * preciso a ogni fronte: si tagliano le due pile separatamente e si accoppiano
- * a caso. Per questo i fogli di retro seguono solo il numero di carte per
- * foglio dei fronti (9, 9, 9, 1), non il loro contenuto.
+ * Il retro della carta: come nel Monopoli classico riporta il nome e l'importo
+ * dell'ipoteca, e si gira da questo lato quando il contratto è ipotecato.
+ * Essendo specifico della carta, ogni retro va abbinato al proprio fronte.
  */
-export function htmlRetroCarta(): string {
+export function htmlRetroCarta(c: Contratto): string {
+  const classe = c.casella.nome.length > NOME_LUNGO ? 'back-name lungo' : 'back-name';
   return (
-    '<article class="contract-back">' +
-    '<div class="stripe stripe-top"></div>' +
-    '<div class="back-mark">' +
-    '<img class="back-logo" src="/resources/logo-sida.svg" alt="">' +
-    '<div class="back-title">Il Monopoli<br>d\'Ufficio</div>' +
-    '<div class="back-brand">SIDA Autosoft Multimedia</div>' +
+    `<article class="contract-back" data-casella="${c.indice}">` +
+    '<div class="back-box">' +
+    '<div class="back-title">Ipotecato</div>' +
+    `<div class="${classe}">${esc(c.casella.nome)}</div>` +
+    '<div class="back-amount"><span>Importo ipoteca</span>' +
+    `<b>${esc(bp(ipotecaCarta(c)))}</b></div>` +
+    '<div class="back-star">★</div>' +
+    '<p class="back-note">Il contratto deve essere girato da questo lato ' +
+    'se è ipotecato.</p>' +
     '</div>' +
-    '<div class="stripe stripe-bottom"></div>' +
     '</article>'
   );
 }
 
-/** Il foglio di retro n. n (0-based), con lo stesso numero di carte del foglio di fronti. */
-function htmlFoglioRetro(foglio: readonly Contratto[], n: number): string {
+/**
+ * Le carte di un foglio nell'ordine in cui vanno stampate sul retro con la
+ * stampa fronte-retro: girando il foglio sul bordo lungo le colonne si
+ * specchiano, quindi ogni riga va rovesciata. Le righe incomplete vengono
+ * riempite prima di rovesciarle, altrimenti l'ultima carta finisce nella
+ * colonna sbagliata.
+ */
+export function specchiaRighe(
+  foglio: readonly Contratto[],
+  colonne = COLONNE,
+): (Contratto | null)[] {
+  if (!Number.isInteger(colonne) || colonne < 1) {
+    throw new RangeError(`Numero di colonne non valido: ${colonne}`);
+  }
+  const out: (Contratto | null)[] = [];
+  for (let i = 0; i < foglio.length; i += colonne) {
+    const riga: (Contratto | null)[] = foglio.slice(i, i + colonne);
+    while (riga.length < colonne) riga.push(null);
+    out.push(...riga.reverse());
+  }
+  return out;
+}
+
+/**
+ * Il foglio di retro n. n (0-based), con lo stesso numero di carte del foglio
+ * di fronti. Con `speculare` le righe vengono rovesciate, per la stampa
+ * fronte-retro; senza, l'ordine resta quello dei fronti (pile separate).
+ */
+function htmlFoglioRetro(
+  foglio: readonly Contratto[],
+  n: number,
+  speculare = false,
+): string {
+  const carte: (Contratto | null)[] = speculare ? specchiaRighe(foglio) : [...foglio];
+  const celle = carte
+    .map((c) => (c ? htmlRetroCarta(c) : '<div class="back-vuoto"></div>'))
+    .join('');
   return (
     '<section class="sheet sheet-retro">' +
-    `<div class="sheet-grid">${foglio.map(() => htmlRetroCarta()).join('')}</div>` +
+    `<div class="sheet-grid">${celle}</div>` +
     `<div class="sheet-foot">Il Monopoli di SIDA — SIDA Autosoft Multimedia · retro ${n + 1}</div>` +
     '</section>'
   );
@@ -244,7 +290,7 @@ export function htmlRetri(
   perFoglio = CARTE_PER_FOGLIO,
 ): string {
   return fogli(carte, perFoglio)
-    .map(htmlFoglioRetro)
+    .map((foglio, n) => htmlFoglioRetro(foglio, n))
     .join('');
 }
 
@@ -268,7 +314,7 @@ export function htmlContrattiFronteRetro(
   perFoglio = CARTE_PER_FOGLIO,
 ): string {
   return fogli(carte, perFoglio)
-    .map((foglio, n) => htmlFoglioFronte(foglio, n) + htmlFoglioRetro(foglio, n))
+    .map((foglio, n) => htmlFoglioFronte(foglio, n) + htmlFoglioRetro(foglio, n, true))
     .join('');
 }
 

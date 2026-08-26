@@ -146,37 +146,44 @@
 .contract-back{
   border:.4mm solid var(--line);
   background:var(--panel);
-  position:relative;
   overflow:hidden;
-  display:flex;flex-direction:column;
-}
-.contract-back .stripe{
-  flex:0 0 4mm;
-  background:linear-gradient(90deg,
-    var(--brown) 0 12.5%, var(--lightblue) 12.5% 25%, var(--pink) 25% 37.5%,
-    var(--orange) 37.5% 50%, var(--red) 50% 62.5%, var(--yellow) 62.5% 75%,
-    var(--green) 75% 87.5%, var(--darkblue) 87.5% 100%);
-}
-.contract-back .back-mark{
-  flex:1 1 auto;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2.4mm;
+  display:flex;
   padding:3mm;
 }
-.contract-back .back-mark::before{
-  content:"";
-  position:absolute;inset:5.5mm 2.5mm;
-  border:.3mm solid var(--gold);
-  pointer-events:none;
+.contract-back .back-box{
+  flex:1 1 auto;
+  border:.35mm solid var(--red);
+  padding:3mm 2.6mm 2.6mm;
+  display:flex;flex-direction:column;align-items:center;
+  text-align:center;color:var(--red);
 }
-.contract-back .back-logo{width:20mm;height:auto;}
 .contract-back .back-title{
-  font-size:4.4mm;line-height:1.15;font-weight:800;text-transform:uppercase;
-  text-align:center;color:var(--red);letter-spacing:.2px;
+  width:100%;
+  font-size:5mm;font-weight:800;text-transform:uppercase;
+  letter-spacing:1.5mm;text-indent:1.5mm;
+  border-bottom:.3mm solid var(--red);
+  padding-bottom:2mm;
 }
-.contract-back .back-brand{
-  font-size:2mm;font-weight:700;text-transform:uppercase;letter-spacing:.5px;
-  color:var(--darkblue);text-align:center;
+.contract-back .back-name{
+  width:100%;margin-top:5mm;
+  font-size:3.4mm;font-weight:800;text-transform:uppercase;line-height:1.15;
+  border-bottom:.3mm solid var(--red);
+  padding-bottom:2mm;
 }
+.contract-back .back-name.lungo{font-size:2.8mm;}
+.contract-back .back-amount{
+  width:100%;margin-top:6mm;
+  display:flex;align-items:baseline;justify-content:space-between;gap:2mm;
+  font-size:2.7mm;
+}
+.contract-back .back-amount b{font-size:3.1mm;white-space:nowrap;}
+.contract-back .back-star{margin-top:7mm;font-size:3.6mm;line-height:1;}
+.contract-back .back-note{
+  margin:auto 0 0;padding-top:4mm;
+  font-size:2.2mm;line-height:1.35;font-weight:700;font-style:italic;
+}
+/* Cella vuota: tiene il posto quando la riga da specchiare non e' piena. */
+.back-vuoto{}
 
 /* ---------- Stampa ---------- */
 @page{size:A4 portrait;margin:0;}
@@ -187,6 +194,6 @@
   .sheet:last-child{break-after:auto;}
   .contract{break-inside:avoid;}
   /* Le fasce colorate devono restare colorate anche in stampa. */
-  .contract .head,.contract .value,
-  .contract-back .stripe{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .contract .head,.contract .value{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .contract-back{break-inside:avoid;}
 }
