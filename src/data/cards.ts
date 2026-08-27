@@ -33,8 +33,7 @@ export const CHANCE_CARDS: readonly Card[] = [
   { text: 'Un dipendente ha installato un software senza licenza: pagate 125 BP di sanzione' },
   {
     text:
-      'Il manuale è stato stampato con le immagini non aggiornate: pagate 25 BP oppure pescate ' +
-      'un «Imprevisto»',
+      'Il manuale è stato stampato con le immagini non aggiornate: pagate 25 BP oppure pescate ' + 'un «Imprevisto»',
   },
 ];
 
@@ -47,11 +46,12 @@ export const CHEST_CARDS: readonly Card[] = [
   },
   {
     text:
-      'Moroni ha trovato un bug nelle app: andate a SIDA Tools; ' +
-      'se passate da «Avvio sprint!» incassate 500 BP',
+      'Moroni ha trovato un bug nelle app: andate a SIDA Tools; ' + 'se passate da «Avvio sprint!» incassate 500 BP',
   },
   { text: 'Il tester trova un bug il giorno prima della consegna: fate tre passi indietro nello sprint' },
-  { text: 'Nuovo aggiornamento di Windows: pagate 60 BP per ogni Aggiornamento e 250 BP per ogni Major Release posseduti' },
+  {
+    text: 'Nuovo aggiornamento di Windows: pagate 60 BP per ogni Aggiornamento e 250 BP per ogni Major Release posseduti',
+  },
   { text: 'Tre grossi clienti abbandonano la concorrenza: incassate 375 BP' },
   { text: 'Il vostro SIDA QuizApp diventa virale tra i candidati: incassate 250 BP' },
   {
@@ -59,7 +59,9 @@ export const CHEST_CARDS: readonly Card[] = [
       'Partecipate alla fiera nazionale delle autoscuole: andate alla casella Consulenza più vicina; ' +
       'se passate da «Avvio sprint!» incassate 500 BP',
   },
-  { text: 'Nuove specifiche ministeriali a progetto quasi finito: pagate 100 BP per ogni Aggiornamento e 250 BP per ogni Major Release posseduti' },
+  {
+    text: 'Nuove specifiche ministeriali a progetto quasi finito: pagate 100 BP per ogni Aggiornamento e 250 BP per ogni Major Release posseduti',
+  },
   { text: 'La release passa tutti i test automatici: avanzate fino ad «Avvio sprint!»' },
   {
     text:
@@ -71,9 +73,10 @@ export const CHEST_CARDS: readonly Card[] = [
   { text: 'Il cloud provider AWS vi riconosce un credito per il disservizio: incassate 125 BP' },
   {
     text:
-      "L'installazione dei pannelli solari buca il tetto: dopo la pioggia gli uffici " +
-      'sono allagati, pagate 50 BP',
+      "L'installazione dei pannelli solari buca il tetto: dopo la pioggia gli uffici " + 'sono allagati, pagate 50 BP',
   },
-  { text: 'La build critica finisce in produzione senza revisione: andate direttamente in Riunione, senza passare da «Avvio sprint!»' },
-  { text: "Un cliente arrabbiato vi sequestra nella sua autoscuola. Gli fate causa e venite rimborsati di 150 BP" },
+  {
+    text: 'La build critica finisce in produzione senza revisione: andate direttamente in Riunione, senza passare da «Avvio sprint!»',
+  },
+  { text: 'Un cliente arrabbiato vi sequestra nella sua autoscuola. Gli fate causa e venite rimborsati di 150 BP' },
 ];

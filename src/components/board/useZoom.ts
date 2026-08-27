@@ -26,10 +26,7 @@ export interface Zoom {
  * is needed. It observes the container and not the window, because the usable
  * space can change without a resize.
  */
-export function useZoom(
-  container: React.RefObject<HTMLElement>,
-  page: React.RefObject<HTMLElement>,
-): Zoom {
+export function useZoom(container: React.RefObject<HTMLElement>, page: React.RefObject<HTMLElement>): Zoom {
   const [fittedFactor, setFittedFactor] = useState(1);
   const [chosenFactor, setChosenFactor] = useState<number | null>(null);
   const naturalSize = useRef<Size | null>(null);
@@ -46,9 +43,7 @@ export function useZoom(
     const available = container.current && availableSpaceIn(container.current);
     const natural = naturalSize.current;
     if (!available || !natural) return;
-    setFittedFactor(
-      Math.min(fitFactor(available.width, natural.width), fitFactor(available.height, natural.height)),
-    );
+    setFittedFactor(Math.min(fitFactor(available.width, natural.width), fitFactor(available.height, natural.height)));
   }, [container]);
 
   useEffect(() => {

@@ -2,13 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { Cell } from '../components/board/Cell';
 import { SPACES, SPACE_COUNT, type Group, type Space } from '../data/spaces';
 import { toHtml } from '../test/render';
-import {
-  bindCurrency,
-  placementOf,
-  priceLabel,
-  spaceCssClasses,
-  type Rotation,
-} from './board';
+import { bindCurrency, placementOf, priceLabel, spaceCssClasses, type Rotation } from './board';
 
 const indexes = [...Array(SPACE_COUNT).keys()];
 const CORNERS = [0, 10, 20, 30];
@@ -99,12 +93,9 @@ describe('space data', () => {
   });
 
   it('keeps the approved price scale', () => {
-    const prices = SPACES.filter((s) => s.type === 'property').map((s) =>
-      s.type === 'property' ? s.price : 0,
-    );
+    const prices = SPACES.filter((s) => s.type === 'property').map((s) => (s.type === 'property' ? s.price : 0));
     expect(prices).toEqual([
-      150, 150, 250, 250, 300, 350, 350, 400, 450, 450, 500, 550, 550, 600, 650, 650, 700, 750,
-      750, 800, 900, 1000,
+      150, 150, 250, 250, 300, 350, 350, 400, 450, 450, 500, 550, 550, 600, 650, 650, 700, 750, 750, 800, 900, 1000,
     ]);
   });
 
@@ -171,23 +162,16 @@ describe('the cell markup', () => {
   });
 
   it('adds the card class only to spaces with no price', () => {
-    expect(spaceCssClasses({ type: 'card', icon: '?', name: 'Probabilità' }, 'rot90')).toBe(
-      'cell special rot90 card',
+    expect(spaceCssClasses({ type: 'card', icon: '?', name: 'Probabilità' }, 'rot90')).toBe('cell special rot90 card');
+    expect(spaceCssClasses({ type: 'special', icon: '!', name: 'Consulenza Nord', price: 200 }, 'rot90')).toBe(
+      'cell special rot90',
     );
-    expect(
-      spaceCssClasses(
-        { type: 'special', icon: '!', name: 'Consulenza Nord', price: 200 },
-        'rot90',
-      ),
-    ).toBe('cell special rot90');
   });
 
   it('makes no space editable', () => {
     const property = SPACES.findIndex((s) => s.type === 'property');
     const card = SPACES.findIndex((s) => s.type === 'card');
-    expect(toHtml(<Cell space={SPACES[property]!} index={property} />)).not.toContain(
-      'contenteditable',
-    );
+    expect(toHtml(<Cell space={SPACES[property]!} index={property} />)).not.toContain('contenteditable');
     expect(toHtml(<Cell space={SPACES[card]!} index={card} />)).not.toContain('contenteditable');
   });
 });

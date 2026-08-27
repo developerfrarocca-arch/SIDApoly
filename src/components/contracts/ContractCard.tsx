@@ -11,15 +11,7 @@ import { bp, contractCssClasses, withThousands, type Contract } from '../../mode
 /** Past this length the name does not fit on one line at full size. */
 const NAME_TOO_LONG_FOR_ONE_LINE = 18;
 
-function RentRow({
-  label,
-  description,
-  amount,
-}: {
-  label: string;
-  description: string;
-  amount: string;
-}) {
+function RentRow({ label, description, amount }: { label: string; description: string; amount: string }) {
   return (
     <tr>
       <th>{label}</th>
@@ -44,15 +36,7 @@ function BigIcon({ icon }: { icon: string }) {
   return <div className="mark">{icon}</div>;
 }
 
-function Header({
-  value,
-  name,
-  subtitle,
-}: {
-  value: string;
-  name: string;
-  subtitle: string;
-}) {
+function Header({ value, name, subtitle }: { value: string; name: string; subtitle: string }) {
   return (
     <>
       <div className="value">
@@ -60,9 +44,7 @@ function Header({
       </div>
       <header className="head">
         <div className="kind">Contratto</div>
-        <h2 className={name.length > NAME_TOO_LONG_FOR_ONE_LINE ? 'title lungo' : 'title'}>
-          {name}
-        </h2>
+        <h2 className={name.length > NAME_TOO_LONG_FOR_ONE_LINE ? 'title lungo' : 'title'}>{name}</h2>
         <div className="dept">{subtitle}</div>
       </header>
     </>
@@ -82,16 +64,12 @@ function PropertyBody({ data }: { data: ContractData }) {
           <RentRow label="»" description="con 2 Aggiornamenti" amount={withThousands(withTwo)} />
           <RentRow label="»" description="con 3 Aggiornamenti" amount={withThousands(withThree)} />
           <RentRow label="»" description="con 4 Aggiornamenti" amount={withThousands(withFour)} />
-          <RentRow
-            label="»"
-            description="con Major Release"
-            amount={withThousands(rents.release)}
-          />
+          <RentRow label="»" description="con Major Release" amount={withThousands(rents.release)} />
         </tbody>
       </table>
       <p className="rule">
-        Se un giocatore possiede tutte le caselle della stessa <b>Linea di business</b> (colore), il
-        canone della sola licenza viene raddoppiato.
+        Se un giocatore possiede tutte le caselle della stessa <b>Linea di business</b> (colore), il canone della sola
+        licenza viene raddoppiato.
       </p>
       <table className="costs">
         <tbody>
@@ -123,26 +101,13 @@ function ConsultantBody({ icon }: { icon: string }) {
       <table className="rents">
         <tbody>
           <RentRow label="Canone" description="una sola casella" amount={bp(withOne)} />
-          <RentRow
-            label="»"
-            description="con 2 caselle Consulenza"
-            amount={withThousands(withTwo)}
-          />
-          <RentRow
-            label="»"
-            description="con 3 caselle Consulenza"
-            amount={withThousands(withThree)}
-          />
-          <RentRow
-            label="»"
-            description="con 4 caselle Consulenza"
-            amount={withThousands(withFour)}
-          />
+          <RentRow label="»" description="con 2 caselle Consulenza" amount={withThousands(withTwo)} />
+          <RentRow label="»" description="con 3 caselle Consulenza" amount={withThousands(withThree)} />
+          <RentRow label="»" description="con 4 caselle Consulenza" amount={withThousands(withFour)} />
         </tbody>
       </table>
       <p className="rule">
-        Il canone <b>raddoppia</b> per ogni casella Consulenza in più posseduta dallo stesso
-        giocatore.
+        Il canone <b>raddoppia</b> per ogni casella Consulenza in più posseduta dallo stesso giocatore.
       </p>
       <MortgageRow value={CONSULTANT_MORTGAGE} />
     </>
@@ -159,8 +124,8 @@ function UtilityBody({ icon }: { icon: string }) {
           <b>{UTILITY_MULTIPLIER} volte</b> il numero mostrato dai dadi.
         </p>
         <p className="rule">
-          Se possiede <b>entrambe</b> le caselle servizio, il canone è pari a{' '}
-          <b>{UTILITIES_MULTIPLIER} volte</b> il numero mostrato dai dadi.
+          Se possiede <b>entrambe</b> le caselle servizio, il canone è pari a <b>{UTILITIES_MULTIPLIER} volte</b> il
+          numero mostrato dai dadi.
         </p>
       </div>
       <MortgageRow value={UTILITY_MORTGAGE} />
@@ -169,8 +134,7 @@ function UtilityBody({ icon }: { icon: string }) {
 }
 
 export function ContractCard({ card }: { card: Contract }) {
-  const value =
-    typeof card.space.price === 'number' ? bp(card.space.price) : String(card.space.price);
+  const value = typeof card.space.price === 'number' ? bp(card.space.price) : String(card.space.price);
   const subtitle =
     card.kind === 'property'
       ? card.space.department

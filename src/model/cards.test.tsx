@@ -62,9 +62,7 @@ describe('the card front', () => {
   });
 
   it('escapes the card text', () => {
-    const html = toHtml(
-      <DeckCard card={{ deck: DECKS[0]!, card: { text: '<script>x</script> & co' }, index: 1 }} />,
-    );
+    const html = toHtml(<DeckCard card={{ deck: DECKS[0]!, card: { text: '<script>x</script> & co' }, index: 1 }} />);
     expect(html).not.toContain('<script>');
     expect(html).toContain('&lt;script&gt;');
     expect(html).toContain('&amp; co');
@@ -136,14 +134,9 @@ describe('the page', () => {
   it('gives each sheet a single deck, marked on the sheet itself', () => {
     const fronts = toDom(<Cards />);
     const sections = [...fronts.querySelectorAll('section.sheet')];
-    expect(sections.map((s) => s.getAttribute('data-mazzo'))).toEqual([
-      'probabilita',
-      'imprevisti',
-    ]);
+    expect(sections.map((s) => s.getAttribute('data-mazzo'))).toEqual(['probabilita', 'imprevisti']);
     for (const section of sections) {
-      const decks = new Set(
-        [...section.querySelectorAll('.card')].map((c) => c.getAttribute('data-mazzo')),
-      );
+      const decks = new Set([...section.querySelectorAll('.card')].map((c) => c.getAttribute('data-mazzo')));
       expect(decks.size, section.getAttribute('data-mazzo') ?? '').toBe(1);
       expect([...decks][0]).toBe(section.getAttribute('data-mazzo'));
     }

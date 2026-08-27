@@ -9,27 +9,20 @@ import { Option, Panel, Sidebar } from '../components/Sidebar';
 import { ContractCard } from '../components/contracts/ContractCard';
 import { ContractBack, EmptyCell } from '../components/contracts/ContractBack';
 import { FOOTER_SIGNATURE, Sheet } from '../components/Sheet';
-import {
-  CARDS_PER_SHEET,
-  contracts,
-  mirrorRows,
-  sheetsOf,
-  type Contract,
-} from '../model/contracts';
+import { CARDS_PER_SHEET, contracts, mirrorRows, sheetsOf, type Contract } from '../model/contracts';
 
 const SEPARATE_PILES_INSTRUCTIONS = (
   <>
-    Stampa prima i <b>fronti</b>, poi su un altro pacco di fogli i <b>retri</b>: ogni retro riporta
-    il nome della sua carta, quindi va abbinato al fronte corrispondente — i due fogli hanno le
-    carte nello stesso ordine. Formato <b>A4 verticale</b>.
+    Stampa prima i <b>fronti</b>, poi su un altro pacco di fogli i <b>retri</b>: ogni retro riporta il nome della sua
+    carta, quindi va abbinato al fronte corrispondente — i due fogli hanno le carte nello stesso ordine. Formato{' '}
+    <b>A4 verticale</b>.
   </>
 );
 
 const DUPLEX_INSTRUCTIONS = (
   <>
-    Nella finestra di stampa attiva <b>Stampa fronte e retro</b> (bordo lungo): fronte e retro di
-    ogni foglio combaceranno da soli, senza bisogno di abbinarli dopo il taglio. Formato{' '}
-    <b>A4 verticale</b>.
+    Nella finestra di stampa attiva <b>Stampa fronte e retro</b> (bordo lungo): fronte e retro di ogni foglio
+    combaceranno da soli, senza bisogno di abbinarli dopo il taglio. Formato <b>A4 verticale</b>.
   </>
 );
 
@@ -43,15 +36,7 @@ function FrontSheet({ cards, number }: { cards: readonly Contract[]; number: num
   );
 }
 
-function BackSheet({
-  cards,
-  number,
-  mirrored,
-}: {
-  cards: readonly Contract[];
-  number: number;
-  mirrored: boolean;
-}) {
+function BackSheet({ cards, number, mirrored }: { cards: readonly Contract[]; number: number; mirrored: boolean }) {
   const cells = mirrored ? mirrorRows(cards) : [...cards];
   return (
     <Sheet extraClass="sheet-retro" footer={`${FOOTER_SIGNATURE} · retro ${number + 1}`}>
@@ -98,11 +83,7 @@ export function Contracts() {
 
   return (
     <div className="app">
-      <Sidebar
-        currentPage="contracts"
-        pageTitle="Contratti delle proprietà"
-        printLabel="Stampa tutto"
-      >
+      <Sidebar currentPage="contracts" pageTitle="Contratti delle proprietà" printLabel="Stampa tutto">
         <Panel title="Opzioni">
           <Option label="Stampa fronte-retro allineata" checked={duplex} onChange={setDuplex} />
         </Panel>

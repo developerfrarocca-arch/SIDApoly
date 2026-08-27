@@ -44,10 +44,7 @@ export function deckCards(decks: readonly Deck[] = DECKS): DeckCardData[] {
 }
 
 /** Splits the cards into sheets, so screen and print agree. */
-export function sheetsOf(
-  cards: readonly DeckCardData[],
-  perSheet = CARDS_PER_SHEET,
-): DeckCardData[][] {
+export function sheetsOf(cards: readonly DeckCardData[], perSheet = CARDS_PER_SHEET): DeckCardData[][] {
   if (!Number.isInteger(perSheet) || perSheet < 1) {
     throw new RangeError(`Invalid cards per sheet: ${perSheet}`);
   }

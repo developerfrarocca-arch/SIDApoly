@@ -10,24 +10,10 @@ export function EdenpurpleLogo() {
   return (
     <svg className="bill-logo" viewBox="0 0 360 110" role="img" aria-label="Edenpurple">
       <circle cx="52" cy="55" r="58" fill="#6C3483" />
-      <text
-        x="8"
-        y="76"
-        fontFamily="Arial, Helvetica, sans-serif"
-        fontWeight="800"
-        fontSize="58"
-        fill="#fff"
-      >
+      <text x="8" y="76" fontFamily="Arial, Helvetica, sans-serif" fontWeight="800" fontSize="58" fill="#fff">
         Ed
       </text>
-      <text
-        x="86"
-        y="72"
-        fontFamily="Arial, Helvetica, sans-serif"
-        fontWeight="800"
-        fontSize="42"
-        fill="#6C3483"
-      >
+      <text x="86" y="72" fontFamily="Arial, Helvetica, sans-serif" fontWeight="800" fontSize="42" fill="#6C3483">
         enpurple
       </text>
     </svg>

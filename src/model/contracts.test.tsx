@@ -28,9 +28,7 @@ const CARDS = contracts();
 
 describe('contract data', () => {
   it('has one contract for each of the 22 property spaces', () => {
-    const propertyIndexes = [...SPACES.entries()]
-      .filter(([, space]) => space.type === 'property')
-      .map(([i]) => i);
+    const propertyIndexes = [...SPACES.entries()].filter(([, space]) => space.type === 'property').map(([i]) => i);
     expect(propertyIndexes).toHaveLength(22);
     expect(
       Object.keys(CONTRACTS)
@@ -116,14 +114,11 @@ describe('number formatting', () => {
 
 describe('the card front', () => {
   it('colours the band by group and uses white text only on the dark ones', () => {
-    const byGroup = (g: string) =>
-      contractCssClasses(CARDS.find((c) => c.kind === 'property' && c.space.group === g)!);
+    const byGroup = (g: string) => contractCssClasses(CARDS.find((c) => c.kind === 'property' && c.space.group === g)!);
     expect(byGroup('yellow')).toBe('contract g-yellow');
     expect(byGroup('darkblue')).toBe('contract g-darkblue scuro');
     expect(byGroup('brown')).toBe('contract g-brown scuro');
-    expect(contractCssClasses(CARDS.find((c) => c.kind === 'consultant')!)).toBe(
-      'contract g-societa',
-    );
+    expect(contractCssClasses(CARDS.find((c) => c.kind === 'consultant')!)).toBe('contract g-societa');
   });
 
   it('prints price, rents, costs and mortgage of a property', () => {
@@ -145,9 +140,7 @@ describe('the card front', () => {
   });
 
   it('shrinks long names, which must stay on a single line', () => {
-    const long = toHtml(
-      <ContractCard card={CARDS.find((c) => c.space.name === 'SIDA Drive Controller')!} />,
-    );
+    const long = toHtml(<ContractCard card={CARDS.find((c) => c.space.name === 'SIDA Drive Controller')!} />);
     const short = toHtml(<ContractCard card={CARDS.find((c) => c.space.name === 'Tachigrafo')!} />);
     expect(long).toContain('class="title lungo"');
     expect(short).toContain('class="title"');
@@ -172,9 +165,7 @@ describe('the card front', () => {
 
 describe('the big icon', () => {
   it('only appears on cards that already have an icon on the board', () => {
-    const withIcon = CARDS.filter((c) =>
-      toHtml(<ContractCard card={c} />).includes('class="mark"'),
-    );
+    const withIcon = CARDS.filter((c) => toHtml(<ContractCard card={c} />).includes('class="mark"'));
     expect(withIcon).toHaveLength(6);
     expect(withIcon.map((c) => c.kind).sort()).toEqual([
       'consultant',
@@ -192,9 +183,7 @@ describe('the big icon', () => {
     expect(html).toContain(`<div class="mark">${consultant.space.icon}</div>`);
     expect(html).toContain('<div class="dept">Referente di zona</div>');
     const utility = CARDS.find((c) => c.kind === 'utility')!;
-    expect(toHtml(<ContractCard card={utility} />)).toContain(
-      '<div class="dept">Servizi di sede</div>',
-    );
+    expect(toHtml(<ContractCard card={utility} />)).toContain('<div class="dept">Servizi di sede</div>');
   });
 
   it('leaves properties without any icon container, not even an empty one', () => {
@@ -232,9 +221,7 @@ describe('separate piles', () => {
     expect(root.querySelectorAll('.sheet:not(.sheet-retro)')).toHaveLength(4);
     expect(root.querySelectorAll('.contract')).toHaveLength(28);
     expect(root.querySelectorAll('.contract .mortgage')).toHaveLength(28);
-    const indexes = [...root.querySelectorAll('.contract')].map((c) =>
-      Number(c.getAttribute('data-casella')),
-    );
+    const indexes = [...root.querySelectorAll('.contract')].map((c) => Number(c.getAttribute('data-casella')));
     expect(indexes).toEqual(CARDS.map((c) => c.index));
   });
 });
@@ -271,9 +258,7 @@ describe('the card back', () => {
 
   it('keeps the order of the fronts when the piles are separate', () => {
     const root = toDom(<ContractSheets duplex={false} />);
-    const indexes = [...root.querySelectorAll('.contract-back')].map((e) =>
-      Number(e.getAttribute('data-casella')),
-    );
+    const indexes = [...root.querySelectorAll('.contract-back')].map((e) => Number(e.getAttribute('data-casella')));
     expect(indexes).toEqual(CARDS.map((c) => c.index));
   });
 
@@ -323,9 +308,7 @@ describe('duplex sheets', () => {
     const root = toDom(<ContractSheets duplex />);
     const sections = [...root.querySelectorAll('section.sheet')];
     for (let i = 0; i < sections.length; i += 2) {
-      const fronts = [...sections[i]!.querySelectorAll('.contract')].map((e) =>
-        e.getAttribute('data-casella'),
-      );
+      const fronts = [...sections[i]!.querySelectorAll('.contract')].map((e) => e.getAttribute('data-casella'));
       const cells = [...sections[i + 1]!.querySelectorAll('.contract-back,.back-vuoto')].map((e) =>
         e.getAttribute('data-casella'),
       );

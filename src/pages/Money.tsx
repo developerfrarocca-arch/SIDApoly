@@ -12,9 +12,8 @@ export function Money() {
       <Sidebar currentPage="money" pageTitle="Banconote dei Buoni Pasto" printLabel="Stampa tutto">
         <Panel title="Come stampare">
           <p>
-            Un foglio per ogni taglio (5, 10, 20, 50, 100, 200, 500 BP), 10 banconote a foglio,
-            tutte attaccate: taglia lungo le <b>linee tratteggiate</b>. Formato{' '}
-            <b>A4 verticale</b>.
+            Un foglio per ogni taglio (5, 10, 20, 50, 100, 200, 500 BP), 10 banconote a foglio, tutte attaccate: taglia
+            lungo le <b>linee tratteggiate</b>. Formato <b>A4 verticale</b>.
           </p>
           <p>Se ti servono più copie di un taglio, ristampa solo quel foglio.</p>
         </Panel>

@@ -17,11 +17,7 @@ export function Nav({ currentPage }: { currentPage: PageId }) {
   return (
     <nav className="nav">
       {MENU.map((entry) => (
-        <a
-          key={entry.page}
-          href={entry.href}
-          aria-current={entry.page === currentPage ? 'page' : undefined}
-        >
+        <a key={entry.page} href={entry.href} aria-current={entry.page === currentPage ? 'page' : undefined}>
           {entry.label}
         </a>
       ))}

@@ -15,9 +15,7 @@ export function ContractBack({ card }: { card: Contract }) {
           <b>{bp(mortgageOf(card))}</b>
         </div>
         <div className="back-star">★</div>
-        <p className="back-note">
-          Il contratto deve essere girato da questo lato se è ipotecato.
-        </p>
+        <p className="back-note">Il contratto deve essere girato da questo lato se è ipotecato.</p>
       </div>
     </article>
   );

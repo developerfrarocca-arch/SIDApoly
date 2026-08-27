@@ -23,9 +23,7 @@ describe('billCopies', () => {
     for (let i = 0; i < DENOMINATIONS.length; i++) {
       const block = copies.slice(i * COPIES_PER_DENOMINATION, (i + 1) * COPIES_PER_DENOMINATION);
       expect(block.every((c) => c.denomination.value === DENOMINATIONS[i]!.value)).toBe(true);
-      expect(block.map((c) => c.series)).toEqual(
-        Array.from({ length: COPIES_PER_DENOMINATION }, (_, n) => n + 1),
-      );
+      expect(block.map((c) => c.series)).toEqual(Array.from({ length: COPIES_PER_DENOMINATION }, (_, n) => n + 1));
     }
   });
 
@@ -37,20 +35,14 @@ describe('billCopies', () => {
 
 describe('serialOf', () => {
   it('includes value and series number, zero padded', () => {
-    expect(serialOf({ denomination: { value: 5, color: '#000' }, series: 1 })).toBe(
-      'SIDA-000005-001',
-    );
-    expect(serialOf({ denomination: { value: 500, color: '#000' }, series: 10 })).toBe(
-      'SIDA-000500-010',
-    );
+    expect(serialOf({ denomination: { value: 5, color: '#000' }, series: 1 })).toBe('SIDA-000005-001');
+    expect(serialOf({ denomination: { value: 500, color: '#000' }, series: 10 })).toBe('SIDA-000500-010');
   });
 });
 
 describe('one bill', () => {
   it('prints the value, the amount in BP and the Edenpurple mark', () => {
-    const html = toHtml(
-      <Bill copy={{ denomination: { value: 50, color: '#E4699D' }, series: 3 }} />,
-    );
+    const html = toHtml(<Bill copy={{ denomination: { value: 50, color: '#E4699D' }, series: 3 }} />);
     expect(html).toContain('50');
     expect(html).toContain('BP');
     expect(html).toContain('Buoni Pasto');
@@ -89,8 +81,6 @@ describe('the page', () => {
   it('builds one sheet per denomination and every bill in the container', () => {
     const root = toDom(<Money />);
     expect(root.querySelectorAll('.sheet')).toHaveLength(DENOMINATIONS.length);
-    expect(root.querySelectorAll('.bill')).toHaveLength(
-      DENOMINATIONS.length * COPIES_PER_DENOMINATION,
-    );
+    expect(root.querySelectorAll('.bill')).toHaveLength(DENOMINATIONS.length * COPIES_PER_DENOMINATION);
   });
 });

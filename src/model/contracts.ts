@@ -87,10 +87,7 @@ export function sheetsOf(cards: readonly Contract[], perSheet = CARDS_PER_SHEET)
  * row is reversed. Incomplete rows are padded before reversing, otherwise the
  * last card ends up in the wrong column.
  */
-export function mirrorRows(
-  sheet: readonly Contract[],
-  columns = COLUMNS,
-): (Contract | null)[] {
+export function mirrorRows(sheet: readonly Contract[], columns = COLUMNS): (Contract | null)[] {
   if (!Number.isInteger(columns) || columns < 1) {
     throw new RangeError(`Invalid number of columns: ${columns}`);
   }

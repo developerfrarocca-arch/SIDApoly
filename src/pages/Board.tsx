@@ -20,23 +20,16 @@ export function Board() {
         </Panel>
         <Panel title="Come stampare">
           <p>
-            Un foglio solo, formato <b>A3 orizzontale</b>: plancia e pannello delle regole stanno
-            affiancati sullo stesso foglio.
+            Un foglio solo, formato <b>A3 orizzontale</b>: plancia e pannello delle regole stanno affiancati sullo
+            stesso foglio.
           </p>
-          <p>
-            A schermo la plancia è rimpicciolita per stare nella finestra; in stampa esce a
-            grandezza naturale.
-          </p>
+          <p>A schermo la plancia è rimpicciolita per stare nella finestra; in stampa esce a grandezza naturale.</p>
         </Panel>
       </Sidebar>
 
       <main className="app-main">
         <div className="page-wrap" ref={container}>
-          <div
-            className="page"
-            ref={page}
-            style={zoom.factor === 1 ? undefined : { zoom: zoom.factor }}
-          >
+          <div className="page" ref={page} style={zoom.factor === 1 ? undefined : { zoom: zoom.factor }}>
             <div className="board">
               <Center />
               {SPACES.map((space, index) => (

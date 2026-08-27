@@ -46,13 +46,13 @@ Poi apri **http://localhost:5173**.
 
 Dal browser: **Ctrl+P**, poi in "Altre impostazioni":
 
-| Impostazione | Plancia (`index.html`) | Contratti (`contratti.html`) / Carte (`carte.html`) / Banconote (`banconote.html`) |
-|---|---|---|
-| Formato | **A3** | **A4** |
-| Orientamento | **Orizzontale** | **Verticale** |
-| Margini | **Nessuno** | **Nessuno** |
-| Scala | **100%** (non "Adatta all'area stampabile") | **100%** |
-| Grafica di sfondo | **Attiva** | **Attiva** |
+| Impostazione      | Plancia (`index.html`)                      | Contratti (`contratti.html`) / Carte (`carte.html`) / Banconote (`banconote.html`) |
+| ----------------- | ------------------------------------------- | ---------------------------------------------------------------------------------- |
+| Formato           | **A3**                                      | **A4**                                                                             |
+| Orientamento      | **Orizzontale**                             | **Verticale**                                                                      |
+| Margini           | **Nessuno**                                 | **Nessuno**                                                                        |
+| Scala             | **100%** (non "Adatta all'area stampabile") | **100%**                                                                           |
+| Grafica di sfondo | **Attiva**                                  | **Attiva**                                                                         |
 
 L'ultima voce è la più importante: senza di essa Chrome scarta tutti i fondini colorati
 delle caselle e delle carte, e la stampa esce in bianco e nero.
@@ -65,13 +65,13 @@ modifica [`src/dati/caselle.ts`](src/dati/caselle.ts).
 
 ## Comandi
 
-| Comando | Cosa fa |
-|---|---|
-| `npm run dev` | Server di sviluppo su http://localhost:5173 con ricarica automatica |
-| `npm test` | Esegue i test una volta |
-| `npm run test:watch` | Test in watch mode, si rilanciano a ogni salvataggio |
-| `npm run build` | Controlla i tipi e genera `dist/` |
-| `npm run preview` | Serve `dist/` in locale, per controllarlo prima di distribuirlo |
+| Comando              | Cosa fa                                                             |
+| -------------------- | ------------------------------------------------------------------- |
+| `npm run dev`        | Server di sviluppo su http://localhost:5173 con ricarica automatica |
+| `npm test`           | Esegue i test una volta                                             |
+| `npm run test:watch` | Test in watch mode, si rilanciano a ogni salvataggio                |
+| `npm run build`      | Controlla i tipi e genera `dist/`                                   |
+| `npm run preview`    | Serve `dist/` in locale, per controllarlo prima di distribuirlo     |
 
 `npm run build` fa `tsc --noEmit` **prima** di buildare: se un dato è incoerente
 (un colore di gruppo inesistente, un campo mancante) la build si ferma invece di

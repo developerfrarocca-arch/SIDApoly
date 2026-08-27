@@ -1,0 +1,9 @@
+dist
+node_modules
+package-lock.json
+
+# I CSS della plancia sono scritti in stile compatto volutamente: una regola per
+# riga, dichiarazioni accorpate, misure in mm allineate a colonna. Prettier le
+# esploderebbe su piu' righe rendendo illeggibili i blocchi geometrici, quindi
+# la formattazione dei fogli di stile resta manuale.
+src/css

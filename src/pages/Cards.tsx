@@ -21,8 +21,8 @@ export function Cards() {
         </Panel>
         <Panel title="Come stampare">
           <p>
-            Carte a una faccia, <b>un mazzo per foglio</b>: stampa ogni foglio sul suo cartoncino e
-            taglia lungo i bordi. Formato <b>A4 verticale</b>.
+            Carte a una faccia, <b>un mazzo per foglio</b>: stampa ogni foglio sul suo cartoncino e taglia lungo i
+            bordi. Formato <b>A4 verticale</b>.
           </p>
         </Panel>
       </Sidebar>
