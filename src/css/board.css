@@ -1,205 +1,463 @@
-  @import './common.css';
+@import './common.css';
 
-  /* ---------- Pagina A3 orizzontale ---------- */
-  /* Alto quanto la finestra: se si ingrandisce la plancia oltre l'adattamento,
-     la barra di scorrimento orizzontale resta a portata di mano in basso invece
-     di finire in fondo a una pagina più alta dello schermo. */
-  .page-wrap{padding:24px;overflow:auto;height:100vh;}
-  .page{
-    width:420mm;height:297mm;
-    margin:0 auto;
-    background:#fff;
-    box-shadow:0 0 24px rgba(0,0,0,.4);
-    padding:8mm;
-    display:flex;
-    gap:8mm;
-    align-items:flex-start;
-  }
+/* ---------- Pagina A3 orizzontale ---------- */
+/* Alto quanto la finestra: se si ingrandisce la plancia oltre l'adattamento,
+   la barra di scorrimento orizzontale resta a portata di mano in basso invece
+   di finire in fondo a una pagina più alta dello schermo. */
+.page-wrap {
+    padding: 24px;
+    overflow: auto;
+    height: 100vh;
+}
 
-  /* ---------- Tabellone ---------- */
-  .board{
-    width:275mm;height:275mm;
-    display:grid;
-    grid-template-columns:var(--corner) repeat(9,var(--cell)) var(--corner);
-    grid-template-rows:var(--corner) repeat(9,var(--cell)) var(--corner);
-    background:var(--cream);
-    position:relative;
-    flex-shrink:0;
-  }
-  .cell{
-    border:.25mm solid var(--line);
-    overflow:hidden;
-    position:relative;
-    background:var(--panel);
-  }
-  .inner{
-    position:absolute;left:50%;top:50%;
-    width:var(--cell);height:var(--corner);
-    display:flex;flex-direction:column;
-    align-items:center;justify-content:flex-start;
-    text-align:center;
-    padding:.6mm;
-    transform:translate(-50%,-50%);
-  }
-  .rot90 .inner{transform:translate(-50%,-50%) rotate(90deg);}
-  .rot180 .inner{transform:translate(-50%,-50%) rotate(180deg);}
-  .rot270 .inner{transform:translate(-50%,-50%) rotate(270deg);}
-  .corner .inner{width:var(--corner);height:var(--corner);}
-  .rot45 .inner{transform:translate(-50%,-50%) rotate(45deg) scale(.82);}
-  .rot135 .inner{transform:translate(-50%,-50%) rotate(135deg) scale(.82);}
-  .rot225 .inner{transform:translate(-50%,-50%) rotate(225deg) scale(.82);}
-  .rot315 .inner{transform:translate(-50%,-50%) rotate(315deg) scale(.82);}
+.page {
+    width: 420mm;
+    height: 297mm;
+    margin: 0 auto;
+    background: #fff;
+    box-shadow: 0 0 24px rgba(0, 0, 0, .4);
+    padding: 8mm;
+    display: flex;
+    gap: 8mm;
+    align-items: flex-start;
+}
 
-  .bar{
-    width:100%;height:4mm;flex:0 0 auto;
-    border-bottom:.25mm solid var(--line);
-    border-top:3.75mm solid transparent;
-  }
-  .dept{
-    font-size:2.15mm;font-weight:700;text-transform:uppercase;
-    letter-spacing:.2px;margin-top:.8mm;line-height:1.1;
-  }
-  .name{
-    font-size:2.5mm;font-weight:700;margin-top:1mm;line-height:1.15;
-    padding:0 .5mm;
-  }
-  .price{
-    font-size:1.9mm;margin-top:auto;margin-bottom:.8mm;font-weight:600;color:#000;
-    background:var(--gold-tenue);border:.2mm solid var(--gold);
-    border-radius:1mm;padding:.3mm 1mm;
-  }
+/* ---------- Tabellone ---------- */
+.board {
+    width: 275mm;
+    height: 275mm;
+    display: grid;
+    grid-template-columns:var(--corner) repeat(9, var(--cell)) var(--corner);
+    grid-template-rows:var(--corner) repeat(9, var(--cell)) var(--corner);
+    background: var(--surface);
+    position: relative;
+    flex-shrink: 0;
+}
 
-  .special .icon{font-size:9.5mm;margin-top:1.5mm;line-height:1;}
-  .special .label{
-    font-size:2.15mm;font-weight:700;text-transform:uppercase;margin-top:1mm;line-height:1.15;
-  }
-  .special .price{margin-top:auto;}
-  .special.card .inner{justify-content:center;}
-  .special.card .icon{margin-top:0;}
+.cell {
+    border: .25mm solid var(--line);
+    overflow: hidden;
+    position: relative;
+    background: var(--surface);
+}
 
-  .corner .inner{justify-content:center;padding:1mm;}
-  .corner .icon{font-size:10.5mm;line-height:1;}
-  .corner .label{font-size:3.4mm;font-weight:800;text-transform:uppercase;margin-top:1.2mm;line-height:1.05;}
-  .corner .sub{font-size:2.3mm;margin-top:1mm;font-style:italic;}
+.inner {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: var(--cell);
+    height: var(--corner);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: center;
+    padding: .6mm;
+    transform: translate(-50%, -50%);
+}
 
-  .brown   .bar{border-top-color:var(--brown);}
-  .lightblue .bar{border-top-color:var(--lightblue);}
-  .pink    .bar{border-top-color:var(--pink);}
-  .orange  .bar{border-top-color:var(--orange);}
-  .red     .bar{border-top-color:var(--red);}
-  .yellow  .bar{border-top-color:var(--yellow);}
-  .green   .bar{border-top-color:var(--green);}
-  .darkblue .bar{border-top-color:var(--darkblue);}
+.rot90 .inner {
+    transform: translate(-50%, -50%) rotate(90deg);
+}
 
-  /* ---------- Centro tabellone ---------- */
-  .center{
-    grid-column:2/11;grid-row:2/11;
-    position:relative;
-    background:var(--cream);
-    border:.4mm solid var(--line);
-    overflow:hidden;
-  }
-  .center .kicker{
-    position:absolute;top:3mm;left:50%;transform:translateX(-50%);
-    z-index:4;font-size:3mm;letter-spacing:1px;text-transform:uppercase;color:#555;
-    background:rgba(255,253,247,.88);padding:1mm 4mm;border-radius:1mm;
-  }
-  .diagonal-card{
-    position:absolute;
-    width:320mm;height:320mm;
-    left:50%;top:50%;
-    transform:translate(-50%,-50%) rotate(-45deg);
-    overflow:hidden;
-    z-index:1;
-    background-image:url(../images/extendedVersion.png);
-    background-size:cover;
-    background-position:50% 45%;
-  }
-  .ribbon-flat{
-    position:absolute;left:0;right:0;top:24%;
-    transform:translateY(-50%);
-    background:var(--red);color:#fff;text-align:center;
-    padding:5mm 0;font-size:9mm;font-weight:800;letter-spacing:1px;text-transform:uppercase;
-    box-shadow:0 1mm 3mm rgba(0,0,0,.35);
-    z-index:3;
-  }
-  .license-plate{
-    position:absolute;z-index:2;
-    left:46.37%;top:81.92%;
-    width:9.49%;height:3.91%;
-    display:flex;align-items:center;justify-content:center;
-    background:#F7F5EE;
-    border:.4mm solid rgba(36,31,22,.85);
-    border-radius:1mm;
-    box-shadow:0 .3mm .9mm rgba(0,0,0,.45);
-  }
-  .license-plate img{height:76%;width:auto;}
-  .brand-strip{
-    margin-top:auto;align-self:flex-end;
-    display:flex;flex-direction:column;align-items:flex-start;gap:1.5mm;
-    background:rgba(255,253,247,.92);
-    padding:3mm 4mm;border-radius:2mm;border:.3mm solid var(--line);
-  }
-  .mini-logo-row{display:flex;align-items:center;gap:2.5mm;}
-  .mini-logo-row .logo-mini{width:16mm;height:auto;flex:0 0 auto;}
-  .mini-logo-row span{font-size:2.8mm;font-weight:700;color:var(--darkblue);letter-spacing:.2px;}
-  .brand-strip .sub2{font-size:2.3mm;color:#555;margin:0;text-align:left;}
-  .brand-strip .currency{
-    background:var(--gold-tenue);color:var(--ink);font-weight:800;
-    padding:1.5mm 5mm;border-radius:2mm;font-size:2.6mm;letter-spacing:.5px;text-transform:uppercase;
-    border:.3mm solid var(--ink);
-  }
-  .deck{
-    position:absolute;z-index:4;
-    width:38mm;height:58mm;
-    background:rgba(255,253,247,.9);
-    border:.6mm dashed var(--ink);
-    border-radius:2mm;
-    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1mm;
-    text-align:center;
-  }
-  .deck .deck-icon{font-size:7mm;line-height:1;}
-  .deck .deck-label{font-size:3mm;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:var(--ink);}
-  .deck-imprevisti{left:18mm;bottom:10mm;transform:rotate(-45deg);}
-  .deck-probabilita{right:20mm;top:8mm;transform:rotate(-45deg);}
+.rot180 .inner {
+    transform: translate(-50%, -50%) rotate(180deg);
+}
 
-  /* ---------- Pannello legenda / regole ---------- */
-  .panel{
-    width:121mm;height:275mm;
-    background:var(--panel);
-    border:.4mm solid var(--line);
-    padding:5mm;
-    font-size:2.6mm;
-    line-height:1.35;
-    overflow:hidden;
-    display:flex;flex-direction:column;
-  }
-  .panel h1{
-    font-size:5mm;margin:0 0 1mm;color:var(--darkblue);text-transform:uppercase;letter-spacing:.5px;
-  }
-  .panel h2{
-    font-size:3.4mm;margin:4mm 0 1.5mm;color:var(--red);text-transform:uppercase;
-    border-bottom:.3mm solid var(--red);padding-bottom:.6mm;
-  }
-  .panel .tagline{font-size:2.6mm;color:#555;font-style:italic;margin-bottom:2mm;}
-  .panel ul{margin:0;padding-left:4mm;}
-  .panel li{margin-bottom:1mm;}
-  .swatches{display:grid;grid-template-columns:1fr 1fr;gap:1mm 3mm;margin-top:1mm;}
-  .swatch{display:flex;align-items:center;gap:1.5mm;font-size:2.4mm;}
-  .swatch i{
-    width:4mm;height:4mm;border-radius:.6mm;display:inline-block;flex:0 0 auto;
-    background:currentColor;
-    border:2mm solid currentColor;outline:.25mm solid var(--line);
-  }
-  .special-list{margin-top:1mm;}
-  .special-list li{display:flex;gap:2mm;align-items:flex-start;margin-bottom:1.3mm;}
-  .special-list .ic{font-size:3.6mm;flex:0 0 auto;}
-  .panel footer{margin-top:3mm;font-size:2.1mm;color:#777;text-align:center;}
+.rot270 .inner {
+    transform: translate(-50%, -50%) rotate(270deg);
+}
 
-  /* ---------- Stampa ---------- */
-  @page{size:A3 landscape;margin:0;}
-  @media print{
-    .page-wrap{padding:0;height:auto;overflow:visible;}
+.corner .inner {
+    width: var(--corner);
+    height: var(--corner);
+}
+
+.rot45 .inner {
+    transform: translate(-50%, -50%) rotate(45deg) scale(.82);
+}
+
+.rot135 .inner {
+    transform: translate(-50%, -50%) rotate(135deg) scale(.82);
+}
+
+.rot225 .inner {
+    transform: translate(-50%, -50%) rotate(225deg) scale(.82);
+}
+
+.rot315 .inner {
+    transform: translate(-50%, -50%) rotate(315deg) scale(.82);
+}
+
+.bar {
+    width: 100%;
+    height: 4mm;
+    flex: 0 0 auto;
+    border-bottom: .25mm solid var(--line);
+    border-top: 3.75mm solid transparent;
+}
+
+.dept {
+    font-size: 2.15mm;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .2px;
+    margin-top: .8mm;
+    line-height: 1.1;
+}
+
+.name {
+    font-size: 2.5mm;
+    font-weight: 700;
+    margin-top: 1mm;
+    line-height: 1.15;
+    padding: 0 .5mm;
+}
+
+.price {
+    font-size: 1.9mm;
+    margin-top: auto;
+    margin-bottom: .8mm;
+    font-weight: 600;
+    color: #000;
+    background: var(--gold-tenue);
+    border: .2mm solid var(--gold);
+    border-radius: 1mm;
+    padding: .3mm 1mm;
+}
+
+.special .icon {
+    font-size: 9.5mm;
+    margin-top: 1.5mm;
+    line-height: 1;
+}
+
+.special .label {
+    font-size: 2.15mm;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-top: 1mm;
+    line-height: 1.15;
+}
+
+.special .price {
+    margin-top: auto;
+}
+
+.special.card .inner {
+    justify-content: center;
+}
+
+.special.card .icon {
+    margin-top: 0;
+}
+
+.corner .inner {
+    justify-content: center;
+    padding: 1mm;
+}
+
+.corner .icon {
+    font-size: 10.5mm;
+    line-height: 1;
+}
+
+.corner .label {
+    font-size: 3.4mm;
+    font-weight: 800;
+    text-transform: uppercase;
+    margin-top: 1.2mm;
+    line-height: 1.05;
+}
+
+.corner .sub {
+    font-size: 2.3mm;
+    margin-top: 1mm;
+    font-style: italic;
+}
+
+.brown .bar {
+    border-top-color: var(--brown);
+}
+
+.lightblue .bar {
+    border-top-color: var(--lightblue);
+}
+
+.pink .bar {
+    border-top-color: var(--pink);
+}
+
+.orange .bar {
+    border-top-color: var(--orange);
+}
+
+.red .bar {
+    border-top-color: var(--red);
+}
+
+.yellow .bar {
+    border-top-color: var(--yellow);
+}
+
+.green .bar {
+    border-top-color: var(--green);
+}
+
+.darkblue .bar {
+    border-top-color: var(--darkblue);
+}
+
+/* ---------- Centro tabellone ---------- */
+.center {
+    grid-column: 2/11;
+    grid-row: 2/11;
+    position: relative;
+    background: var(--surface);
+    border: .4mm solid var(--line);
+    overflow: hidden;
+}
+
+.center .kicker {
+    position: absolute;
+    top: 3mm;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 4;
+    font-size: 3mm;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #555;
+    background: rgba(255, 255, 255, .88);
+    padding: 1mm 4mm;
+    border-radius: 1mm;
+}
+
+.diagonal-card {
+    position: absolute;
+    width: 320mm;
+    height: 320mm;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) rotate(-45deg);
+    overflow: hidden;
+    z-index: 1;
+    background-image: url(../images/extendedVersion.png);
+    background-size: cover;
+    background-position: 50% 45%;
+}
+
+.ribbon-flat {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 24%;
+    transform: translateY(-50%);
+    background: var(--red);
+    color: #fff;
+    text-align: center;
+    padding: 5mm 0;
+    font-size: 9mm;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    box-shadow: 0 1mm 3mm rgba(0, 0, 0, .35);
+    z-index: 3;
+}
+
+.license-plate {
+    position: absolute;
+    z-index: 2;
+    left: 46.37%;
+    top: 81.92%;
+    width: 9.49%;
+    height: 3.91%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #F7F5EE;
+    border: .4mm solid rgba(36, 31, 22, .85);
+    border-radius: 1mm;
+    box-shadow: 0 .3mm .9mm rgba(0, 0, 0, .45);
+}
+
+.license-plate img {
+    height: 76%;
+    width: auto;
+}
+
+.deck {
+    position: absolute;
+    z-index: 4;
+    width: 38mm;
+    height: 58mm;
+    background: rgba(255, 255, 255, .9);
+    border: .6mm dashed var(--ink);
+    border-radius: 2mm;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1mm;
+    text-align: center;
+}
+
+.deck .deck-icon {
+    font-size: 7mm;
+    line-height: 1;
+}
+
+.deck .deck-label {
+    font-size: 3mm;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    color: var(--ink);
+}
+
+.deck-imprevisti {
+    left: 18mm;
+    bottom: 10mm;
+    transform: rotate(-45deg);
+}
+
+.deck-probabilita {
+    right: 20mm;
+    top: 8mm;
+    transform: rotate(-45deg);
+}
+
+/* ---------- Pannello legenda / regole ---------- */
+.panel {
+    width: 121mm;
+    height: 275mm;
+    background: var(--surface);
+    border: .4mm solid var(--line);
+    padding: 5mm;
+    font-size: 2.6mm;
+    line-height: 1.35;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.panel h1 {
+    font-size: 5mm;
+    margin: 0 0 1mm;
+    color: var(--sida-blue);
+    text-transform: uppercase;
+    letter-spacing: .5px;
+}
+
+.panel h2 {
+    font-size: 3.4mm;
+    margin: 4mm 0 1.5mm;
+    color: var(--red);
+    text-transform: uppercase;
+    border-bottom: .3mm solid var(--red);
+    padding-bottom: .6mm;
+}
+
+.panel .tagline {
+    font-size: 2.6mm;
+    color: #555;
+    font-style: italic;
+    margin-bottom: 2mm;
+}
+
+.panel .currency {
+    align-self: flex-start;
+    margin: 0;
+    background: var(--gold-tenue);
+    color: var(--ink);
+    border: .25mm solid rgba(36, 31, 22, .5);
+    border-radius: 1.2mm;
+    padding: .7mm 2.4mm;
+    font-size: 2.9mm;
+    font-weight: 700;
+}
+
+.panel-logo {
+    margin-top: auto;
+    align-self: flex-end;
+    width: 24mm;
+    height: auto;
+}
+
+.panel ul {
+    margin: 0;
+    padding-left: 4mm;
+}
+
+.panel li {
+    margin-bottom: 1mm;
+}
+
+.swatches {
+    display: grid;
+    grid-template-columns:1fr 1fr;
+    gap: 1mm 3mm;
+    margin-top: 1mm;
+}
+
+.swatch {
+    display: flex;
+    align-items: center;
+    gap: 1.5mm;
+    font-size: 2.4mm;
+}
+
+.swatch i {
+    width: 4mm;
+    height: 4mm;
+    border-radius: .6mm;
+    display: inline-block;
+    flex: 0 0 auto;
+    background: currentColor;
+    border: 2mm solid currentColor;
+    outline: .25mm solid var(--line);
+}
+
+.special-list {
+    margin-top: 1mm;
+}
+
+.special-list li {
+    display: flex;
+    gap: 2mm;
+    align-items: flex-start;
+    margin-bottom: 1.3mm;
+}
+
+.special-list .ic {
+    font-size: 3.6mm;
+    flex: 0 0 auto;
+}
+
+.panel footer {
+    margin-top: 3mm;
+    font-size: 2.1mm;
+    color: #777;
+    text-align: center;
+}
+
+/* ---------- Stampa ---------- */
+@page {
+    size: A3 landscape;
+    margin: 0;
+}
+
+@media print {
+    .page-wrap {
+        padding: 0;
+        height: auto;
+        overflow: visible;
+    }
+
     /* !important: batte lo zoom inline messo da src/plancia.ts per lo schermo. */
-    .page{box-shadow:none;margin:0;zoom:1 !important;}
-  }
+    .page {
+        box-shadow: none;
+        margin: 0;
+        zoom: 1 !important;
+    }
+}

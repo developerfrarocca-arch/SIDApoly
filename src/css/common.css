@@ -1,29 +1,38 @@
 /* Palette, reset e navigazione: condivisi da tutte le pagine. */
 
-:root{
-  --brown:#8B5E3C;
-  --lightblue:#8ECBEA;
-  --pink:#E4699D;
-  --orange:#F2A93B;
-  --red:#E2574C;
-  --yellow:#F0D048;
-  --green:#4CAF6D;
-  --darkblue:#28527A;
-  --cream:#F7F2E3;
-  --panel:#FFFDF7;
-  --ink:#241F16;
-  --gold:#C9A227;
-  --gold-tenue:#E2CF8D;
-  --line:#241F16;
-  --cell:23mm;
-  --corner:34mm;
+:root {
+    --brown: #8B5E3C;
+    --lightblue: #8ECBEA;
+    --pink: #E4699D;
+    --orange: #F2A93B;
+    --red: #E2574C;
+    --yellow: #F0D048;
+    --green: #4CAF6D;
+    --darkblue: #28527A;
+    --sida-blue: #004E90;
+    --surface: #FFFFFF;
+    --panel: #FFFDF7;
+    --ink: #241F16;
+    --gold: #C9A227;
+    --gold-tenue: #E2CF8D;
+    --line: #241F16;
+    --cell: 23mm;
+    --corner: 34mm;
 }
-*{box-sizing:border-box;}
-html,body{margin:0;padding:0;}
-body{
-  background:#999;
-  font-family:"Segoe UI","Arial Narrow",Arial,Helvetica,sans-serif;
-  color:var(--ink);
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #999;
+    font-family: "Segoe UI", "Arial Narrow", Arial, Helvetica, sans-serif;
+    color: var(--ink);
 }
 
 /* ---------- Navigazione (schermo, non stampata) ----------
@@ -32,110 +41,271 @@ body{
    A3 e non ci sta comunque nella finestra: scorre dentro .page-wrap, come già
    faceva prima. */
 
-.brand{display:flex;align-items:center;gap:10px;}
-.brand-logo{
-  width:34px;height:auto;flex:0 0 auto;
-  /* Il logo è monocromatico scuro: qui va su fondo blu, quindi lo si schiarisce. */
-  filter:brightness(0) invert(1);
-  opacity:.92;
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
-.brand-name{font-weight:800;font-size:15px;letter-spacing:.2px;line-height:1.2;}
 
-.nav{display:flex;gap:8px;flex-wrap:wrap;}
-.nav a{
-  color:#fff;text-decoration:none;font-weight:700;font-size:13px;
-  border:1px solid rgba(255,255,255,.45);border-radius:5px;
-  padding:7px 12px;white-space:nowrap;
+.brand-logo {
+    width: 34px;
+    height: auto;
+    flex: 0 0 auto;
+    /* Il logo è monocromatico scuro: qui va su fondo blu, quindi lo si schiarisce. */
+    filter: brightness(0) invert(1);
+    opacity: .92;
 }
-.nav a:hover{background:rgba(255,255,255,.14);border-color:var(--gold);color:var(--gold);}
-.nav a[aria-current="page"]{background:var(--gold);border-color:var(--gold);color:var(--ink);}
 
-.stampa{
-  background:var(--gold);color:var(--ink);border:none;
-  padding:9px 16px;border-radius:5px;
-  font-weight:800;font-size:14px;cursor:pointer;
+.brand-name {
+    font-weight: 800;
+    font-size: 15px;
+    letter-spacing: .2px;
+    line-height: 1.2;
 }
-.stampa:hover{background:#e0b93a;}
 
-.opzione{display:flex;align-items:flex-start;gap:10px;cursor:pointer;}
+.nav {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
 
-.opzione input{
-  appearance:none;-webkit-appearance:none;
-  flex:0 0 auto;
-  width:34px;height:18px;margin:1px 0 0;
-  border:1px solid rgba(255,255,255,.4);
-  border-radius:9px;
-  background:rgba(255,255,255,.18);
-  position:relative;
-  cursor:pointer;
-  transition:background .15s ease, border-color .15s ease;
+.nav a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 13px;
+    border: 1px solid rgba(255, 255, 255, .45);
+    border-radius: 5px;
+    padding: 7px 12px;
+    white-space: nowrap;
 }
-.opzione input::after{
-  content:"";
-  position:absolute;top:2px;left:2px;
-  width:12px;height:12px;border-radius:50%;
-  background:#fff;
-  transition:transform .15s ease, background .15s ease;
+
+.nav a:hover {
+    background: rgba(255, 255, 255, .14);
+    border-color: var(--gold);
+    color: var(--gold);
 }
-.opzione input:hover{border-color:var(--gold);}
-.opzione input:checked{background:var(--gold);border-color:var(--gold);}
-.opzione input:checked::after{transform:translateX(16px);background:var(--ink);}
-.opzione input:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+
+.nav a[aria-current="page"] {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--ink);
+}
+
+.stampa {
+    background: var(--gold);
+    color: var(--ink);
+    border: none;
+    padding: 9px 16px;
+    border-radius: 5px;
+    font-weight: 800;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.stampa:hover {
+    background: #e0b93a;
+}
+
+.opzione {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.opzione input {
+    appearance: none;
+    -webkit-appearance: none;
+    flex: 0 0 auto;
+    width: 34px;
+    height: 18px;
+    margin: 1px 0 0;
+    border: 1px solid rgba(255, 255, 255, .4);
+    border-radius: 9px;
+    background: rgba(255, 255, 255, .18);
+    position: relative;
+    cursor: pointer;
+    transition: background .15s ease, border-color .15s ease;
+}
+
+.opzione input::after {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #fff;
+    transition: transform .15s ease, background .15s ease;
+}
+
+.opzione input:hover {
+    border-color: var(--gold);
+}
+
+.opzione input:checked {
+    background: var(--gold);
+    border-color: var(--gold);
+}
+
+.opzione input:checked::after {
+    transform: translateX(16px);
+    background: var(--ink);
+}
+
+.opzione input:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+}
 
 /* ---------- Barra laterale ---------- */
-.app{display:flex;align-items:flex-start;}
-.sidebar{
-  position:sticky;top:0;
-  flex:0 0 250px;height:100vh;
-  background:var(--darkblue);color:#fff;
-  border-right:2px solid var(--gold);
-  padding:16px;
-  display:flex;flex-direction:column;gap:16px;
-  overflow-y:auto;
-  font-size:13px;line-height:1.45;
+.app {
+    display: flex;
+    align-items: flex-start;
 }
-.sidebar h1{margin:0;font-size:16px;line-height:1.25;color:var(--gold);}
-.sidebar h2{
-  margin:0 0 6px;font-size:11px;font-weight:800;
-  text-transform:uppercase;letter-spacing:.8px;color:rgba(255,255,255,.6);
-}
-.sidebar .nav{flex-direction:column;gap:6px;}
-.sidebar .nav a{display:block;}
-.sidebar .stampa{margin-top:auto;}
-.pannello{border-top:1px solid rgba(255,255,255,.22);padding-top:12px;}
-.pannello p{margin:0;}
-.pannello p + p{margin-top:8px;}
-.pannello b{color:var(--gold);}
 
-.opzione + .opzione{margin-top:8px;}
+.sidebar {
+    position: sticky;
+    top: 0;
+    flex: 0 0 250px;
+    height: 100vh;
+    background: var(--sida-blue);
+    color: #fff;
+    border-right: 2px solid var(--gold);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    overflow-y: auto;
+    font-size: 13px;
+    line-height: 1.45;
+}
+
+.sidebar h1 {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.25;
+    color: var(--gold);
+}
+
+.sidebar h2 {
+    margin: 0 0 6px;
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .8px;
+    color: rgba(255, 255, 255, .6);
+}
+
+.sidebar .nav {
+    flex-direction: column;
+    gap: 6px;
+}
+
+.sidebar .nav a {
+    display: block;
+}
+
+.sidebar .stampa {
+    margin-top: auto;
+}
+
+.pannello {
+    border-top: 1px solid rgba(255, 255, 255, .22);
+    padding-top: 12px;
+}
+
+.pannello p {
+    margin: 0;
+}
+
+.pannello p + p {
+    margin-top: 8px;
+}
+
+.pannello b {
+    color: var(--gold);
+}
+
+.opzione + .opzione {
+    margin-top: 8px;
+}
 
 /* Comandi dello zoom: valgono solo per lo schermo, la stampa li ignora. */
-.zoom{display:flex;align-items:center;gap:8px;}
-.zoom button{
-  flex:0 0 auto;width:30px;height:28px;
-  background:rgba(255,255,255,.12);color:#fff;
-  border:1px solid rgba(255,255,255,.35);border-radius:5px;
-  font-size:16px;font-weight:800;line-height:1;cursor:pointer;
+.zoom {
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
-.zoom button:hover{background:rgba(255,255,255,.24);border-color:var(--gold);color:var(--gold);}
-.zoom span{
-  flex:1 1 auto;text-align:center;
-  font-weight:800;font-variant-numeric:tabular-nums;
+
+.zoom button {
+    flex: 0 0 auto;
+    width: 30px;
+    height: 28px;
+    background: rgba(255, 255, 255, .12);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, .35);
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 1;
+    cursor: pointer;
 }
-.zoom-adatta{
-  margin-top:8px;width:100%;
-  background:none;color:#fff;
-  border:1px solid rgba(255,255,255,.35);border-radius:5px;
-  padding:6px 10px;font:inherit;font-weight:700;cursor:pointer;
+
+.zoom button:hover {
+    background: rgba(255, 255, 255, .24);
+    border-color: var(--gold);
+    color: var(--gold);
 }
-.zoom-adatta:hover{border-color:var(--gold);color:var(--gold);}
+
+.zoom span {
+    flex: 1 1 auto;
+    text-align: center;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+}
+
+.zoom-adatta {
+    margin-top: 8px;
+    width: 100%;
+    background: none;
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, .35);
+    border-radius: 5px;
+    padding: 6px 10px;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.zoom-adatta:hover {
+    border-color: var(--gold);
+    color: var(--gold);
+}
 
 /* Il foglio non si stringe: se la finestra è stretta scorre, non si deforma. */
-.app-main{flex:1 1 auto;min-width:0;overflow-x:auto;}
+.app-main {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow-x: auto;
+}
 
-@media print{
-  body{background:#fff;}
-  .sidebar{display:none;}
-  .app{display:block;}
-  .app-main{overflow:visible;}
+@media print {
+    body {
+        background: #fff;
+    }
+
+    .sidebar {
+        display: none;
+    }
+
+    .app {
+        display: block;
+    }
+
+    .app-main {
+        overflow: visible;
+    }
 }
