@@ -3,6 +3,10 @@ export function Center() {
     <div className="center">
       <div className="diagonal-card" role="img" aria-label="Il team SIDA">
         <div className="ribbon-flat">Il Monopoli di SIDA</div>
+
+        <div className="license-plate">
+          <img src="/resources/logo-sida.svg" alt="" />
+        </div>
       </div>
 
       <div className="deck deck-imprevisti">

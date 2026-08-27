@@ -123,6 +123,17 @@
     box-shadow:0 1mm 3mm rgba(0,0,0,.35);
     z-index:3;
   }
+  .license-plate{
+    position:absolute;z-index:2;
+    left:46.37%;top:81.92%;
+    width:9.49%;height:3.91%;
+    display:flex;align-items:center;justify-content:center;
+    background:#F7F5EE;
+    border:.4mm solid rgba(36,31,22,.85);
+    border-radius:1mm;
+    box-shadow:0 .3mm .9mm rgba(0,0,0,.45);
+  }
+  .license-plate img{height:76%;width:auto;}
   .brand-strip{
     margin-top:auto;align-self:flex-end;
     display:flex;flex-direction:column;align-items:flex-start;gap:1.5mm;

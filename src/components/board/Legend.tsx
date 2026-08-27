@@ -118,9 +118,6 @@ export function Legend() {
           <img className="logo-mini" src="/resources/logo-sida.svg" alt="SIDA Autosoft Multimedia" />
           <span>SIDA Autosoft Multimedia</span>
         </div>
-        <div className="sub2">
-          Prodotti, servizi e release sul tabellone più temuto dell&apos;ufficio
-        </div>
         <div className="currency">Valuta: Buoni Pasto (BP)</div>
       </div>
     </div>
