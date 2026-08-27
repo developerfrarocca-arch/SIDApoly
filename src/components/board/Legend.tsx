@@ -1,5 +1,12 @@
+import { CONSULTANT_INDEXES } from '../../data/contracts';
+import { SPACES } from '../../data/spaces';
 import { DENOMINATION_LIST } from '../../model/money';
 import { businessLines } from '../../model/board';
+
+const CONSULTANT_ICONS = CONSULTANT_INDEXES.map((i) => {
+  const space = SPACES[i];
+  return space?.type === 'special' ? space.icon : '';
+}).join('');
 
 export function Legend() {
   return (
@@ -44,7 +51,7 @@ export function Legend() {
       <h2>Caselle speciali</h2>
       <ul className="special-list">
         <li>
-          <span className="ic">🧑‍💼</span>
+          <span className="ic">{CONSULTANT_ICONS}</span>
           <span>
             <b>Consulenza Nord / Sud / Est / Ovest</b> (4) — i consulenti assunti da Autosoft come referenti di zona;
             come le stazioni classiche: il canone dovuto raddoppia per ogni casella Consulenza posseduta dallo stesso

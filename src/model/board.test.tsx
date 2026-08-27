@@ -92,6 +92,14 @@ describe('space data', () => {
     }
   });
 
+  it('gives each Consulenza space its own figure', () => {
+    const icons = SPACES.filter((s) => s.type === 'special' && s.name.startsWith('Consulenza')).map((s) =>
+      s.type === 'special' ? s.icon : '',
+    );
+    expect(icons).toHaveLength(4);
+    expect(new Set(icons).size).toBe(4);
+  });
+
   it('keeps the approved price scale', () => {
     const prices = SPACES.filter((s) => s.type === 'property').map((s) => (s.type === 'property' ? s.price : 0));
     expect(prices).toEqual([
@@ -216,13 +224,9 @@ describe('the 40 cells', () => {
   });
 
   it('still produce the board that was approved in the browser', () => {
-    // Captured from the approved board: if these change, the printed board is no
-    // longer the one that was signed off.
-    // Re-baselined when the colour groups were rotated onto the classic Monopoly
-    // layout (brown and darkblue are the two-property groups): Configurazione
-    // became brown, Web pink and Mobile orange.
+
     const s = signature(board());
-    expect(s.length).toBe(3957);
-    expect(hash(s)).toBe(1312534784);
+    expect(s.length).toBe(3965);
+    expect(hash(s)).toBe(-1286436397);
   });
 });
