@@ -93,10 +93,13 @@ Prettier formatta TypeScript, HTML e Markdown; ESLint usa la flat config in
 [`eslint.config.js`](eslint.config.js) con i preset di typescript-eslint e le regole
 degli hook di React. Tre scelte da sapere prima di toccare la configurazione:
 
-- **`src/css` è escluso da Prettier** ([`.prettierignore`](.prettierignore)). I fogli di
-  stile sono scritti in stile compatto voluto — dichiarazioni accorpate su una riga,
-  misure in mm allineate in colonna — e Prettier li esploderebbe rendendo illeggibili
-  i blocchi geometrici.
+- **`src/css` è escluso da Prettier** ([`.prettierignore`](.prettierignore)), perché i
+  fogli di stile erano scritti in stile compatto — dichiarazioni accorpate su una riga,
+  misure in mm allineate in colonna — e Prettier li avrebbe esplosi. Attenzione: lo
+  stile non è più uniforme, `board.css` e `common.css` sono stati riformattati espansi
+  mentre `cards.css`, `contracts.css` e `money.css` sono ancora compatti. Se si sceglie
+  lo stile espanso, la cosa pulita è togliere l'esclusione e lasciare uniformare tutto
+  a Prettier.
 - **`printWidth` è 120, non 100.** [`src/data/spaces.ts`](src/data/spaces.ts) è una
   tabella di 40 righe, una per casella, con l'indice in commento: a 100 colonne Prettier
   ne spezzerebbe più della metà distruggendo l'allineamento.
@@ -199,10 +202,12 @@ senso orario a partire dall'angolo "Avvio sprint!" (indice 0). Ci sono quattro t
 di casella:
 
 ```ts
-{ type: 'corner',   icon: '☕', name: 'Pausa caffè', subtitle: 'Sosta gratuita' }
-{ type: 'property', group: 'red', department: 'Didattica', name: 'Aula', price: 220 }
-{ type: 'special',  icon: '💼', name: 'Consulenza Nord', price: 200 }
-{ type: 'card',     icon: '🎲', name: 'Imprevisti' }
+const esempi = [
+  /* 20 */ { type: 'corner', icon: '☕', name: 'Pausa caffè', subtitle: 'Sosta gratuita' },
+  /* 21 */ { type: 'property', group: 'red', department: 'Didattica', name: 'Manuale AeB', price: 550 },
+  /* 25 */ { type: 'special', icon: '🧑‍💼', name: 'Consulenza Nord', price: 480 },
+  /*  7 */ { type: 'card', icon: '🎲', name: 'Imprevisti' },
+];
 ```
 
 - `price` numerico viene stampato come `"220 BP"`; se serve un testo diverso si passa
@@ -244,8 +249,9 @@ Canoni, costo degli Aggiornamenti e valore ipotecario stanno invece in
 (non per colore: nel Monopoli originale i canoni dipendono dalla posizione):
 
 ```ts
-26: { rents: { bare: 22, upgrades: [110, 330, 800, 975], release: 1150 },
-      upgradeCost: 150, mortgage: 130 },
+const esempio = {
+  26: { rents: { bare: 55, upgrades: [275, 825, 2000, 2500], release: 3000 }, upgradeCost: 375, mortgage: 325 },
+};
 ```
 
 - `bare` è il canone della licenza senza migliorie, `upgrades` i quattro canoni
