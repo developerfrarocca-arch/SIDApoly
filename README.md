@@ -220,17 +220,19 @@ particolare i gruppi colore stanno alle posizioni classiche — `brown` alle cas
 e `darkblue` alle 37 e 39 sono i due gruppi da 2 proprietà, gli altri sei ne hanno 3 —
 e il test "respects the colour group sizes of the classic game" in
 [`src/model/board.test.tsx`](src/model/board.test.tsx) lo verifica. Se sposti un reparto
-su un altro colore, aggiorna anche la legenda (vedi sotto) e la firma del tabellone.
+su un altro colore, la legenda segue da sé; va invece ri-baselinata la firma del
+tabellone (vedi la sezione Test).
 
 Posizione nella griglia e rotazione del testo sono calcolate dall'indice da
 [`src/model/board.ts`](src/model/board.ts), quindi non vanno indicate. Se aggiungi o
 togli caselle, però, salta la geometria del perimetro: il tabellone è pensato per
 esattamente 40 posizioni.
 
-I nomi dei gruppi colore (`Configurazione`, `Formazione`, `Web`, `Mobile`, `Didattica`,
-`Simulatori`, `Ufficio`, `Sportello`) compaiono anche nella legenda dentro
-[`src/components/board/Legend.tsx`](src/components/board/Legend.tsx): se li rinomini,
-allineali in entrambi i posti.
+La legenda delle linee di business **non** ripete nulla a mano: reparti, nomi delle
+caselle e ordine dei colori li ricava da `SPACES` tramite `businessLines()` in
+[`src/model/board.ts`](src/model/board.ts). Se rinomini un reparto o una casella, o se
+sposti un gruppo su un altro colore, la legenda si aggiorna da sé — compreso l'ordine,
+che segue la prima comparsa di ogni colore sul tabellone.
 
 ## Modificare i contratti
 

@@ -3,7 +3,7 @@
    without a browser; the markup is built by the components in
    src/components/board. */
 
-import { SPACE_COUNT, type Space } from '../data/spaces';
+import { SPACE_COUNT, SPACES, type Group, type Space } from '../data/spaces';
 
 /** How a space's content is rotated: by board side, or diagonally for corners. */
 export type Rotation = '' | 'rot45' | 'rot90' | 'rot135' | 'rot180' | 'rot225' | 'rot270' | 'rot315';
@@ -63,4 +63,22 @@ export function spaceCssClasses(space: Space, rotation: Rotation): string {
   if (rotation) classes.push(rotation);
   if (space.type === 'card') classes.push('card');
   return classes.join(' ');
+}
+
+/** A colour group as the legend shows it: the department and its spaces. */
+export interface BusinessLine {
+  group: Group;
+  department: string;
+  names: string[];
+}
+
+export function businessLines(spaces: readonly Space[] = SPACES): BusinessLine[] {
+  const lines = new Map<Group, BusinessLine>();
+  for (const space of spaces) {
+    if (space.type !== 'property') continue;
+    const line = lines.get(space.group);
+    if (line) line.names.push(space.name);
+    else lines.set(space.group, { group: space.group, department: space.department, names: [space.name] });
+  }
+  return [...lines.values()];
 }

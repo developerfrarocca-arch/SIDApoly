@@ -7,6 +7,8 @@ import { COPIES_PER_DENOMINATION, DENOMINATIONS, type Denomination } from '../da
 /** Bills per A4 portrait sheet: a 2x5 grid. */
 export const BILLS_PER_SHEET = 10;
 
+export const DENOMINATION_LIST = DENOMINATIONS.map((d) => d.value).join(', ');
+
 /** One printed copy of a denomination, numbered like a real bill's serial. */
 export interface BillCopy {
   denomination: Denomination;

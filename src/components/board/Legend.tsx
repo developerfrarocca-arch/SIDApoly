@@ -1,18 +1,5 @@
-interface LineaDiBusiness {
-  colore: string;
-  testo: string;
-}
-
-const LINEE_DI_BUSINESS: readonly LineaDiBusiness[] = [
-  { colore: 'pink', testo: 'Configurazione — SIDA Sync Test, SIDA Connect' },
-  { colore: 'lightblue', testo: 'Formazione — Tachigrafo, Carico Sicuro, Guida Sicura' },
-  { colore: 'orange', testo: 'Web — patenteonline.it, patente.it, sida.patente.it' },
-  { colore: 'brown', testo: 'Mobile — SIDA QuizApp, SIDA Tools, SIDA Drive Controller' },
-  { colore: 'red', testo: 'Didattica — Manuale AeB, Manuale Superiori, Manuale CQC' },
-  { colore: 'yellow', testo: 'Simulatori — DRIVE 180°, DRIVE 360°, DRIVE CML' },
-  { colore: 'green', testo: 'Ufficio — Aula, Quiz, Gestione Sida Millennium' },
-  { colore: 'darkblue', testo: 'Sportello — TuttoPrenota, SIDA PagoPa' },
-];
+import { DENOMINATION_LIST } from '../../model/money';
+import { businessLines } from '../../model/board';
 
 export function Legend() {
   return (
@@ -23,7 +10,7 @@ export function Legend() {
       <h2>Come si gioca</h2>
       <ul>
         <li>
-          Ogni giocatore riceve <b>1.500 Buoni Pasto</b> (tagli da 1, 5, 10, 20, 50, 100, 500) e sceglie una pedina.
+          Ogni giocatore riceve <b>1.500 Buoni Pasto</b> (tagli da {DENOMINATION_LIST}) e sceglie una pedina.
         </li>
         <li>
           A turno si tira il dado e ci si muove in senso orario partendo da <b>Avvio sprint!</b>
@@ -46,10 +33,10 @@ export function Legend() {
 
       <h2>Legenda Linee di business</h2>
       <div className="swatches">
-        {LINEE_DI_BUSINESS.map((linea) => (
-          <div className="swatch" key={linea.colore}>
-            <i style={{ color: `var(--${linea.colore})` }}></i>
-            {linea.testo}
+        {businessLines().map((linea) => (
+          <div className="swatch" key={linea.group}>
+            <i style={{ color: `var(--${linea.group})` }}></i>
+            {linea.department} — {linea.names.join(', ')}
           </div>
         ))}
       </div>

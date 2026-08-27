@@ -218,8 +218,11 @@ describe('the 40 cells', () => {
   it('still produce the board that was approved in the browser', () => {
     // Captured from the approved board: if these change, the printed board is no
     // longer the one that was signed off.
+    // Re-baselined when the colour groups were rotated onto the classic Monopoly
+    // layout (brown and darkblue are the two-property groups): Configurazione
+    // became brown, Web pink and Mobile orange.
     const s = signature(board());
-    expect(s.length).toBe(3958);
-    expect(hash(s)).toBe(-874641370);
+    expect(s.length).toBe(3957);
+    expect(hash(s)).toBe(1312534784);
   });
 });
