@@ -2,7 +2,8 @@
 
 /* ============================================================
    Carte contratto — grafica del Monopoli classico.
-   Fogli A4 verticali, griglia 3x3 (9 carte per foglio).
+   Fogli A4 verticali, griglia 3x3 (9 carte per foglio), oppure
+   fogli A3 orizzontali, griglia 6x3 (18 carte per foglio).
    ============================================================ */
 
 :root{
@@ -26,6 +27,9 @@
   display:flex;flex-direction:column;
   flex-shrink:0;
 }
+/* Foglio A3 orizzontale: stessa altezza e stesse righe dell'A4, il doppio
+   delle colonne — di fatto due griglie A4 affiancate sullo stesso foglio. */
+.sheet.sheet-a3{width:420mm;height:297mm;}
 .sheet-grid{
   display:grid;
   grid-template-columns:repeat(3,var(--carta-w));
@@ -33,6 +37,7 @@
   gap:var(--carta-gap);
   justify-content:center;align-content:start;
 }
+.sheet-a3 .sheet-grid{grid-template-columns:repeat(6,var(--carta-w));}
 .sheet-foot{
   margin-top:auto;text-align:center;
   font-size:2.2mm;color:#888;letter-spacing:.3px;
@@ -191,11 +196,20 @@
 
 /* ---------- Stampa ---------- */
 @page{size:A4 portrait;margin:0;}
+/* Pagina nominata per i fogli A3: la proprieta' "page" (supportata da Chrome)
+   assegna questo formato solo agli elementi .sheet-a3, cosi' i due formati
+   possono convivere nello stesso documento di stampa. NB: essendo orizzontale,
+   il bordo lungo del foglio A3 e' quello orizzontale (in alto/in basso), non
+   quello verticale come sull'A4 verticale: per il fronte-retro allineato va
+   quindi selezionato il bordo CORTO, non il bordo lungo usato per l'A4
+   (vedi le istruzioni mostrate in pagina). */
+@page a3{size:A3 landscape;margin:0;}
 @media print{
   .sheets-divider{display:none;}
   .sheets{padding:0;gap:0;}
   .sheet{box-shadow:none;break-after:page;}
   .sheet:last-child{break-after:auto;}
+  .sheet-a3{page:a3;}
   .contract{break-inside:avoid;}
   /* Le fasce colorate devono restare colorate anche in stampa. */
   .contract .head,.contract .value{-webkit-print-color-adjust:exact;print-color-adjust:exact;}

@@ -27,6 +27,15 @@ export const CARDS_PER_SHEET = 9;
 export const COLUMNS = 3;
 
 /**
+ * Cards per A3 landscape sheet: a 6x3 grid, i.e. two A4 grids side by side —
+ * same row count and row height as A4, twice the columns.
+ */
+export const CARDS_PER_SHEET_A3 = 18;
+
+/** Columns of an A3 sheet grid (see .sheet-a3 in contracts.css). */
+export const COLUMNS_A3 = 6;
+
+/**
  * Every contract card, in board order: the 22 product/service spaces, the 4
  * Consulenza spaces and the 2 utility spaces.
  */
