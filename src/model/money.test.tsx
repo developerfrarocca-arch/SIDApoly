@@ -41,12 +41,12 @@ describe('serialOf', () => {
 });
 
 describe('one bill', () => {
-  it('prints the value, the amount in BP and the Edenpurple mark', () => {
+  it('prints the value, the amount in BP and the Edenblu mark', () => {
     const html = toHtml(<Bill copy={{ denomination: { value: 50, color: '#E4699D' }, series: 3 }} />);
     expect(html).toContain('50');
     expect(html).toContain('BP');
     expect(html).toContain('Buoni Pasto');
-    expect(html).toContain('Edenpurple');
+    expect(html).toContain('Edenblu');
     expect(html).toContain('--bill-color:#E4699D');
     expect(html).toContain('SIDA-000050-003');
   });

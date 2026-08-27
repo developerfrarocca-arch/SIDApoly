@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-export const FOOTER_SIGNATURE = 'Il Monopoli di SIDA — SIDA Autosoft Multimedia';
+export const FOOTER_SIGNATURE = 'Il Monopoli di SIDA Autosoft Multimedia';
 
 interface SheetProps {
   extraClass?: string | undefined;

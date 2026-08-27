@@ -1,20 +1,33 @@
-import type { CSSProperties } from 'react';
+import { useId, type CSSProperties } from 'react';
 import { withThousands } from '../../model/contracts';
+import { FOOTER_SIGNATURE } from '../Sheet';
 import { serialOf, type BillCopy } from '../../model/money';
 
-/**
- * The "Edenpurple" mark: same layout as the Edenred logo (circle plus two-tone
- * wordmark), with "red" swapped for "purple" and the palette moved onto violet.
- */
-export function EdenpurpleLogo() {
+const MARK_FONT = 'Arial, Helvetica, sans-serif';
+
+export function EdenbluLogo() {
+  const clipId = useId();
   return (
-    <svg className="bill-logo" viewBox="0 0 360 110" role="img" aria-label="Edenpurple">
-      <circle cx="52" cy="55" r="58" fill="#6C3483" />
-      <text x="8" y="76" fontFamily="Arial, Helvetica, sans-serif" fontWeight="800" fontSize="58" fill="#fff">
-        Ed
+    <svg className="bill-logo" viewBox="0 0 754 474" role="img" aria-label="Edenblu">
+      <defs>
+        <clipPath id={clipId}>
+          <circle cx="237" cy="237" r="229" />
+        </clipPath>
+      </defs>
+      <circle cx="237" cy="237" r="229" className="mark-disc" />
+      <text x="8" y="296" fontFamily={MARK_FONT} fontWeight="800" fontSize="168" className="mark-word">
+        Edenblu
       </text>
-      <text x="86" y="72" fontFamily="Arial, Helvetica, sans-serif" fontWeight="800" fontSize="42" fill="#6C3483">
-        enpurple
+      <text
+        x="8"
+        y="296"
+        fontFamily={MARK_FONT}
+        fontWeight="800"
+        fontSize="168"
+        fill="#fff"
+        clipPath={`url(#${clipId})`}
+      >
+        Edenblu
       </text>
     </svg>
   );
@@ -30,12 +43,12 @@ export function Bill({ copy }: { copy: BillCopy }) {
       <div className="corner corner-tl">{figure}</div>
       <div className="corner corner-tr">{figure}</div>
       <div className="bill-center">
-        <EdenpurpleLogo />
+        <EdenbluLogo />
         <div className="bill-title">Buoni Pasto</div>
         <div className="bill-value">
           {figure} <span>BP</span>
         </div>
-        <div className="bill-sub">Il Monopoli d&apos;Ufficio — SIDA Autosoft Multimedia</div>
+        <div className="bill-sub">{FOOTER_SIGNATURE}</div>
       </div>
       <div className="corner corner-bl">{figure}</div>
       <div className="corner corner-br">{figure}</div>

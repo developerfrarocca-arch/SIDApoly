@@ -1,7 +1,7 @@
 {
   "name": "sidapoly",
   "version": "1.0.0",
-  "description": "Generatore di stampe per Il Monopoli di SIDA - SIDA Autosoft Multimedia",
+  "description": "Generatore di stampe per Il Monopoli di SIDA Autosoft Multimedia",
   "private": true,
   "type": "module",
   "scripts": {
