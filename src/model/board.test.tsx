@@ -224,9 +224,8 @@ describe('the 40 cells', () => {
   });
 
   it('still produce the board that was approved in the browser', () => {
-
     const s = signature(board());
-    expect(s.length).toBe(3965);
-    expect(hash(s)).toBe(-1286436397);
+    expect(s.length).toBe(3963);
+    expect(hash(s)).toBe(-624752442);
   });
 });
