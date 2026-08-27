@@ -42,8 +42,8 @@ export function Bill({ copy }: { copy: BillCopy }) {
     <article className="bill" style={style} data-valore={value}>
       <div className="corner corner-tl">{figure}</div>
       <div className="corner corner-tr">{figure}</div>
+      <EdenbluLogo />
       <div className="bill-center">
-        <EdenbluLogo />
         <div className="bill-title">Buoni Pasto</div>
         <div className="bill-value">
           {figure} <span>BP</span>

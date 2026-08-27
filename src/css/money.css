@@ -64,17 +64,31 @@
   color:var(--bill-color);
   z-index:1;
 }
-.corner-tl{top:1.6mm;left:3mm;}
-.corner-tr{top:1.6mm;right:3mm;}
-.corner-bl{bottom:1.6mm;left:3mm;}
-.corner-br{bottom:1.6mm;right:3mm;}
+/* 2.8mm invece di 1.6: le cifre restavano appiccicate al bordo, e con esse il
+   marchio in alto e il seriale in basso, che ci si allineano. */
+.corner-tl{top:2.8mm;left:3mm;}
+.corner-tr{top:2.8mm;right:3mm;}
+.corner-bl{bottom:2.8mm;left:3mm;}
+.corner-br{bottom:2.8mm;right:3mm;}
 
 .bill-center{
   flex:1 1 auto;
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.6mm;
   text-align:center;z-index:1;
 }
-.bill-logo{width:12mm;height:auto;}
+/* Il marchio sta in alto, centrato fra le due cifre d'angolo e allineato al
+   centro del loro inchiostro, che cade a 7.06mm dal bordo della banconota.
+   Qui si sottrae il bordo da .35mm perche' top parte dal padding box, non dal
+   border box: 7.06 - .35 = 6.7mm.
+   La larghezza tiene il disco dentro la cornice decorativa, che corre fra 2 e
+   2.5mm dal bordo: a 10mm il logo e' alto 6.3mm e parte da 3.9mm. */
+.bill-logo{
+  position:absolute;
+  top:6.7mm;left:50%;
+  transform:translate(-50%,-50%);
+  width:10mm;height:auto;
+  z-index:1;
+}
 .bill-logo .mark-disc,
 .bill-logo .mark-word{fill:var(--sida-blue);}
 .bill-title{
@@ -86,7 +100,9 @@
 .bill-sub{font-size:1.7mm;letter-spacing:.2px;color:#555;}
 
 .bill-serial{
-  position:absolute;bottom:2.2mm;left:50%;transform:translateX(-50%);
+  /* 3.4mm: a 2.2 il box del seriale entrava nella cornice (bordo interno a
+     2.5mm) e l'inchiostro le passava a 0.23mm. */
+  position:absolute;bottom:3.4mm;left:50%;transform:translateX(-50%);
   font-size:1.6mm;letter-spacing:.4px;color:#777;
   font-family:"Consolas","Courier New",monospace;
   z-index:1;
