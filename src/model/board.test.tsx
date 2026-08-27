@@ -72,11 +72,15 @@ describe('space data', () => {
     expect(indexes.filter((i) => SPACES[i]!.type === 'corner')).toEqual(CORNERS);
   });
 
-  it('respects the colour group sizes of the classic game', () => {
+  it('keeps six groups of three and two of two, as the classic game does', () => {
+    // Same shape as the classic game — six groups of three and two of two — but
+    // the two short groups are Configurazione (pink) and Sportello (darkblue),
+    // not brown and darkblue: the colours were put back the way they had been
+    // approved, so brown is Mobile and pink is Configurazione.
     const expectedSizes: Record<Group, number> = {
-      brown: 2,
+      brown: 3,
       lightblue: 3,
-      pink: 3,
+      pink: 2,
       orange: 3,
       red: 3,
       yellow: 3,
@@ -224,8 +228,12 @@ describe('the 40 cells', () => {
   });
 
   it('still produce the board that was approved in the browser', () => {
+    // Captured from the approved board: if these change, the printed board is no
+    // longer the one that was signed off.
+    // Re-baselined when the colour groups were put back the way they had been
+    // approved: Configurazione is pink again, Web orange and Mobile brown.
     const s = signature(board());
-    expect(s.length).toBe(3963);
-    expect(hash(s)).toBe(-624752442);
+    expect(s.length).toBe(3964);
+    expect(hash(s)).toBe(159291360);
   });
 });
