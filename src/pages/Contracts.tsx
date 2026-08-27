@@ -113,9 +113,10 @@ export function ContractSheets({ duplex, a3 = false }: { duplex: boolean; a3?: b
 export function Contracts() {
   const [duplex, setDuplex] = useState(false);
   const [a3, setA3] = useState(false);
+  const [colored, setColored] = useState(true);
 
   return (
-    <div className="app">
+    <div className={colored ? 'app' : 'app senza-colori'}>
       <Sidebar currentPage="contracts" pageTitle="Contratti delle proprietà" printLabel="Stampa tutto">
         <Panel title="Opzioni">
           <Option label="Stampa fronte-retro allineata" checked={duplex} onChange={setDuplex} />
@@ -123,6 +124,12 @@ export function Contracts() {
             label={a3 ? 'Foglio A3 (18 carte a foglio)' : 'Foglio A4 (9 carte a foglio)'}
             checked={a3}
             onChange={setA3}
+          />
+          <Option
+            label="Fasce colorate"
+            checked={colored}
+            onChange={setColored}
+            hint="Togli la spunta per stampare in bianco e nero: le fasce restano vuote e la linea di business si legge dal nome del reparto."
           />
         </Panel>
         <Panel title="Come stampare">

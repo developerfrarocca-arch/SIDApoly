@@ -194,6 +194,21 @@
 /* Cella vuota: tiene il posto quando la riga da specchiare non e' piena. */
 .back-vuoto{}
 
+/* ---------- Senza colori ----------
+   Per stampare in bianco e nero senza sprecare inchiostro a colori: via il
+   fondo dalle fasce, dalla riga del valore e via il rosso dal retro. Le carte
+   restano leggibili perche' fascia e riga del valore hanno gia' il loro bordo,
+   e la linea di business si riconosce dal nome del reparto.
+   Il testo delle fasce scure (marroni, blu e quelle di Consulenza/servizi) e'
+   bianco: senza fondo sparirebbe, quindi qui torna color inchiostro.
+   Si parte da .app.senza-colori per vincere sulle regole .contract.g-* senza
+   dipendere dall'ordine in cui compaiono. */
+.app.senza-colori .contract .head{background:none;color:var(--ink);}
+.app.senza-colori .contract .value{background:none;}
+.app.senza-colori .contract-back .back-box{border-color:var(--line);color:var(--ink);}
+.app.senza-colori .contract-back .back-title,
+.app.senza-colori .contract-back .back-name{border-bottom-color:var(--line);}
+
 /* ---------- Stampa ---------- */
 @page{size:A4 portrait;margin:0;}
 /* Pagina nominata per i fogli A3: la proprieta' "page" (supportata da Chrome)
