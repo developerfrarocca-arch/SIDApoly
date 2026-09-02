@@ -8,9 +8,10 @@ Generatore delle stampe del Monopoli in versione SIDA Autosoft Multimedia. Quatt
   con il regolamento su un terzo foglio.
 - **`contracts.html`** — i contratti delle proprietà: 28 carte in stile Monopoli classico
   (22 prodotti/servizi, 4 Consulenza, 2 caselle servizio) su 4 fogli A4 verticali da ritagliare.
-- **`cards.html`** — i mazzi Probabilità e Imprevisti: 32 carte orizzontali (16 per mazzo,
-  58×38mm, proporzioni dei due segnaposto al centro della plancia) su 2 fogli A4
-  verticali, più i retri (un colore pieno per mazzo).
+- **`cards.html`** — i mazzi Probabilità e Imprevisti: 32 carte orizzontali (16 per mazzo)
+  su 2 fogli A4 verticali, più i retri (un colore pieno per mazzo). Due misure a scelta:
+  58×38mm per la plancia su un foglio, oppure — con l'opzione **Carte grandi** — 64×42mm,
+  la misura degli spazi dei mazzi sulla plancia grande su due A3.
 - **`money.html`** — le banconote dei Buoni Pasto: 7 tagli, 10 banconote a foglio.
 
 Si passa da una all'altra coi link nella barra laterale a sinistra, che contiene anche
@@ -113,6 +114,13 @@ se escono più piccole è tornata la trappola 1 o la 2.
 Le carte contratto misurano 60×88 mm e sono già distanziate di 4 mm: si taglia lungo
 il bordo nero di ogni carta.
 
+Le carte Probabilità/Imprevisti escono di 58×38 mm distanziate di 4 mm, oppure di
+**64×42 mm attaccate fra loro** con l'opzione **Carte grandi** — tre carte da 64 mm sono
+esattamente la larghezza utile di un A4, quindi non c'è spazio da lasciare e il bordo di
+ogni carta fa da linea di taglio. In entrambi i casi 18 carte per foglio, un mazzo per
+foglio. La misura grande è quella degli spazi dei mazzi sulla plancia su due A3: le due
+opzioni si usano insieme.
+
 I nomi delle caselle e delle carte non sono modificabili dal browser: per cambiarli
 modifica [`src/data/spaces.ts`](src/data/spaces.ts).
 
@@ -198,7 +206,7 @@ src/test/render.tsx               utility condivise dai test
 src/pages/Board.tsx               compone tabellone, centro, legenda, controlli zoom e i fogli
                                   della stampa su due A3
 src/pages/Contracts.tsx           fogli delle carte contratto
-src/pages/Cards.tsx               fogli dei mazzi
+src/pages/Cards.tsx               fogli dei mazzi, nelle due misure di carta
 src/pages/Money.tsx               fogli delle banconote
 
 src/components/Sidebar.tsx        barra laterale: marchio, navigazione, stampa, opzioni
@@ -217,7 +225,7 @@ src/components/money/Bill.tsx           una banconota
 src/css/common.css                palette, reset e barra laterale: condivisi da tutte le pagine
 src/css/board.css                 stile della plancia, in mm, foglio unico e due A3
 src/css/contracts.css             stile delle carte contratto, in mm, con le @page per l'A4
-src/css/cards.css                 stile delle carte Probabilità/Imprevisti
+src/css/cards.css                 stile delle carte Probabilità/Imprevisti, 58x38 o 64x42mm
 src/css/money.css                 stile delle banconote
 
 src/images/                       artwork del centro della plancia (importato dal CSS)

@@ -5,10 +5,11 @@
    A differenza dei contratti (verticali, come le proprietà) queste carte
    sono orizzontali, come le vere carte Probabilità/Imprevisti: il testo
    corre in larghezza invece che in colonna stretta.
-   Le proporzioni (58x38mm, rapporto 58:38) sono le stesse dei due
-   segnaposto dei mazzi al centro della plancia (.deck in board.css,
-   38x58mm in verticale: qui ruotate in orizzontale).
-   Fogli A4 verticali, griglia 3x6 (18 carte per foglio).
+   Due misure, scelte dall'opzione nella barra laterale:
+   - 58x38mm, per la plancia su un foglio A3;
+   - 64x42mm, la misura degli spazi dei mazzi sulla plancia grande su due A3
+     (vedi la sezione "Plancia grande su due A3" in board.css).
+   In entrambi i casi fogli A4 verticali, griglia 3x6 (18 carte per foglio).
    ============================================================ */
 
 :root{
@@ -16,6 +17,21 @@
   --carta-h:38mm;
   --carta-gap:4mm;
 }
+
+/* Carte grandi: 3 x 64mm sono esattamente la larghezza utile dell'A4, quindi
+   niente spazio fra le carte — il bordo di ogni carta diventa la linea di
+   taglio, come per i contratti — e le sei righe da 42mm restano dentro il
+   foglio. Testo e titolo crescono nella stessa proporzione (64/58). */
+.carte-grandi{
+  --carta-w:64mm;
+  --carta-h:42mm;
+  --carta-gap:0mm;
+}
+
+.carte-grandi .card{padding:2mm 2.9mm 2.2mm;}
+.carte-grandi .card .card-head{padding:1.4mm 0 1.3mm;}
+.carte-grandi .card .card-mazzo{font-size:4mm;}
+.carte-grandi .card .card-testo{font-size:3.5mm;}
 
 .sheets{padding:24px;display:flex;flex-direction:column;align-items:center;gap:24px;}
 
