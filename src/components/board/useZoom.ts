@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { fitFactor, nextStep } from '../../zoom';
 
 interface Size {
@@ -21,51 +21,87 @@ export interface Zoom {
   fitToWindow: () => void;
 }
 
+/** A zoom chosen by hand, remembered together with the paper it was chosen for. */
+interface Chosen {
+  format: unknown;
+  factor: number;
+}
+
 /**
- * Keeps the board inside its container in both width and height, so no scrollbar
+ * Keeps the sheet inside its container in both width and height, so no scrollbar
  * is needed. It observes the container and not the window, because the usable
  * space can change without a resize.
+ *
+ * `format` is anything that tells one paper from another (one A3, or two): when
+ * it changes the zoom goes back to fitting the window, because the sheet that
+ * has to fit is a different one.
  */
-export function useZoom(container: React.RefObject<HTMLElement>, page: React.RefObject<HTMLElement>): Zoom {
+export function useZoom(
+  container: React.RefObject<HTMLElement>,
+  sheet: React.RefObject<HTMLElement>,
+  format?: unknown,
+): Zoom {
   const [fittedFactor, setFittedFactor] = useState(1);
-  const [chosenFactor, setChosenFactor] = useState<number | null>(null);
-  const naturalSize = useRef<Size | null>(null);
+  const [chosen, setChosen] = useState<Chosen | null>(null);
+  // a zoom chosen for another paper is dropped instead of being carried over
+  const factor = chosen && chosen.format === format ? chosen.factor : fittedFactor;
 
-  // an A3 never changes size: measured at the first layout, while zoom is still 1
-  useLayoutEffect(() => {
-    const el = page.current;
-    if (el && !naturalSize.current && el.offsetWidth > 0) {
-      naturalSize.current = { width: el.offsetWidth, height: el.offsetHeight };
-    }
-  }, [page]);
+  /* The factor in force is read from a ref and not from the closure, so that
+     refit() never changes: were it rebuilt at every zoom step, the effect below
+     would measure again in a loop. */
+  const zoomInForce = useRef(factor);
+  useEffect(() => {
+    zoomInForce.current = factor;
+  }, [factor]);
 
+  /* The sheet is measured through the zoom already applied to it: `zoom` scales
+     the box, so dividing the measured size by the factor in force gives the size
+     the sheet would have at 100%. Measuring every time instead of remembering
+     the first measurement lets the paper change format without dragging a stale
+     size along. */
   const refit = useCallback(() => {
-    const available = container.current && availableSpaceIn(container.current);
-    const natural = naturalSize.current;
-    if (!available || !natural) return;
+    const box = container.current;
+    const paper = sheet.current;
+    if (!box || !paper) return;
+    const available = availableSpaceIn(box);
+    const measured = paper.getBoundingClientRect();
+    const natural = {
+      width: measured.width / zoomInForce.current,
+      height: measured.height / zoomInForce.current,
+    };
     setFittedFactor(Math.min(fitFactor(available.width, natural.width), fitFactor(available.height, natural.height)));
-  }, [container]);
+  }, [container, sheet]);
 
+  /* `format` is among the dependencies so that changing paper measures again:
+     the container has not resized, so the observer alone would not notice.
+     The first measurement is taken in a microtask and not here, because setting
+     state in the body of an effect makes React render twice in a row. */
   useEffect(() => {
     const observed = container.current;
     if (!observed) return;
-    refit();
+    let live = true;
+    queueMicrotask(() => live && refit());
     if (typeof ResizeObserver !== 'function') {
       window.addEventListener('resize', refit);
-      return () => window.removeEventListener('resize', refit);
+      return () => {
+        live = false;
+        window.removeEventListener('resize', refit);
+      };
     }
     const observer = new ResizeObserver(refit);
     observer.observe(observed);
-    return () => observer.disconnect();
-  }, [container, refit]);
+    return () => {
+      live = false;
+      observer.disconnect();
+    };
+  }, [container, refit, format]);
 
-  const factor = chosenFactor ?? fittedFactor;
   return {
     factor,
-    zoomIn: () => setChosenFactor(nextStep(factor, 1)),
-    zoomOut: () => setChosenFactor(nextStep(factor, -1)),
+    zoomIn: () => setChosen({ format, factor: nextStep(factor, 1) }),
+    zoomOut: () => setChosen({ format, factor: nextStep(factor, -1) }),
     fitToWindow: () => {
-      setChosenFactor(null);
+      setChosen(null);
       refit();
     },
   };

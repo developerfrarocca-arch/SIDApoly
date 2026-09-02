@@ -10,6 +10,26 @@
     height: 100vh;
 }
 
+/* Contenitore dei fogli: uno solo (A3 orizzontale) oppure i tre della plancia
+   divisa. */
+.pages {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+}
+
+/* Lo zoom per stare nella finestra vale solo a schermo: src/pages/Board.tsx
+   passa il fattore in --screen-zoom e la stampa non lo vede nemmeno. Messo
+   inline verrebbe portato anche sulla carta: `zoom: 1 !important` in
+   @media print non basta a fermarlo (Chrome stampa comunque in scala ridotta e
+   perde il ritaglio del disegno al centro). */
+@media screen {
+    .pages {
+        zoom: var(--screen-zoom, 1);
+    }
+}
+
 .page {
     width: 420mm;
     height: 297mm;
@@ -286,11 +306,16 @@
     width: auto;
 }
 
+/* Segnaposto dei due mazzi, sulla diagonale del centro. Sono posizionati per il
+   loro centro (in percentuale del centro plancia) e non per gli angoli: così
+   cambiarne la misura — come fa la plancia su due A3 — li lascia dove sono. */
 .deck {
+    --deck-w: 38mm;
+    --deck-h: 58mm;
     position: absolute;
     z-index: 4;
-    width: 38mm;
-    height: 58mm;
+    width: var(--deck-w);
+    height: var(--deck-h);
     background: rgba(255, 255, 255, .9);
     border: .6mm dashed var(--ink);
     border-radius: 2mm;
@@ -315,16 +340,21 @@
     color: var(--ink);
 }
 
+.deck-imprevisti,
+.deck-probabilita {
+    left: var(--deck-x);
+    top: var(--deck-y);
+    transform: translate(-50%, -50%) rotate(-45deg);
+}
+
 .deck-imprevisti {
-    left: 18mm;
-    bottom: 10mm;
-    transform: rotate(-45deg);
+    --deck-x: 17.9%;
+    --deck-y: 81.2%;
 }
 
 .deck-probabilita {
-    right: 20mm;
-    top: 8mm;
-    transform: rotate(-45deg);
+    --deck-x: 81.2%;
+    --deck-y: 17.9%;
 }
 
 /* ---------- Pannello legenda / regole ---------- */
@@ -441,12 +471,176 @@
     text-align: center;
 }
 
-/* ---------- Stampa ---------- */
-@page {
-    size: A3 landscape;
-    margin: 0;
+/* ---------- Plancia grande su due A3 ---------- */
+/* La plancia esce quadrata di 400mm — l'altezza di un A3 verticale meno 1cm di
+   margine sopra e sotto — e viene tagliata a metà: 200mm per foglio, più un
+   terzo foglio con le sole regole. Ogni metà è accostata al lato della cucitura,
+   quindi dopo la stampa si taglia 1cm di carta e si incollano i due fogli.
+   Il fattore di scala è 400mm / 275mm (la plancia a misura naturale). */
+.split {
+    --split-margin: 10mm;
+    --split-board: 400mm;
+    --split-scale: 1.4545455;
+    /* misure naturali di quel che viene ingrandito: .board e .panel qui sopra */
+    --board-natural: 275mm;
+    --panel-natural: 121mm;
 }
 
+.split-page {
+    width: 297mm;
+    height: 420mm;
+    flex-shrink: 0;
+    position: relative;
+    background: #fff;
+    box-shadow: 0 0 24px rgba(0, 0, 0, .4);
+    padding: var(--split-margin);
+    display: flex;
+    align-items: center;
+    /* niente sbava fuori dal foglio, nemmeno a schermo */
+    overflow: hidden;
+}
+
+/* La metà sinistra sta a destra del suo foglio e viceversa: i due bordi da
+   incollare finiscono a 1cm dal bordo carta. */
+.split-left {
+    justify-content: flex-end;
+}
+
+.split-right {
+    justify-content: flex-start;
+}
+
+.split-rules {
+    justify-content: center;
+}
+
+/* Finestra che mostra metà plancia: la plancia ingrandita è larga il doppio e
+   sporge dal lato non stampato, dove viene tagliata via.
+
+   Il ritaglio è un clip-path e non solo overflow: hidden. Con la plancia
+   ingrandita da un transform, in stampa Chrome perde il ritaglio di
+   overflow — il disegno del centro finiva stampato sopra le caselle in basso e
+   oltre la linea di taglio — mentre il clip-path lo rispetta. Per la stessa
+   ragione ce l'ha anche il centro della plancia. */
+.split-window {
+    width: calc(var(--split-board) / 2);
+    height: var(--split-board);
+    overflow: hidden;
+    clip-path: inset(0);
+    position: relative;
+    flex: 0 0 auto;
+}
+
+.split .center {
+    clip-path: inset(0);
+}
+
+/* L'ingrandimento è un transform e non uno `zoom`: a schermo funzionano
+   entrambi, ma in stampa Chrome ignora `zoom` (la plancia usciva a 275mm) e
+   perde anche il ritaglio del disegno al centro.
+
+   La scatola di layout della plancia è poi *parcheggiata* a sinistra della
+   finestra e riportata al suo posto dal translateX. Sembra un giro strano ma è
+   necessario: il transform non tocca il layout, e una scatola larga 275mm che
+   parte a 87mm dal bordo del foglio sporge oltre l'A3. Quando qualcosa sporge a
+   destra della pagina, Chrome rimpicciolisce tutta la stampa per farcela stare
+   (la plancia usciva all'80%: 32cm invece di 40). Parcheggiata a sinistra la
+   scatola non sporge più e la stampa esce a misura.
+
+   Con transform-origin 0 0 il punto x della plancia finisce a
+   translateX + scala * x: la metà da mostrare si scegle con il translate. */
+.split .board {
+    position: absolute;
+    top: 0;
+    left: calc(-1 * var(--board-natural));
+    transform-origin: 0 0;
+    transform: translateX(var(--board-natural)) scale(var(--split-scale));
+}
+
+.split-right .board {
+    transform: translateX(calc(var(--board-natural) - var(--split-board) / 2)) scale(var(--split-scale));
+}
+
+/* Gli spazi dei due mazzi vanno a misura di carta vera (64x42mm orizzontali,
+   la misura giusta per una plancia da 40cm): sono dentro la plancia ingrandita,
+   quindi qui si scrivono divisi per il fattore di scala. */
+.split .deck {
+    --deck-w: calc(64mm / var(--split-scale));
+    --deck-h: calc(42mm / var(--split-scale));
+}
+
+/* Linee di taglio: il contorno tratteggiato segue il bordo della mezza plancia
+   su tutti e quattro i lati, così si rifila il foglio e le due metà combaciano.
+   outline e non border: sta fuori dalla finestra, quindi non le ruba spazio. */
+.split-left .split-window,
+.split-right .split-window {
+    outline: .3mm dashed rgba(36, 31, 22, .55);
+}
+
+/* Sul lato della cucitura la linea arriva fino ai bordi del foglio: è il taglio
+   che conta, quello che deve venire dritto per incollare senza scalini. */
+.split-left::after,
+.split-right::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    border-left: .3mm dashed rgba(36, 31, 22, .55);
+}
+
+.split-left::after {
+    right: var(--split-margin);
+}
+
+.split-right::after {
+    left: var(--split-margin);
+}
+
+/* Etichetta nel margine esterno, per non confondere i due fogli. */
+.split-tag {
+    position: absolute;
+    top: 50%;
+    margin: 0;
+    writing-mode: vertical-rl;
+    transform: translateY(-50%) rotate(180deg);
+    white-space: nowrap;
+    font-size: 3.2mm;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+    color: #8a8275;
+}
+
+.split-left .split-tag {
+    left: 16mm;
+}
+
+.split-right .split-tag {
+    right: 16mm;
+}
+
+/* Le regole da sole su un A3 verticale: stesso ingrandimento della plancia (e
+   con lo stesso transform, per lo stesso motivo), così il pannello riempie
+   l'altezza del foglio. La scatola tiene la misura ingrandita — il pannello è
+   121x275mm — perché il foglio possa centrarla. */
+.split-rules-box {
+    position: relative;
+    width: calc(121mm * var(--split-scale));
+    height: var(--split-board);
+    flex: 0 0 auto;
+}
+
+.split-rules-box .panel {
+    position: absolute;
+    top: 0;
+    left: calc(-1 * var(--panel-natural));
+    transform-origin: 0 0;
+    transform: translateX(var(--panel-natural)) scale(var(--split-scale));
+}
+
+/* ---------- Stampa ---------- */
+/* La regola @page la scrive src/pages/Board.tsx: cambia con l'opzione scelta
+   (A3 orizzontale per un foglio, A3 verticale per la plancia divisa) e da CSS
+   non si potrebbe scegliere. */
 @media print {
     .page-wrap {
         padding: 0;
@@ -454,10 +648,21 @@
         overflow: visible;
     }
 
-    /* !important: batte lo zoom inline messo da src/plancia.ts per lo schermo. */
+    .pages {
+        gap: 0;
+    }
+
     .page {
         box-shadow: none;
         margin: 0;
-        zoom: 1 !important;
+    }
+
+    .split-page {
+        box-shadow: none;
+        break-after: page;
+    }
+
+    .split-page:last-child {
+        break-after: auto;
     }
 }

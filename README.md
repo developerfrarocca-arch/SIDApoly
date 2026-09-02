@@ -3,7 +3,9 @@
 Generatore delle stampe del Monopoli in versione SIDA Autosoft Multimedia. Quattro pagine:
 
 - **`index.html`** — la plancia: un foglio A3 orizzontale con il tabellone da 40 caselle
-  e il pannello del regolamento.
+  e il pannello del regolamento, oppure — con l'opzione **Plancia grande su due A3** —
+  la stessa plancia quadrata di 40 cm divisa a metà su due A3 verticali da incollare,
+  con il regolamento su un terzo foglio.
 - **`contracts.html`** — i contratti delle proprietà: 28 carte in stile Monopoli classico
   (22 prodotti/servizi, 4 Consulenza, 2 caselle servizio) su 4 fogli A4 verticali da ritagliare.
 - **`cards.html`** — i mazzi Probabilità e Imprevisti: 32 carte orizzontali (16 per mazzo,
@@ -48,13 +50,13 @@ Poi apri **http://localhost:5173**.
 
 Dal browser: **Ctrl+P**, poi in "Altre impostazioni":
 
-| Impostazione      | Plancia (`index.html`)                      | Contratti / Carte / Banconote |
-| ----------------- | ------------------------------------------- | ----------------------------- |
-| Formato           | **A3**                                      | **A4**                        |
-| Orientamento      | **Orizzontale**                             | **Verticale**                 |
-| Margini           | **Nessuno**                                 | **Nessuno**                   |
-| Scala             | **100%** (non "Adatta all'area stampabile") | **100%**                      |
-| Grafica di sfondo | **Attiva**                                  | **Attiva**                    |
+| Impostazione      | Plancia (`index.html`)                      | Plancia su due A3 | Contratti / Carte / Banconote |
+| ----------------- | ------------------------------------------- | ----------------- | ----------------------------- |
+| Formato           | **A3**                                      | **A3**            | **A4**                        |
+| Orientamento      | **Orizzontale**                             | **Verticale**     | **Verticale**                 |
+| Margini           | **Nessuno**                                 | **Nessuno**       | **Nessuno**                   |
+| Scala             | **100%** (non "Adatta all'area stampabile") | **100%**          | **100%**                      |
+| Grafica di sfondo | **Attiva**                                  | **Attiva**        | **Attiva**                    |
 
 L'ultima voce è la più importante: senza di essa Chrome scarta i fondini colorati delle
 barre dei gruppi, dei cartellini prezzo e delle carte, e la stampa esce quasi tutta in
@@ -62,6 +64,51 @@ bianco e nero.
 
 Lo zoom a schermo non influisce sulla stampa: `@media print` lo azzera con
 `zoom:1 !important`, quindi la plancia esce sempre a grandezza reale.
+
+### Plancia grande su due A3
+
+L'opzione **Plancia grande su due A3** nella barra laterale sostituisce il foglio unico
+con tre fogli **A3 verticali**: la metà sinistra della plancia, la metà destra e il
+regolamento da solo. La plancia esce quadrata di **400 mm** — l'altezza di un A3 meno
+1 cm di margine sopra e sotto — quindi ogni metà è larga 200 mm ed è accostata al lato
+della cucitura: dopo la stampa si taglia lungo il **tratteggio** (1 cm di carta sul lato
+da incollare) e si accostano le due metà. La divisione cade esattamente al centro, come
+richiesto, quindi taglia in due la casella centrale del lato in alto e di quello in basso.
+
+Gli spazi dei due mazzi al centro della plancia non seguono l'ingrandimento: sono fissati
+a **64×42 mm** reali (orizzontali, come le carte), la misura a cui portare le carte
+Imprevisti e Probabilità. Si cambiano da `--deck-w` / `--deck-h` in
+[`src/css/board.css`](src/css/board.css).
+
+La regola `@page` non sta nel CSS ma in [`src/pages/Board.tsx`](src/pages/Board.tsx): il
+formato della carta cambia con l'opzione (A3 orizzontale o A3 verticale) e da CSS non si
+potrebbe scegliere.
+
+#### Tre trappole della stampa, se qualcuno tocca questo CSS
+
+Quel che si vede a schermo non basta a garantire la stampa: la plancia grande ne ha
+azzoppate tre, tutte corrette in [`src/css/board.css`](src/css/board.css) e da non
+reintrodurre.
+
+1. **`zoom` a schermo sì, in stampa no.** Chrome ignora `zoom` quando pagina per la
+   stampa: la plancia usciva a 275 mm invece di 400 e il disegno del centro sbordava dal
+   suo ritaglio. L'ingrandimento è quindi un `transform: scale`, e lo zoom "adatta alla
+   finestra" arriva in `--screen-zoom`, usato solo dentro `@media screen` (`zoom: 1
+!important` in `@media print` non bastava a fermarlo).
+2. **Se qualcosa sporge a destra della pagina, Chrome rimpicciolisce tutto.** Una
+   scatola larga 275 mm che parte a 87 mm dal bordo di un A3 verticale sporge, e la
+   stampa usciva all'80% (32 cm invece di 40) senza alcun avviso. Per questo la scatola
+   di layout della plancia è _parcheggiata_ a sinistra della finestra (`left: -275mm`) e
+   riportata al suo posto dal `translateX`: il `transform` non tocca il layout, quindi
+   niente sporge e la stampa esce a misura.
+3. **`overflow: hidden` non ritaglia il contenuto trasformato.** Con la plancia
+   ingrandita da un `transform`, in stampa il disegno del centro finiva sopra le caselle
+   in basso e oltre la linea di taglio. Il ritaglio è quindi anche un `clip-path:
+inset(0)`, che la stampa rispetta.
+
+Come si verifica: stampa in PDF e **misura**. Un quadrato di 100 mm messo per prova nel
+foglio deve uscire di 100 mm, e le caselle devono misurare 33,5 mm (49,5 mm gli angoli);
+se escono più piccole è tornata la trappola 1 o la 2.
 
 Le carte contratto misurano 60×88 mm e sono già distanziate di 4 mm: si taglia lungo
 il bordo nero di ogni carta.
@@ -148,7 +195,8 @@ src/model/*.test.tsx              test
 src/zoom.ts                       aritmetica dello zoom, senza React
 src/test/render.tsx               utility condivise dai test
 
-src/pages/Board.tsx               compone tabellone, centro, legenda e controlli zoom
+src/pages/Board.tsx               compone tabellone, centro, legenda, controlli zoom e i fogli
+                                  della stampa su due A3
 src/pages/Contracts.tsx           fogli delle carte contratto
 src/pages/Cards.tsx               fogli dei mazzi
 src/pages/Money.tsx               fogli delle banconote
@@ -159,7 +207,7 @@ src/components/Sheet.tsx          foglio A4 con piè di pagina, condiviso dalle 
 src/components/board/Cell.tsx     una casella del perimetro
 src/components/board/Center.tsx   centro della plancia: fascia del titolo, mazzi, targa
 src/components/board/Legend.tsx   pannello regolamento, legenda colori, valuta, logo
-src/components/board/useZoom.ts   hook dello zoom: adatta l'A3 alla finestra
+src/components/board/useZoom.ts   hook dello zoom: adatta il foglio in uso alla finestra
 src/components/board/ZoomControls.tsx   i pulsanti dello zoom
 src/components/cards/DeckCard.tsx       una carta Probabilità/Imprevisti
 src/components/contracts/ContractCard.tsx   fronte di una carta contratto
@@ -167,7 +215,7 @@ src/components/contracts/ContractBack.tsx   retro di una carta contratto
 src/components/money/Bill.tsx           una banconota
 
 src/css/common.css                palette, reset e barra laterale: condivisi da tutte le pagine
-src/css/board.css                 stile della plancia, in mm, con le @page per l'A3
+src/css/board.css                 stile della plancia, in mm, foglio unico e due A3
 src/css/contracts.css             stile delle carte contratto, in mm, con le @page per l'A4
 src/css/cards.css                 stile delle carte Probabilità/Imprevisti
 src/css/money.css                 stile delle banconote

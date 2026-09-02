@@ -11,5 +11,4 @@
 - [x] Optional: logo SIDA in bianco sulla plancia dove c'è "Il monopoli di sida" al posto della parola "SIDA"
 - [ ] Optional: grafica sopra la scatola di questo gioco da tavolo
 - [ ] Aggiungere retro imprevisti e probabilità
-- [ ] Isolare plancia per stampa su due A3 (la divisione dev'essere al centro, zoomata il più possibile)
-- [ ] Creare pagina cover stampabile
+- [x] Isolare plancia per stampa su due A3 (la divisione dev'essere al centro, zoomata il più possibile)
