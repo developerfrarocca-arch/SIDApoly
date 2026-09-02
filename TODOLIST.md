@@ -12,3 +12,4 @@
 - [ ] Optional: grafica sopra la scatola di questo gioco da tavolo
 - [ ] Aggiungere retro imprevisti e probabilità
 - [ ] Isolare plancia per stampa su due A3 (la divisione dev'essere al centro, zoomata il più possibile)
+- [ ] Creare pagina cover stampabile
