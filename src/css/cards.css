@@ -18,16 +18,17 @@
   --carta-gap:4mm;
 }
 
-/* Carte grandi: 3 x 64mm sono esattamente la larghezza utile dell'A4, quindi
-   niente spazio fra le carte — il bordo di ogni carta diventa la linea di
-   taglio, come per i contratti — e le sei righe da 42mm restano dentro il
-   foglio. Testo e titolo crescono nella stessa proporzione (64/58). */
+/* Carte grandi: tre carte da 64mm con due spazi da 3mm occupano 198mm.
+   I margini laterali del foglio si riducono a 6mm per mantenere la griglia
+   centrata e lasciare lo spazio per il taglio. Testo e titolo crescono nella
+   stessa proporzione (64/58). */
 .carte-grandi{
   --carta-w:64mm;
   --carta-h:42mm;
-  --carta-gap:0mm;
+  --carta-gap:3mm;
 }
 
+.carte-grandi .sheet{padding-inline:6mm;}
 .carte-grandi .card{padding:2mm 2.9mm 2.2mm;}
 .carte-grandi .card .card-head{padding:1.4mm 0 1.3mm;}
 .carte-grandi .card .card-mazzo{font-size:4mm;}
