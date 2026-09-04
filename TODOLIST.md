@@ -9,6 +9,6 @@
 - [x] Migliorare topbar, considerare eventuale sidebar per le altre pagine che non siano la plancia
 - [x] Cambiare icone consulenza (nord uno biondo, sud uno nero, est uno giallo, ovest uno capelli scuri)
 - [x] Optional: logo SIDA in bianco sulla plancia dove c'è "Il monopoli di sida" al posto della parola "SIDA"
-- [ ] Optional: grafica sopra la scatola di questo gioco da tavolo
+- [x] Optional: grafica sopra la scatola di questo gioco da tavolo
 - [ ] Aggiungere retro imprevisti e probabilità
 - [x] Isolare plancia per stampa su due A3 (la divisione dev'essere al centro, zoomata il più possibile)

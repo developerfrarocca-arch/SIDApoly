@@ -10,8 +10,8 @@ export default defineConfig({
     outDir: 'dist',
     // Le immagini restano file separati: una foto da 8 MB non va inlineata.
     assetsInlineLimit: 4096,
-    // Quattro pagine: il tabellone (A3), le carte contratto, le carte
-    // Imprevisti/Probabilità e le banconote (A4).
+    // Cinque pagine: il tabellone (A3), le carte contratto, le carte
+    // Imprevisti/Probabilità e le banconote (A4), la copertina della scatola (A3).
     // I percorsi sono relativi alla radice del progetto.
     rollupOptions: {
       input: {
@@ -19,6 +19,7 @@ export default defineConfig({
         contracts: 'contracts.html',
         cards: 'cards.html',
         money: 'money.html',
+        cover: 'cover.html',
       },
     },
   },
