@@ -1,7 +1,11 @@
+import art from '../../images/extendedVersion.png';
+
 export function Center() {
   return (
     <div className="center">
       <div className="diagonal-card" role="img" aria-label="Il team SIDA">
+        <img className="art" src={art} alt="" />
+
         <div className="ribbon-flat">Il Monopoli di SIDA</div>
 
         <div className="license-plate">

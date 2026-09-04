@@ -254,17 +254,30 @@
 }
 
 .diagonal-card {
+    --card: 320mm;
+    --art-h: 320mm;
+    --art-y: 0mm;
+    --art-w: calc(var(--art-h) * 2390 / 1792);
+    --art-shift-x: -6.5mm;
+    --art-x: calc((var(--card) - var(--art-w)) / 2 + var(--art-shift-x));
     position: absolute;
-    width: 320mm;
-    height: 320mm;
+    width: var(--card);
+    height: var(--card);
     left: 50%;
     top: 50%;
-    transform: translate(-50%, -50%) rotate(-45deg);
+    transform: translate(calc(var(--card) / -2), calc(var(--card) / -2)) rotate(-45deg);
     overflow: hidden;
+    clip-path: inset(0);
     z-index: 1;
-    background-image: url(../images/extendedVersion.png);
-    background-size: cover;
-    background-position: 50% 45%;
+}
+
+.diagonal-card .art {
+    position: absolute;
+    left: var(--art-x);
+    top: var(--art-y);
+    width: var(--art-w);
+    height: var(--art-h);
+    z-index: 0;
 }
 
 .ribbon-flat {
@@ -286,12 +299,16 @@
 }
 
 .license-plate {
+    --plate-fx: .4695;
+    --plate-fy: .8255;
+    --plate-fw: .0810;
+    --plate-fh: .0230;
     position: absolute;
     z-index: 2;
-    left: 46.37%;
-    top: 81.92%;
-    width: 9.49%;
-    height: 3.91%;
+    left: calc(var(--art-x) + var(--plate-fx) * var(--art-w));
+    top: calc(var(--art-y) + var(--plate-fy) * var(--art-h));
+    width: calc(var(--plate-fw) * var(--art-w));
+    height: calc(var(--plate-fh) * var(--art-h));
     display: flex;
     align-items: center;
     justify-content: center;
@@ -642,6 +659,13 @@
    (A3 orizzontale per un foglio, A3 verticale per la plancia divisa) e da CSS
    non si potrebbe scegliere. */
 @media print {
+    .split .diagonal-card {
+        --print-fix-x: -16.03mm;
+        --print-fix-y: 6.61mm;
+        transform: translate(calc(var(--card) / -2 + var(--print-fix-x)), calc(var(--card) / -2 + var(--print-fix-y)))
+        rotate(-45deg);
+    }
+
     .page-wrap {
         padding: 0;
         height: auto;
