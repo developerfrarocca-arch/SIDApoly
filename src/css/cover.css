@@ -1,0 +1,75 @@
+@import './common.css';
+
+/* ============================================================
+   Copertina della scatola — un foglio A3 orizzontale.
+   Il disegno è tutto in src/components/cover/CoverArt.tsx: un SVG grande
+   quanto il foglio, con il coperchio (39,6×26,8 cm) centrato dentro e i
+   crocini di taglio nel bianco che resta intorno.
+   Qui c'è solo il foglio: misura, ombra e zoom a schermo.
+   ============================================================ */
+
+/* Alto quanto la finestra, come la plancia: se si ingrandisce oltre
+   l'adattamento la barra di scorrimento resta a portata di mano. */
+.cover-wrap {
+    padding: 24px;
+    overflow: auto;
+    height: 100vh;
+}
+
+.cover-pages {
+    display: flex;
+    justify-content: center;
+}
+
+/* Lo stesso trucco della plancia (vedi board.css): lo zoom per stare nella
+   finestra vale solo a schermo, e passa da una proprietà personalizzata perché
+   uno `zoom` inline finirebbe anche sulla carta. */
+@media screen {
+    .cover-pages {
+        zoom: var(--screen-zoom, 1);
+    }
+}
+
+.cover-page {
+    width: 420mm;
+    height: 297mm;
+    flex: 0 0 auto;
+    background: #fff;
+    box-shadow: 0 0 24px rgba(0, 0, 0, .4);
+}
+
+.cover-art {
+    display: block;
+    width: 100%;
+    height: 100%;
+    /* Il fondo blu è il disegno, non una decorazione: senza questo Chrome lo
+       scarta quando la "grafica di sfondo" è spenta. */
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+}
+
+/* ---------- Stampa ---------- */
+@page {
+    size: A3 landscape;
+    margin: 0;
+}
+
+@media print {
+    .cover-wrap {
+        padding: 0;
+        height: auto;
+        overflow: visible;
+    }
+
+    /* Il foglio è larghissimo quanto la pagina: niente centratura, così non resta
+       nemmeno un decimo di millimetro fuori dal foglio. Basta quello e Chrome
+       rimpicciolisce tutta la stampa per farla stare dentro (vedi la stessa
+       trappola in board.css). */
+    .cover-pages {
+        display: block;
+    }
+
+    .cover-page {
+        box-shadow: none;
+    }
+}

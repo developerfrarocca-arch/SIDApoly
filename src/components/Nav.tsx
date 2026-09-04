@@ -1,4 +1,4 @@
-export type PageId = 'board' | 'contracts' | 'cards' | 'money';
+export type PageId = 'board' | 'contracts' | 'cards' | 'money' | 'cover';
 
 interface MenuEntry {
   page: PageId;
@@ -11,6 +11,7 @@ const MENU: readonly MenuEntry[] = [
   { page: 'contracts', href: './contracts.html', label: '📄 Contratti' },
   { page: 'cards', href: './cards.html', label: '🎴 Imprevisti/Probabilità' },
   { page: 'money', href: './money.html', label: '💶 Banconote' },
+  { page: 'cover', href: './cover.html', label: '🎁 Copertina' },
 ];
 
 export function Nav({ currentPage }: { currentPage: PageId }) {

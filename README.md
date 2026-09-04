@@ -1,6 +1,6 @@
 # SIDApoly — Il Monopoli di SIDA
 
-Generatore delle stampe del Monopoli in versione SIDA Autosoft Multimedia. Quattro pagine:
+Generatore delle stampe del Monopoli in versione SIDA Autosoft Multimedia. Cinque pagine:
 
 - **`index.html`** — la plancia: un foglio A3 orizzontale con il tabellone da 40 caselle
   e il pannello del regolamento, oppure — con l'opzione **Plancia grande su due A3** —
@@ -13,6 +13,8 @@ Generatore delle stampe del Monopoli in versione SIDA Autosoft Multimedia. Quatt
   58×38mm per la plancia su un foglio, oppure — con l'opzione **Carte grandi** — 64×42mm,
   la misura degli spazi dei mazzi sulla plancia grande su due A3.
 - **`money.html`** — le banconote dei Buoni Pasto: 7 tagli, 10 banconote a foglio.
+- **`cover.html`** — la copertina della scatola: il coperchio da **39,6×26,8 cm** centrato
+  su un A3 orizzontale, con i crocini di taglio nella carta che resta intorno.
 
 Si passa da una all'altra coi link nella barra laterale a sinistra, che contiene anche
 il pulsante di stampa e i controlli di zoom.
@@ -51,13 +53,13 @@ Poi apri **http://localhost:5173**.
 
 Dal browser: **Ctrl+P**, poi in "Altre impostazioni":
 
-| Impostazione      | Plancia (`index.html`)                      | Plancia su due A3 | Contratti / Carte / Banconote |
-| ----------------- | ------------------------------------------- | ----------------- | ----------------------------- |
-| Formato           | **A3**                                      | **A3**            | **A4**                        |
-| Orientamento      | **Orizzontale**                             | **Verticale**     | **Verticale**                 |
-| Margini           | **Nessuno**                                 | **Nessuno**       | **Nessuno**                   |
-| Scala             | **100%** (non "Adatta all'area stampabile") | **100%**          | **100%**                      |
-| Grafica di sfondo | **Attiva**                                  | **Attiva**        | **Attiva**                    |
+| Impostazione      | Plancia (`index.html`)                      | Plancia su due A3 | Contratti / Carte / Banconote | Copertina (`cover.html`) |
+| ----------------- | ------------------------------------------- | ----------------- | ----------------------------- | ------------------------ |
+| Formato           | **A3**                                      | **A3**            | **A4**                        | **A3**                   |
+| Orientamento      | **Orizzontale**                             | **Verticale**     | **Verticale**                 | **Orizzontale**          |
+| Margini           | **Nessuno**                                 | **Nessuno**       | **Nessuno**                   | **Nessuno**              |
+| Scala             | **100%** (non "Adatta all'area stampabile") | **100%**          | **100%**                      | **100%**                 |
+| Grafica di sfondo | **Attiva**                                  | **Attiva**        | **Attiva**                    | **Attiva**               |
 
 L'ultima voce è la più importante: senza di essa Chrome scarta i fondini colorati delle
 barre dei gruppi, dei cartellini prezzo e delle carte, e la stampa esce quasi tutta in
@@ -172,8 +174,9 @@ npm run build
 ```
 
 Genera la cartella `dist/`, autosufficiente e con percorsi relativi: `dist/index.html`,
-`dist/contracts.html`, `dist/cards.html` e `dist/money.html` **si aprono col doppio
-clic**, senza Node e senza server, e i link della barra laterale continuano a funzionare.
+`dist/contracts.html`, `dist/cards.html`, `dist/money.html` e `dist/cover.html` **si aprono
+col doppio clic**, senza Node e senza server, e i link della barra laterale continuano a
+funzionare.
 È la cartella da copiare su una chiavetta o da mandare a un collega — va copiata tutta,
 non il solo HTML.
 
@@ -184,21 +187,25 @@ index.html                        pagina plancia (monta src/main.tsx)
 contracts.html                    pagina contratti (monta src/contracts.tsx)
 cards.html                        pagina carte Probabilità/Imprevisti (monta src/cards.tsx)
 money.html                        pagina banconote (monta src/money.tsx)
+cover.html                        pagina copertina della scatola (monta src/cover.tsx)
 
 src/main.tsx                      entry plancia
 src/contracts.tsx                 entry contratti
 src/cards.tsx                     entry carte
 src/money.tsx                     entry banconote
+src/cover.tsx                     entry copertina
 
 src/data/spaces.ts                le 40 caselle e i loro tipi  <-- il file da modificare
 src/data/contracts.ts             canoni, costo Aggiornamenti e ipoteche, per indice di casella
 src/data/cards.ts                 i testi delle 16+16 carte Probabilità e Imprevisti
 src/data/money.ts                 i 7 tagli delle banconote e i loro colori
+src/data/sidaWordmark.ts          i tracciati del marchio SIDA, dorati sulla copertina
 
 src/model/board.ts                posizione e rotazione di ogni casella, formattazione prezzi
 src/model/contracts.ts            costruisce le carte contratto dai dati delle caselle
 src/model/cards.ts                impagina fronti e retri dei due mazzi
 src/model/money.ts                genera le copie delle banconote e le impagina
+src/model/cover.ts                le misure della copertina, lette sull’artwork originale
 src/model/*.test.tsx              test
 src/zoom.ts                       aritmetica dello zoom, senza React
 src/test/render.tsx               utility condivise dai test
@@ -208,9 +215,10 @@ src/pages/Board.tsx               compone tabellone, centro, legenda, controlli 
 src/pages/Contracts.tsx           fogli delle carte contratto
 src/pages/Cards.tsx               fogli dei mazzi, nelle due misure di carta
 src/pages/Money.tsx               fogli delle banconote
+src/pages/Cover.tsx               il foglio A3 della copertina
 
 src/components/Sidebar.tsx        barra laterale: marchio, navigazione, stampa, opzioni
-src/components/Nav.tsx            link fra le quattro pagine
+src/components/Nav.tsx            link fra le cinque pagine
 src/components/Sheet.tsx          foglio A4 con piè di pagina, condiviso dalle stampe
 src/components/board/Cell.tsx     una casella del perimetro
 src/components/board/Center.tsx   centro della plancia: fascia del titolo, mazzi, targa
@@ -221,12 +229,14 @@ src/components/cards/DeckCard.tsx       una carta Probabilità/Imprevisti
 src/components/contracts/ContractCard.tsx   fronte di una carta contratto
 src/components/contracts/ContractBack.tsx   retro di una carta contratto
 src/components/money/Bill.tsx           una banconota
+src/components/cover/CoverArt.tsx       il disegno della copertina, un SVG grande come il foglio
 
 src/css/common.css                palette, reset e barra laterale: condivisi da tutte le pagine
 src/css/board.css                 stile della plancia, in mm, foglio unico e due A3
 src/css/contracts.css             stile delle carte contratto, in mm, con le @page per l'A4
 src/css/cards.css                 stile delle carte Probabilità/Imprevisti, 58x38 o 64x42mm
 src/css/money.css                 stile delle banconote
+src/css/cover.css                 foglio A3 della copertina: misura, ombra e zoom a schermo
 
 src/images/                       artwork del centro della plancia (importato dal CSS)
 public/resources/                 logo e favicon, copiati in dist/ senza rinomina
@@ -358,6 +368,39 @@ Sul paraurti dell'auto c'è una targa col logo SIDA (`.license-plate`, in
 percentuale della card partendo dai pixel dell'artwork, quindi **se sostituisci
 l'immagine la targa va riposizionata**. Il calcolo che lega pixel dell'immagine e
 percentuali è spiegato nel commento sopra la regola `.license-plate` in `board.css`.
+
+## Modificare la copertina della scatola
+
+Il coperchio è un rettangolo di **396×268 mm** centrato su un A3 orizzontale: 12 mm di
+carta bianca per lato e 14,5 mm sopra e sotto, da tagliare a mano lungo i crocini. Niente
+tocca il bordo del foglio, quindi non serve una stampante che stampi al vivo.
+
+Le misure **non stanno nel CSS**: sono tutte in [`src/model/cover.ts`](src/model/cover.ts),
+lette pixel per pixel sull'artwork originale `src/images/cover.png` — una tavola A3 in cui
+un pixel vale un millimetro — e
+[`src/components/cover/CoverArt.tsx`](src/components/cover/CoverArt.tsx) non fa altro che
+disegnarle. Per cambiare la misura del coperchio basta `TRIM`: le due cornici restano al
+loro margine, e targhe, titoli e marchio si riposizionano da sé, perché sono agganciati
+alla cornice e al centro del rifilo e non a coordinate assolute.
+
+Tre cose vale la pena sapere prima di metterci mano:
+
+- **È un SVG e non il solito layout in millimetri.** Il marchio del quarantennale è
+  disegno a filo — un cerchio, quattro tratti e due parole — e in SVG esce a qualunque
+  misura senza un pixel arrotondato.
+- **L'oro non è piatto.** Ogni tratto porta la lucentezza metallica per il lungo, con il
+  punto più chiaro a metà: i valori della sfumatura (`SHEEN`) sono stati letti sull'asta
+  della "I" di SIDA. L'opzione **Oro sfumato** nella barra laterale la spegne, per le
+  stampanti che rendono le sfumature a bande.
+- **"SIDA" è il marchio vero.** I tracciati sono gli stessi di
+  `public/resources/logo-sida.svg`, copiati in
+  [`src/data/sidaWordmark.ts`](src/data/sidaWordmark.ts) perché un `<img>` esterno non può
+  ereditare il gradiente dell'SVG che lo contiene. Le due righe — "SIDA" e "AutoSoft
+  Multimedia" — stanno separate perché ognuna ha la propria sfumatura, come nell'originale.
+
+I due titoli sono in Arial Bold, con `textLength` fissato alla larghezza misurata
+sull'originale: così le parole restano lunghe esattamente come sulla scatola anche su una
+macchina che risolve Arial in qualcosa di leggermente diverso.
 
 ## Test
 
